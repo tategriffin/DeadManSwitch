@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="DeadManSwitch.Service.Wcf.Host.EscalationService" CodeBehind="EscalationService.svc.cs" %>

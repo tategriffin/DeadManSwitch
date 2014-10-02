@@ -1,0 +1,1 @@
+﻿Send log files to this directory. Do not delete this file. It ensures the directory exists on the target server.

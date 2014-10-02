@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ReturnObjectOfTypeArrayOfSchedule">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ReturnObjectOfType{0}" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfSchedule" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" nillable="true" type="tns:ArrayOfSchedule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObjectOfTypeArrayOfSchedule" nillable="true" type="tns:ReturnObjectOfTypeArrayOfSchedule" />
+  <xs:complexType name="ArrayOfSchedule">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Schedule" nillable="true" type="tns:Schedule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSchedule" nillable="true" type="tns:ArrayOfSchedule" />
+  <xs:complexType name="Schedule">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Enabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Interval" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UniqueId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Schedule" nillable="true" type="tns:Schedule" />
+  <xs:complexType name="DailySchedule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Schedule">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CheckInTime" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CheckInWindowStartTime" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Friday" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Monday" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Saturday" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Sunday" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Thursday" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Tuesday" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Wednesday" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DailySchedule" nillable="true" type="tns:DailySchedule" />
+  <xs:complexType name="ReturnObjectOfTypeboolean">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ReturnObjectOfType{0}" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObjectOfTypeboolean" nillable="true" type="tns:ReturnObjectOfTypeboolean" />
+  <xs:complexType name="ReturnObjectOfTypeDailySchedule">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ReturnObjectOfType{0}" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="DailySchedule" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" nillable="true" type="tns:DailySchedule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObjectOfTypeDailySchedule" nillable="true" type="tns:ReturnObjectOfTypeDailySchedule" />
+</xs:schema>

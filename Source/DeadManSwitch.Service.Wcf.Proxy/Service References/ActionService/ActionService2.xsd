@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1659/ActionService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" />
+  <xs:element name="GetAllEscalationActionTypes">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllEscalationActionTypesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="GetAllEscalationActionTypesResult" nillable="true" type="q1:ReturnObjectOfTypeArrayOfKeyValueOfintstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllEscalationWaitMinutes">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllEscalationWaitMinutesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="GetAllEscalationWaitMinutesResult" nillable="true" type="q2:ReturnObjectOfTypeArrayOfKeyValueOfintstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindUserEscalationSteps">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindUserEscalationStepsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="FindUserEscalationStepsResult" nillable="true" type="q3:ReturnObjectOfTypeArrayOfEscalationStep" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveUserEscalationSteps">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="allSteps" nillable="true" type="q4:ArrayOfEscalationStep" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveUserEscalationStepsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="SaveUserEscalationStepsResult" nillable="true" type="q5:ReturnObjectOfTypeboolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

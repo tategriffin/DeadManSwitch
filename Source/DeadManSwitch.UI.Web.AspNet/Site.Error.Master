@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Error.master.cs" Inherits="DeadManSwitch.UI.Web.AspNet.Site_Error" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Periodic CheckIn</title>
+    <link runat="server" href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">
+                    <a runat="server" href="~/">periodic check-in logo</a>
+                </p>
+            </div>
+        </div>
+    </header>
+    <div id="body">
+        <section class="content-wrapper main-content clear-fix">
+            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            <br />
+            <a runat="server" href="~/">Return to Periodic CheckIn</a>
+        </section>
+    </div>
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>&copy; <%: DateTime.Now.Year %> - Periodic CheckIn</p>
+            </div>
+        </div>
+    </footer>
+    </form>
+</body>
+</html>

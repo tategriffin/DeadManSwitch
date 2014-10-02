@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0C5870E2-70FF-4F19-B1FF-E5AA8BF4ED7A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeadManSwitch.Service.Wcf.Host</RootNamespace>
+    <AssemblyName>DeadManSwitch.Service.Wcf.Host</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Clutch">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\Clutch.1.0.5047.39101\lib\net40\Clutch.dll</HintPath>
+    </Reference>
+    <Reference Include="Clutch.Diagnostics.EntityFramework">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\Clutch.Diagnostics.EntityFramework.1.0.5047.39115\lib\net40\Clutch.Diagnostics.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AccountService.svc" />
+    <Content Include="ActionService.svc" />
+    <Content Include="CheckInService.svc" />
+    <Content Include="EscalationService.svc" />
+    <Content Include="Logs\README.txt" />
+    <Content Include="ScheduleService.svc" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountService.svc.cs">
+      <DependentUpon>AccountService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="ActionService.svc.cs">
+      <DependentUpon>ActionService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="CurrentAppState.cs" />
+    <Compile Include="AppSettingReader.cs" />
+    <Compile Include="App_Code\AppStart.cs" />
+    <Compile Include="CheckInService.svc.cs">
+      <DependentUpon>CheckInService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="EscalationService.svc.cs">
+      <DependentUpon>EscalationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleService.svc.cs">
+      <DependentUpon>ScheduleService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="StartUp\BootStrapper.cs" />
+    <Compile Include="StartUp\ClutchDiagConfig.cs" />
+    <Compile Include="StartUp\InternalServicesConfig.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="packageRestore.proj" />
+    <Content Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NLog.Arvixe PROD.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </Content>
+    <Content Include="NLog.Arvixe TEST.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </Content>
+    <Content Include="NLog.Debug.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </Content>
+    <Content Include="NLog.DEV.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </Content>
+    <Content Include="NLog.Release.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCuttingConcerns\DeadManSwitch.Core\DeadManSwitch.Core.csproj">
+      <Project>{ae4b229c-9825-4ca1-b878-e15bda9c4519}</Project>
+      <Name>DeadManSwitch.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeadManSwitch.Service.InProc\DeadManSwitch.Service.InProc.csproj">
+      <Project>{057394e7-e596-4df1-a2c0-a9361c295da7}</Project>
+      <Name>DeadManSwitch.Service.InProc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeadManSwitch.Service.Wcf\DeadManSwitch.Service.Wcf.csproj">
+      <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
+      <Name>DeadManSwitch.Service.Wcf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeadManSwitch.Service\DeadManSwitch.Service.csproj">
+      <Project>{593d53d9-55ed-4360-bc88-74e1e910aadc}</Project>
+      <Name>DeadManSwitch.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Label="SlowCheetah">
+    <SlowCheetah_EnableImportFromNuGet Condition=" '$(SC_EnableImportFromNuGet)'=='' ">true</SlowCheetah_EnableImportFromNuGet>
+    <SlowCheetah_NuGetImportPath Condition=" '$(SlowCheetah_NuGetImportPath)'=='' ">$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\..\..\Solution\DeadManSwitchAllSource\packages\SlowCheetah.2.5.8\tools\SlowCheetah.Transforms.targets ))</SlowCheetah_NuGetImportPath>
+    <SlowCheetahTargets Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='true' and Exists('$(SlowCheetah_NuGetImportPath)') ">$(SlowCheetah_NuGetImportPath)</SlowCheetahTargets>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3546</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1659/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\Solution\DeadManSwitchAllSource\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\Solution\DeadManSwitchAllSource\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

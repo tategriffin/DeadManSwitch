@@ -1,0 +1,869 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DeadManSwitchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DeadManSwitchModelStoreContainer">
+          <EntitySet Name="ApplicationSetting" EntityType="DeadManSwitchModel.Store.ApplicationSetting" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CheckIn" EntityType="DeadManSwitchModel.Store.CheckIn" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EscalationActionLog" EntityType="DeadManSwitchModel.Store.EscalationActionLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EscalationActionType" EntityType="DeadManSwitchModel.Store.EscalationActionType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EscalationAttempt" EntityType="DeadManSwitchModel.Store.EscalationAttempt" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EscalationWorkTable" EntityType="DeadManSwitchModel.Store.EscalationWorkTable" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="KillSwitch" EntityType="DeadManSwitchModel.Store.KillSwitch" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="KillSwitchRule" EntityType="DeadManSwitchModel.Store.KillSwitchRule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ScheduleDaily" EntityType="DeadManSwitchModel.Store.ScheduleDaily" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserAccount" EntityType="DeadManSwitchModel.Store.UserAccount" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserEscalationAction" EntityType="DeadManSwitchModel.Store.UserEscalationAction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserPreference" EntityType="DeadManSwitchModel.Store.UserPreference" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="vwMissedCheckIn" EntityType="DeadManSwitchModel.Store.vwMissedCheckIn" store:Type="Views" store:Schema="dbo" store:Name="vwMissedCheckIn">
+            <DefiningQuery>SELECT 
+      [vwMissedCheckIn].[CheckInId] AS [CheckInId], 
+      [vwMissedCheckIn].[UserId] AS [UserId], 
+      [vwMissedCheckIn].[LastCheckIn] AS [LastCheckIn], 
+      [vwMissedCheckIn].[NextCheckIn] AS [NextCheckIn], 
+      [vwMissedCheckIn].[HasBeenEscalated] AS [HasBeenEscalated], 
+      [vwMissedCheckIn].[NumberOfAttempts] AS [NumberOfAttempts], 
+      [vwMissedCheckIn].[LastEscalationAttemptDate] AS [LastEscalationAttemptDate]
+      FROM [dbo].[vwMissedCheckIn] AS [vwMissedCheckIn]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CheckIn_UserId" Association="DeadManSwitchModel.Store.FK_CheckIn_UserId">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="CheckIn" EntitySet="CheckIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EscalationWorkTable_UserEscalationActionId" Association="DeadManSwitchModel.Store.FK_EscalationWorkTable_UserEscalationActionId">
+            <End Role="UserEscalationAction" EntitySet="UserEscalationAction" />
+            <End Role="EscalationWorkTable" EntitySet="EscalationWorkTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EscalationWorkTable_UserId" Association="DeadManSwitchModel.Store.FK_EscalationWorkTable_UserId">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="EscalationWorkTable" EntitySet="EscalationWorkTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KillSwitch_EscalationActionTypeID" Association="DeadManSwitchModel.Store.FK_KillSwitch_EscalationActionTypeID">
+            <End Role="EscalationActionType" EntitySet="EscalationActionType" />
+            <End Role="KillSwitch" EntitySet="KillSwitch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KillSwitchRule_KillSwitchID" Association="DeadManSwitchModel.Store.FK_KillSwitchRule_KillSwitchID">
+            <End Role="KillSwitch" EntitySet="KillSwitch" />
+            <End Role="KillSwitchRule" EntitySet="KillSwitchRule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduleDaily_UserId" Association="DeadManSwitchModel.Store.FK_ScheduleDaily_UserId">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="ScheduleDaily" EntitySet="ScheduleDaily" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEscalationAction_EscalationActionTypeId" Association="DeadManSwitchModel.Store.FK_UserEscalationAction_EscalationActionTypeId">
+            <End Role="EscalationActionType" EntitySet="EscalationActionType" />
+            <End Role="UserEscalationAction" EntitySet="UserEscalationAction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEscalationAction_UserId" Association="DeadManSwitchModel.Store.FK_UserEscalationAction_UserId">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="UserEscalationAction" EntitySet="UserEscalationAction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPreference_UserId" Association="DeadManSwitchModel.Store.FK_UserPreference_UserId">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="UserPreference" EntitySet="UserPreference" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ApplicationSetting">
+          <Key>
+            <PropertyRef Name="ApplicationSettingId" />
+          </Key>
+          <Property Name="ApplicationSettingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Value" Type="nvarchar" MaxLength="500" />
+          <Property Name="SettingDescription" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="CheckIn">
+          <Key>
+            <PropertyRef Name="CheckInId" />
+          </Key>
+          <Property Name="CheckInId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LastCheckIn" Type="datetime" />
+          <Property Name="NextCheckIn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EscalationActionLog">
+          <Key>
+            <PropertyRef Name="EscalationActionLogId" />
+          </Key>
+          <Property Name="EscalationActionLogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="EscalationActionTypeId" Type="int" Nullable="false" />
+          <Property Name="Direction" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="EscalationActionType">
+          <Key>
+            <PropertyRef Name="EscalationActionTypeId" />
+          </Key>
+          <Property Name="EscalationActionTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="EscalationAttempt">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NumberOfAttempts" Type="int" Nullable="false" />
+          <Property Name="LastEscalationAttemptDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EscalationWorkTable">
+          <Key>
+            <PropertyRef Name="EscalationWorkTableId" />
+          </Key>
+          <Property Name="EscalationWorkTableId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="UserEscalationActionId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TriggerDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LockExpiration" Type="datetime" Nullable="false" />
+          <Property Name="Success" Type="bit" />
+          <Property Name="NumberOfFailures" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KillSwitch">
+          <Key>
+            <PropertyRef Name="KillSwitchID" />
+          </Key>
+          <Property Name="KillSwitchID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="EscalationActionTypeID" Type="int" Nullable="false" />
+          <Property Name="Direction" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Engaged" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KillSwitchRule">
+          <Key>
+            <PropertyRef Name="KillSwitchRuleID" />
+          </Key>
+          <Property Name="KillSwitchRuleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="KillSwitchID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Limit" Type="int" Nullable="false" />
+          <Property Name="TimePeriodTicks" Type="bigint" Nullable="false" />
+          <Property Name="ActivateKillSwitch" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScheduleDaily">
+          <Key>
+            <PropertyRef Name="ScheduleDailyId" />
+          </Key>
+          <Property Name="ScheduleDailyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="Sunday" Type="bit" Nullable="false" />
+          <Property Name="Monday" Type="bit" Nullable="false" />
+          <Property Name="Tuesday" Type="bit" Nullable="false" />
+          <Property Name="Wednesday" Type="bit" Nullable="false" />
+          <Property Name="Thursday" Type="bit" Nullable="false" />
+          <Property Name="Friday" Type="bit" Nullable="false" />
+          <Property Name="Saturday" Type="bit" Nullable="false" />
+          <Property Name="CheckInHour" Type="int" Nullable="false" />
+          <Property Name="CheckInMinute" Type="int" Nullable="false" />
+          <Property Name="CheckInWindowStart" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="AccountPassword" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserEscalationAction">
+          <Key>
+            <PropertyRef Name="UserEscalationActionId" />
+          </Key>
+          <Property Name="UserEscalationActionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="EscalationActionTypeId" Type="int" Nullable="false" />
+          <Property Name="ExecutionOrder" Type="int" Nullable="false" />
+          <Property Name="WaitTicksAfterPreviousAction" Type="bigint" Nullable="false" />
+          <Property Name="ActionTarget" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ActionMessage" Type="nvarchar" />
+        </EntityType>
+        <EntityType Name="UserPreference">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserPreferenceId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeZoneId" Type="nvarchar" Nullable="false" MaxLength="32" />
+          <Property Name="EarlyCheckInMinutes" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DeadManSwitch.dbo.vwMissedCheckIn' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="vwMissedCheckIn">
+          <Key>
+            <PropertyRef Name="CheckInId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="HasBeenEscalated" />
+            <PropertyRef Name="NumberOfAttempts" />
+            <PropertyRef Name="LastEscalationAttemptDate" />
+          </Key>
+          <Property Name="CheckInId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LastCheckIn" Type="datetime" />
+          <Property Name="NextCheckIn" Type="datetime" />
+          <Property Name="HasBeenEscalated" Type="int" Nullable="false" />
+          <Property Name="NumberOfAttempts" Type="int" Nullable="false" />
+          <Property Name="LastEscalationAttemptDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CheckIn_UserId">
+          <End Role="UserAccount" Type="DeadManSwitchModel.Store.UserAccount" Multiplicity="1" />
+          <End Role="CheckIn" Type="DeadManSwitchModel.Store.CheckIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CheckIn">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EscalationWorkTable_UserEscalationActionId">
+          <End Role="UserEscalationAction" Type="DeadManSwitchModel.Store.UserEscalationAction" Multiplicity="1" />
+          <End Role="EscalationWorkTable" Type="DeadManSwitchModel.Store.EscalationWorkTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEscalationAction">
+              <PropertyRef Name="UserEscalationActionId" />
+            </Principal>
+            <Dependent Role="EscalationWorkTable">
+              <PropertyRef Name="UserEscalationActionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EscalationWorkTable_UserId">
+          <End Role="UserAccount" Type="DeadManSwitchModel.Store.UserAccount" Multiplicity="1" />
+          <End Role="EscalationWorkTable" Type="DeadManSwitchModel.Store.EscalationWorkTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="EscalationWorkTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KillSwitch_EscalationActionTypeID">
+          <End Role="EscalationActionType" Type="DeadManSwitchModel.Store.EscalationActionType" Multiplicity="1" />
+          <End Role="KillSwitch" Type="DeadManSwitchModel.Store.KillSwitch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EscalationActionType">
+              <PropertyRef Name="EscalationActionTypeId" />
+            </Principal>
+            <Dependent Role="KillSwitch">
+              <PropertyRef Name="EscalationActionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KillSwitchRule_KillSwitchID">
+          <End Role="KillSwitch" Type="DeadManSwitchModel.Store.KillSwitch" Multiplicity="1" />
+          <End Role="KillSwitchRule" Type="DeadManSwitchModel.Store.KillSwitchRule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KillSwitch">
+              <PropertyRef Name="KillSwitchID" />
+            </Principal>
+            <Dependent Role="KillSwitchRule">
+              <PropertyRef Name="KillSwitchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduleDaily_UserId">
+          <End Role="UserAccount" Type="DeadManSwitchModel.Store.UserAccount" Multiplicity="1" />
+          <End Role="ScheduleDaily" Type="DeadManSwitchModel.Store.ScheduleDaily" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ScheduleDaily">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEscalationAction_EscalationActionTypeId">
+          <End Role="EscalationActionType" Type="DeadManSwitchModel.Store.EscalationActionType" Multiplicity="1" />
+          <End Role="UserEscalationAction" Type="DeadManSwitchModel.Store.UserEscalationAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EscalationActionType">
+              <PropertyRef Name="EscalationActionTypeId" />
+            </Principal>
+            <Dependent Role="UserEscalationAction">
+              <PropertyRef Name="EscalationActionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEscalationAction_UserId">
+          <End Role="UserAccount" Type="DeadManSwitchModel.Store.UserAccount" Multiplicity="1" />
+          <End Role="UserEscalationAction" Type="DeadManSwitchModel.Store.UserEscalationAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserEscalationAction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPreference_UserId">
+          <End Role="UserAccount" Type="DeadManSwitchModel.Store.UserAccount" Multiplicity="1" />
+          <End Role="UserPreference" Type="DeadManSwitchModel.Store.UserPreference" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserPreference">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeadManSwitchModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DeadManSwitchEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="ApplicationSettings" EntityType="DeadManSwitchModel.ApplicationSetting" />
+          <EntitySet Name="EscalationActionTypes" EntityType="DeadManSwitchModel.EscalationActionType" />
+          <EntitySet Name="KillSwitches" EntityType="DeadManSwitchModel.KillSwitch" />
+          <EntitySet Name="KillSwitchRules" EntityType="DeadManSwitchModel.KillSwitchRule" />
+          <AssociationSet Name="FK_KillSwitch_EscalationActionTypeID" Association="DeadManSwitchModel.FK_KillSwitch_EscalationActionTypeID">
+            <End Role="EscalationActionType" EntitySet="EscalationActionTypes" />
+            <End Role="KillSwitch" EntitySet="KillSwitches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KillSwitchRule_KillSwitchID" Association="DeadManSwitchModel.FK_KillSwitchRule_KillSwitchID">
+            <End Role="KillSwitch" EntitySet="KillSwitches" />
+            <End Role="KillSwitchRule" EntitySet="KillSwitchRules" />
+          </AssociationSet>
+          <EntitySet Name="EscalationActionLogs" EntityType="DeadManSwitchModel.EscalationActionLog" />
+          <EntitySet Name="CheckIns" EntityType="DeadManSwitchModel.CheckIn" />
+          <EntitySet Name="EscalationAttempts" EntityType="DeadManSwitchModel.EscalationAttempt" />
+          <EntitySet Name="EscalationWorkTables" EntityType="DeadManSwitchModel.EscalationWorkTable" />
+          <EntitySet Name="UserAccounts" EntityType="DeadManSwitchModel.UserAccount" />
+          <EntitySet Name="UserEscalationActions" EntityType="DeadManSwitchModel.UserEscalationAction" />
+          <EntitySet Name="UserPreferences" EntityType="DeadManSwitchModel.UserPreference" />
+          <EntitySet Name="vwMissedCheckIns" EntityType="DeadManSwitchModel.vwMissedCheckIn" />
+          <AssociationSet Name="FK_CheckIn_UserId" Association="DeadManSwitchModel.FK_CheckIn_UserId">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="CheckIn" EntitySet="CheckIns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEscalationAction_EscalationActionTypeId" Association="DeadManSwitchModel.FK_UserEscalationAction_EscalationActionTypeId">
+            <End Role="EscalationActionType" EntitySet="EscalationActionTypes" />
+            <End Role="UserEscalationAction" EntitySet="UserEscalationActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EscalationWorkTable_UserEscalationActionId" Association="DeadManSwitchModel.FK_EscalationWorkTable_UserEscalationActionId">
+            <End Role="UserEscalationAction" EntitySet="UserEscalationActions" />
+            <End Role="EscalationWorkTable" EntitySet="EscalationWorkTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EscalationWorkTable_UserId" Association="DeadManSwitchModel.FK_EscalationWorkTable_UserId">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="EscalationWorkTable" EntitySet="EscalationWorkTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEscalationAction_UserId" Association="DeadManSwitchModel.FK_UserEscalationAction_UserId">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="UserEscalationAction" EntitySet="UserEscalationActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPreference_UserId" Association="DeadManSwitchModel.FK_UserPreference_UserId">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="UserPreference" EntitySet="UserPreferences" />
+          </AssociationSet>
+          <EntitySet Name="ScheduleDailies" EntityType="DeadManSwitchModel.ScheduleDaily" />
+          <AssociationSet Name="FK_ScheduleDaily_UserId" Association="DeadManSwitchModel.FK_ScheduleDaily_UserId">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="ScheduleDaily" EntitySet="ScheduleDailies" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ApplicationSetting">
+          <Key>
+            <PropertyRef Name="ApplicationSettingId" />
+          </Key>
+          <Property Name="ApplicationSettingId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Value" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="SettingDescription" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EscalationActionType">
+          <Key>
+            <PropertyRef Name="EscalationActionTypeId" />
+          </Key>
+          <Property Name="EscalationActionTypeId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="KillSwitches" Relationship="DeadManSwitchModel.FK_KillSwitch_EscalationActionTypeID" FromRole="EscalationActionType" ToRole="KillSwitch" />
+          <NavigationProperty Name="UserEscalationActions" Relationship="DeadManSwitchModel.FK_UserEscalationAction_EscalationActionTypeId" FromRole="EscalationActionType" ToRole="UserEscalationAction" />
+        </EntityType>
+        <EntityType Name="KillSwitch">
+          <Key>
+            <PropertyRef Name="KillSwitchID" />
+          </Key>
+          <Property Type="Int32" Name="KillSwitchID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="EscalationActionTypeID" Nullable="false" />
+          <Property Type="String" Name="Direction" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="Boolean" Name="Engaged" Nullable="false" />
+          <NavigationProperty Name="EscalationActionType" Relationship="DeadManSwitchModel.FK_KillSwitch_EscalationActionTypeID" FromRole="KillSwitch" ToRole="EscalationActionType" />
+          <NavigationProperty Name="KillSwitchRules" Relationship="DeadManSwitchModel.FK_KillSwitchRule_KillSwitchID" FromRole="KillSwitch" ToRole="KillSwitchRule" />
+        </EntityType>
+        <EntityType Name="KillSwitchRule">
+          <Key>
+            <PropertyRef Name="KillSwitchRuleID" />
+          </Key>
+          <Property Type="Int32" Name="KillSwitchRuleID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="KillSwitchID" Nullable="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Int32" Name="Limit" Nullable="false" />
+          <Property Type="Int64" Name="TimePeriodTicks" Nullable="false" />
+          <Property Type="Boolean" Name="ActivateKillSwitch" Nullable="false" />
+          <NavigationProperty Name="KillSwitch" Relationship="DeadManSwitchModel.FK_KillSwitchRule_KillSwitchID" FromRole="KillSwitchRule" ToRole="KillSwitch" />
+        </EntityType>
+        <Association Name="FK_KillSwitch_EscalationActionTypeID">
+          <End Type="DeadManSwitchModel.EscalationActionType" Role="EscalationActionType" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.KillSwitch" Role="KillSwitch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EscalationActionType">
+              <PropertyRef Name="EscalationActionTypeId" />
+            </Principal>
+            <Dependent Role="KillSwitch">
+              <PropertyRef Name="EscalationActionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KillSwitchRule_KillSwitchID">
+          <End Type="DeadManSwitchModel.KillSwitch" Role="KillSwitch" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.KillSwitchRule" Role="KillSwitchRule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KillSwitch">
+              <PropertyRef Name="KillSwitchID" />
+            </Principal>
+            <Dependent Role="KillSwitchRule">
+              <PropertyRef Name="KillSwitchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EscalationActionLog">
+          <Key>
+            <PropertyRef Name="EscalationActionLogId" />
+          </Key>
+          <Property Type="Int32" Name="EscalationActionLogId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="EscalationActionTypeId" Nullable="false" />
+          <Property Type="String" Name="Direction" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CheckIn">
+          <Key>
+            <PropertyRef Name="CheckInId" />
+          </Key>
+          <Property Type="Int32" Name="CheckInId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="LastCheckIn" Precision="3" />
+          <Property Type="DateTime" Name="NextCheckIn" Precision="3" />
+          <NavigationProperty Name="UserAccount" Relationship="DeadManSwitchModel.FK_CheckIn_UserId" FromRole="CheckIn" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="EscalationAttempt">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="NumberOfAttempts" Nullable="false" />
+          <Property Type="DateTime" Name="LastEscalationAttemptDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="EscalationWorkTable">
+          <Key>
+            <PropertyRef Name="EscalationWorkTableId" />
+          </Key>
+          <Property Type="Int32" Name="EscalationWorkTableId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="UserEscalationActionId" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="TriggerDateTime" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="LockExpiration" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="Success" />
+          <Property Type="Int32" Name="NumberOfFailures" Nullable="false" />
+          <NavigationProperty Name="UserEscalationAction" Relationship="DeadManSwitchModel.FK_EscalationWorkTable_UserEscalationActionId" FromRole="EscalationWorkTable" ToRole="UserEscalationAction" />
+          <NavigationProperty Name="UserAccount" Relationship="DeadManSwitchModel.FK_EscalationWorkTable_UserId" FromRole="EscalationWorkTable" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AccountPassword" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="String" Name="Email" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CheckIns" Relationship="DeadManSwitchModel.FK_CheckIn_UserId" FromRole="UserAccount" ToRole="CheckIn" />
+          <NavigationProperty Name="EscalationWorkTables" Relationship="DeadManSwitchModel.FK_EscalationWorkTable_UserId" FromRole="UserAccount" ToRole="EscalationWorkTable" />
+          <NavigationProperty Name="UserEscalationActions" Relationship="DeadManSwitchModel.FK_UserEscalationAction_UserId" FromRole="UserAccount" ToRole="UserEscalationAction" />
+          <NavigationProperty Name="UserPreference" Relationship="DeadManSwitchModel.FK_UserPreference_UserId" FromRole="UserAccount" ToRole="UserPreference" />
+          <NavigationProperty Name="ScheduleDailies" Relationship="DeadManSwitchModel.FK_ScheduleDaily_UserId" FromRole="UserAccount" ToRole="ScheduleDaily" />
+        </EntityType>
+        <EntityType Name="UserEscalationAction">
+          <Key>
+            <PropertyRef Name="UserEscalationActionId" />
+          </Key>
+          <Property Type="Int32" Name="UserEscalationActionId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="EscalationActionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="ExecutionOrder" Nullable="false" />
+          <Property Type="Int64" Name="WaitTicksAfterPreviousAction" Nullable="false" />
+          <Property Type="String" Name="ActionTarget" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ActionMessage" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EscalationActionType" Relationship="DeadManSwitchModel.FK_UserEscalationAction_EscalationActionTypeId" FromRole="UserEscalationAction" ToRole="EscalationActionType" />
+          <NavigationProperty Name="EscalationWorkTables" Relationship="DeadManSwitchModel.FK_EscalationWorkTable_UserEscalationActionId" FromRole="UserEscalationAction" ToRole="EscalationWorkTable" />
+          <NavigationProperty Name="UserAccount" Relationship="DeadManSwitchModel.FK_UserEscalationAction_UserId" FromRole="UserEscalationAction" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="UserPreference">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserPreferenceId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="TimeZoneId" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="EarlyCheckInMinutes" Nullable="false" />
+          <NavigationProperty Name="UserAccount" Relationship="DeadManSwitchModel.FK_UserPreference_UserId" FromRole="UserPreference" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="vwMissedCheckIn">
+          <Key>
+            <PropertyRef Name="CheckInId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="HasBeenEscalated" />
+            <PropertyRef Name="NumberOfAttempts" />
+            <PropertyRef Name="LastEscalationAttemptDate" />
+          </Key>
+          <Property Type="Int32" Name="CheckInId" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="LastCheckIn" Precision="3" />
+          <Property Type="DateTime" Name="NextCheckIn" Precision="3" />
+          <Property Type="Int32" Name="HasBeenEscalated" Nullable="false" />
+          <Property Type="Int32" Name="NumberOfAttempts" Nullable="false" />
+          <Property Type="DateTime" Name="LastEscalationAttemptDate" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_CheckIn_UserId">
+          <End Type="DeadManSwitchModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.CheckIn" Role="CheckIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CheckIn">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEscalationAction_EscalationActionTypeId">
+          <End Type="DeadManSwitchModel.EscalationActionType" Role="EscalationActionType" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.UserEscalationAction" Role="UserEscalationAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EscalationActionType">
+              <PropertyRef Name="EscalationActionTypeId" />
+            </Principal>
+            <Dependent Role="UserEscalationAction">
+              <PropertyRef Name="EscalationActionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EscalationWorkTable_UserEscalationActionId">
+          <End Type="DeadManSwitchModel.UserEscalationAction" Role="UserEscalationAction" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.EscalationWorkTable" Role="EscalationWorkTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserEscalationAction">
+              <PropertyRef Name="UserEscalationActionId" />
+            </Principal>
+            <Dependent Role="EscalationWorkTable">
+              <PropertyRef Name="UserEscalationActionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EscalationWorkTable_UserId">
+          <End Type="DeadManSwitchModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.EscalationWorkTable" Role="EscalationWorkTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="EscalationWorkTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEscalationAction_UserId">
+          <End Type="DeadManSwitchModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.UserEscalationAction" Role="UserEscalationAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserEscalationAction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPreference_UserId">
+          <End Type="DeadManSwitchModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.UserPreference" Role="UserPreference" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserPreference">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ScheduleDaily">
+          <Key>
+            <PropertyRef Name="ScheduleDailyId" />
+          </Key>
+          <Property Type="Int32" Name="ScheduleDailyId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="ModDate" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="IsEnabled" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Sunday" Nullable="false" />
+          <Property Type="Boolean" Name="Monday" Nullable="false" />
+          <Property Type="Boolean" Name="Tuesday" Nullable="false" />
+          <Property Type="Boolean" Name="Wednesday" Nullable="false" />
+          <Property Type="Boolean" Name="Thursday" Nullable="false" />
+          <Property Type="Boolean" Name="Friday" Nullable="false" />
+          <Property Type="Boolean" Name="Saturday" Nullable="false" />
+          <Property Type="Int32" Name="CheckInHour" Nullable="false" />
+          <Property Type="Int32" Name="CheckInMinute" Nullable="false" />
+          <Property Type="Int64" Name="CheckInWindowStart" Nullable="false" />
+          <NavigationProperty Name="UserAccount" Relationship="DeadManSwitchModel.FK_ScheduleDaily_UserId" FromRole="ScheduleDaily" ToRole="UserAccount" />
+        </EntityType>
+        <Association Name="FK_ScheduleDaily_UserId">
+          <End Type="DeadManSwitchModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="DeadManSwitchModel.ScheduleDaily" Role="ScheduleDaily" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ScheduleDaily">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeadManSwitchModelStoreContainer" CdmEntityContainer="DeadManSwitchEntities">
+          <EntitySetMapping Name="ApplicationSettings">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.ApplicationSetting">
+              <MappingFragment StoreEntitySet="ApplicationSetting">
+                <ScalarProperty Name="SettingDescription" ColumnName="SettingDescription" />
+                <ScalarProperty Name="ApplicationSettingId" ColumnName="ApplicationSettingId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EscalationActionTypes">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.EscalationActionType">
+              <MappingFragment StoreEntitySet="EscalationActionType">
+                <ScalarProperty Name="EscalationActionTypeId" ColumnName="EscalationActionTypeId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KillSwitches">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.KillSwitch">
+              <MappingFragment StoreEntitySet="KillSwitch">
+                <ScalarProperty Name="Engaged" ColumnName="Engaged" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="EscalationActionTypeID" ColumnName="EscalationActionTypeID" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="KillSwitchID" ColumnName="KillSwitchID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KillSwitchRules">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.KillSwitchRule">
+              <MappingFragment StoreEntitySet="KillSwitchRule">
+                <ScalarProperty Name="ActivateKillSwitch" ColumnName="ActivateKillSwitch" />
+                <ScalarProperty Name="TimePeriodTicks" ColumnName="TimePeriodTicks" />
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="KillSwitchID" ColumnName="KillSwitchID" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="KillSwitchRuleID" ColumnName="KillSwitchRuleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EscalationActionLogs">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.EscalationActionLog">
+              <MappingFragment StoreEntitySet="EscalationActionLog">
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="EscalationActionTypeId" ColumnName="EscalationActionTypeId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EscalationActionLogId" ColumnName="EscalationActionLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckIns">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.CheckIn">
+              <MappingFragment StoreEntitySet="CheckIn">
+                <ScalarProperty Name="NextCheckIn" ColumnName="NextCheckIn" />
+                <ScalarProperty Name="LastCheckIn" ColumnName="LastCheckIn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CheckInId" ColumnName="CheckInId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EscalationAttempts">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.EscalationAttempt">
+              <MappingFragment StoreEntitySet="EscalationAttempt">
+                <ScalarProperty Name="LastEscalationAttemptDate" ColumnName="LastEscalationAttemptDate" />
+                <ScalarProperty Name="NumberOfAttempts" ColumnName="NumberOfAttempts" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EscalationWorkTables">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.EscalationWorkTable">
+              <MappingFragment StoreEntitySet="EscalationWorkTable">
+                <ScalarProperty Name="NumberOfFailures" ColumnName="NumberOfFailures" />
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="LockExpiration" ColumnName="LockExpiration" />
+                <ScalarProperty Name="TriggerDateTime" ColumnName="TriggerDateTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserEscalationActionId" ColumnName="UserEscalationActionId" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EscalationWorkTableId" ColumnName="EscalationWorkTableId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccountPassword" ColumnName="AccountPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserEscalationActions">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.UserEscalationAction">
+              <MappingFragment StoreEntitySet="UserEscalationAction">
+                <ScalarProperty Name="ActionMessage" ColumnName="ActionMessage" />
+                <ScalarProperty Name="ActionTarget" ColumnName="ActionTarget" />
+                <ScalarProperty Name="WaitTicksAfterPreviousAction" ColumnName="WaitTicksAfterPreviousAction" />
+                <ScalarProperty Name="ExecutionOrder" ColumnName="ExecutionOrder" />
+                <ScalarProperty Name="EscalationActionTypeId" ColumnName="EscalationActionTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserEscalationActionId" ColumnName="UserEscalationActionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPreferences">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.UserPreference">
+              <MappingFragment StoreEntitySet="UserPreference">
+                <ScalarProperty Name="EarlyCheckInMinutes" ColumnName="EarlyCheckInMinutes" />
+                <ScalarProperty Name="TimeZoneId" ColumnName="TimeZoneId" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserPreferenceId" ColumnName="UserPreferenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwMissedCheckIns">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.vwMissedCheckIn">
+              <MappingFragment StoreEntitySet="vwMissedCheckIn">
+                <ScalarProperty Name="LastEscalationAttemptDate" ColumnName="LastEscalationAttemptDate" />
+                <ScalarProperty Name="NumberOfAttempts" ColumnName="NumberOfAttempts" />
+                <ScalarProperty Name="HasBeenEscalated" ColumnName="HasBeenEscalated" />
+                <ScalarProperty Name="NextCheckIn" ColumnName="NextCheckIn" />
+                <ScalarProperty Name="LastCheckIn" ColumnName="LastCheckIn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CheckInId" ColumnName="CheckInId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduleDailies">
+            <EntityTypeMapping TypeName="DeadManSwitchModel.ScheduleDaily">
+              <MappingFragment StoreEntitySet="ScheduleDaily">
+                <ScalarProperty Name="CheckInWindowStart" ColumnName="CheckInWindowStart" />
+                <ScalarProperty Name="CheckInMinute" ColumnName="CheckInMinute" />
+                <ScalarProperty Name="CheckInHour" ColumnName="CheckInHour" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="ModDate" ColumnName="ModDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ScheduleDailyId" ColumnName="ScheduleDailyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A666508-2F13-4098-AC32-A477CC4567B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeadManSwitch</RootNamespace>
+    <AssemblyName>DeadManSwitch</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Action\ActionFactory.cs" />
+    <Compile Include="Action\EscalationWorkItem.cs" />
+    <Compile Include="Action\KillSwitches\KillSwitch.cs" />
+    <Compile Include="Action\KillSwitches\KillSwitchRule.cs" />
+    <Compile Include="Action\KillSwitches\KillSwitchRuleResults.cs" />
+    <Compile Include="Action\KillSwitches\KillSwitchRules.cs" />
+    <Compile Include="Action\Processors\IEscalationWorkItemProcessor.cs" />
+    <Compile Include="Action\Processors\SendEmailProcessor.cs" />
+    <Compile Include="Action\Processors\SendSMSProcessor.cs" />
+    <Compile Include="Action\SendEmailAction.cs" />
+    <Compile Include="Action\SendSMSAction.cs" />
+    <Compile Include="Action\UserEscalationTask.cs" />
+    <Compile Include="CheckInInfo.cs" />
+    <Compile Include="Data\IAccountRepository.cs" />
+    <Compile Include="Data\IApplicationSettingsRepository.cs" />
+    <Compile Include="Data\IDailyScheduleRepository.cs" />
+    <Compile Include="Data\IEscalationRepository.cs" />
+    <Compile Include="Data\IKillSwitchRepository.cs" />
+    <Compile Include="Data\IReferenceDataRepository.cs" />
+    <Compile Include="Data\IScheduleRepository.cs" />
+    <Compile Include="Data\IUserEscalationProcedureRepository.cs" />
+    <Compile Include="Data\IUserPreferenceRepository.cs" />
+    <Compile Include="DateTimeCalculator.cs" />
+    <Compile Include="EscalationProcedures.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Providers\ApplicationSettingsProvider.cs" />
+    <Compile Include="Providers\EscalationProcessor.cs" />
+    <Compile Include="Providers\EscalationProvider.cs" />
+    <Compile Include="Providers\MissedCheckInProcessor.cs" />
+    <Compile Include="Providers\NextCheckInCalculator.cs" />
+    <Compile Include="Providers\KillSwitchProvider.cs" />
+    <Compile Include="Providers\ReferenceDataProvider.cs" />
+    <Compile Include="Providers\DailyScheduleProvider.cs" />
+    <Compile Include="Providers\ScheduleProvider.cs" />
+    <Compile Include="Providers\UserEscalationProcedureProvider.cs" />
+    <Compile Include="Providers\UserPreferenceProvider.cs" />
+    <Compile Include="Providers\UserProvider.cs" />
+    <Compile Include="Schedule\CheckInSchedule.cs" />
+    <Compile Include="Schedule\DailySchedule.cs" />
+    <Compile Include="Schedule\DailyScheduleCheckInWindow.cs" />
+    <Compile Include="Schedule\NonRecurringSchedule.cs" />
+    <Compile Include="Schedule\ISchedule.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Providers\CheckInProvider.cs" />
+    <Compile Include="Data\ICheckInRepository.cs" />
+    <Compile Include="Action\IAction.cs" />
+    <Compile Include="MissedCheckIn.cs" />
+    <Compile Include="Providers\MissedCheckInProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserPreferences.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCuttingConcerns\DeadManSwitch.Core\DeadManSwitch.Core.csproj">
+      <Project>{ae4b229c-9825-4ca1-b878-e15bda9c4519}</Project>
+      <Name>DeadManSwitch.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExternalServices\ExternalServiceAdapters\ExternalServiceAdapters.csproj">
+      <Project>{87134447-d20c-4568-9f03-6ff211046bea}</Project>
+      <Name>ExternalServiceAdapters</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

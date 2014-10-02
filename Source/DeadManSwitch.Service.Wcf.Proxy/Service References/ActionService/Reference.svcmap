@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d1a91303-0d7d-4c25-af27-e4a9c89d4bbc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>true</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1659/ActionService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ActionService.xsd" MetadataType="Schema" ID="f4458585-216b-4374-8ded-90475b967df1" SourceId="1" SourceUrl="http://localhost:1659/ActionService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ActionService1.xsd" MetadataType="Schema" ID="a35367da-52c9-49e2-951c-c02cd6a14ad5" SourceId="1" SourceUrl="http://localhost:1659/ActionService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ActionService.disco" MetadataType="Disco" ID="aca73aa3-bfa1-4a05-b11a-8c7f505bf912" SourceId="1" SourceUrl="http://localhost:1659/ActionService.svc?disco" />
+    <MetadataFile FileName="ActionService2.xsd" MetadataType="Schema" ID="2331f507-3146-4297-afee-254ca41e265f" SourceId="1" SourceUrl="http://localhost:1659/ActionService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ActionService.wsdl" MetadataType="Wsdl" ID="79c6ff58-814b-474f-9e70-edac68ca92f1" SourceId="1" SourceUrl="http://localhost:1659/ActionService.svc?wsdl" />
+    <MetadataFile FileName="ActionService3.xsd" MetadataType="Schema" ID="5793880f-a124-4c7e-a2a2-0e36e3538efd" SourceId="1" SourceUrl="http://localhost:1659/ActionService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

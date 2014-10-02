@@ -1,0 +1,7 @@
+﻿To add a Web.config transform file:
+
+In Solution Exporer
+1) Expand Properties > Publish Profiles
+2) Right click on xyz.pubxml file
+3) DO NOT CLICK "Add Transform"
+4) Click "Add Config Transform" 

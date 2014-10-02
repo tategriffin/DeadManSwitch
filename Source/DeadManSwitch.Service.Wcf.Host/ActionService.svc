@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="DeadManSwitch.Service.Wcf.Host.ActionService" CodeBehind="ActionService.svc.cs" %>

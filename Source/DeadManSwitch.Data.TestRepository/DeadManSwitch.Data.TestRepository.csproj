@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F6BDAFCD-EAD9-4418-950F-A199FC64B88C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeadManSwitch.Data.TestRepository</RootNamespace>
+    <AssemblyName>DeadManSwitch.Data.TestRepository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountRepository.cs" />
+    <Compile Include="ApplicationSettingsRepository.cs" />
+    <Compile Include="CheckInRepository.cs" />
+    <Compile Include="DailyScheduleRepository.cs" />
+    <Compile Include="EscalationRepository.cs" />
+    <Compile Include="KillSwitchRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceDataRepository.cs" />
+    <Compile Include="RepositoryWithContext.cs" />
+    <Compile Include="ScheduleRepository.cs" />
+    <Compile Include="Tables\ApplicationSettingTable.cs" />
+    <Compile Include="Tables\CheckInTable.cs" />
+    <Compile Include="Tables\EscalationActionLogTable.cs" />
+    <Compile Include="Tables\EscalationWorkTable.cs" />
+    <Compile Include="Tables\KillSwitchRuleTable.cs" />
+    <Compile Include="Tables\KillSwitchTable.cs" />
+    <Compile Include="Tables\ScheduleDailyTable.cs" />
+    <Compile Include="Tables\UserAccountTable.cs" />
+    <Compile Include="Tables\UserEscalationActionTable.cs" />
+    <Compile Include="Tables\UserPreferenceTable.cs" />
+    <Compile Include="RepositoryContext.cs" />
+    <Compile Include="UserEscalationProcedureRepository.cs" />
+    <Compile Include="UserPreferenceRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCuttingConcerns\DeadManSwitch.Core\DeadManSwitch.Core.csproj">
+      <Project>{ae4b229c-9825-4ca1-b878-e15bda9c4519}</Project>
+      <Name>DeadManSwitch.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeadManSwitch\DeadManSwitch.csproj">
+      <Project>{4a666508-2f13-4098-ac32-a477cc4567b2}</Project>
+      <Name>DeadManSwitch</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{215317BB-BE40-4BC5-8649-CD8A88E01484}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeadManSwitch.Service.Wcf.Proxy</RootNamespace>
+    <AssemblyName>DeadManSwitch.Service.Wcf.Proxy</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\..\Solution\DeadManSwitchAllSource\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountServiceProxy.cs" />
+    <Compile Include="ActionServiceProxy.cs" />
+    <Compile Include="CheckInServiceProxy.cs" />
+    <Compile Include="EscalationServiceProxy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleServiceProxy.cs" />
+    <Compile Include="Service References\AccountService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ActionService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CheckInService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\EscalationService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ScheduleService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="README.rtf" />
+    <None Include="Service References\AccountService\AccountService.wsdl" />
+    <None Include="Service References\AccountService\AccountService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountService\AccountService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountService\AccountService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountService\AccountService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActionService\ActionService.wsdl" />
+    <None Include="Service References\ActionService\ActionService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActionService\ActionService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActionService\ActionService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ActionService\ActionService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CheckInService\CheckInService.wsdl" />
+    <None Include="Service References\CheckInService\CheckInService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CheckInService\CheckInService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CheckInService\CheckInService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EscalationService\EscalationService.wsdl" />
+    <None Include="Service References\EscalationService\EscalationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EscalationService\EscalationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ScheduleService\ScheduleService.wsdl" />
+    <None Include="Service References\ScheduleService\ScheduleService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ScheduleService\ScheduleService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ScheduleService\ScheduleService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeadManSwitch.Service.Wcf\DeadManSwitch.Service.Wcf.csproj">
+      <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
+      <Name>DeadManSwitch.Service.Wcf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeadManSwitch.Service\DeadManSwitch.Service.csproj">
+      <Project>{593d53d9-55ed-4360-bc88-74e1e910aadc}</Project>
+      <Name>DeadManSwitch.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AccountService\" />
+    <WCFMetadataStorage Include="Service References\ActionService\" />
+    <WCFMetadataStorage Include="Service References\CheckInService\" />
+    <WCFMetadataStorage Include="Service References\EscalationService\" />
+    <WCFMetadataStorage Include="Service References\ScheduleService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AccountService\AccountService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AccountService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AccountService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AccountService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionService\ActionService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CheckInService\CheckInService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CheckInService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CheckInService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CheckInService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EscalationService\EscalationService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EscalationService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EscalationService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EscalationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ScheduleService\ScheduleService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ScheduleService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ScheduleService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ScheduleService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
