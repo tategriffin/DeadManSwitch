@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.AspNet.Membership.OpenAuth;
-using Microsoft.Practices.Unity;
 
 namespace DeadManSwitch.UI.Web.AspNet.Account
 {

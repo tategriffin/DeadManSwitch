@@ -341,7 +341,6 @@ namespace DeadManSwitch.Service.Tests
         {
             //Arrange
             string userName = "anyUser";
-            string password = "1234";
             var context = new RepositoryContext();
             var user = new DeadManSwitch.User(userName, "name@example.com", "first", "last");
             var userRecord = new UserAccountTableRow(user, "password");
@@ -370,7 +369,6 @@ namespace DeadManSwitch.Service.Tests
         {
             //Arrange
             string userName = "anyUser";
-            string password = "1234";
             var context = new RepositoryContext();
             var user = new DeadManSwitch.User(userName, "name@example.com", "first", "last");
             var userRecord = new UserAccountTableRow(user, "password");
@@ -399,7 +397,6 @@ namespace DeadManSwitch.Service.Tests
         {
             //Arrange
             string userName = "anyUser";
-            string password = "1234";
             var context = new RepositoryContext();
             var user = new DeadManSwitch.User(userName, "name@example.com", "first", "last");
             var userRecord = new UserAccountTableRow(user, "password");

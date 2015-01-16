@@ -22,7 +22,6 @@ namespace DeadManSwitch.UI.Web.AspNet
             
             //MS configs
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterOpenAuth();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             IocConfig.Register();

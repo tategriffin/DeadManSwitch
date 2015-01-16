@@ -21,11 +21,11 @@ namespace DeadManSwitch.UI.Web.AspNet
                   "~/Scripts/WebForms/TreeView.js",
                   "~/Scripts/WebForms/WebParts.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
-                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+//            bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
+//                "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
+//                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
+//                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
+//                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
 
             // Use the Development version of Modernizr to develop with and learn from. Then, when you’re
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need
