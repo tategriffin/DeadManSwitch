@@ -21,16 +21,16 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
 
         public ChangePasswordResultModel ChangePassword(string userName, string currentPassword, string password)
         {
-            ChangePasswordResultModel result = new ChangePasswordResultModel();
+            ChangePasswordResultModel result;
             
-            result.PasswordWasChanged = this.AccountSvc.ChangePassword(userName, currentPassword, password);
-            if (result.PasswordWasChanged)
+            var wasPwdChanged = this.AccountSvc.ChangePassword(userName, currentPassword, password);
+            if (wasPwdChanged)
             {
-                result.ResultMessage = "Your password has been changed.";
+                result = new ChangePasswordResultModel("Your password has been changed.");
             }
             else
             {
-                result.ResultMessage = "Your password could not be changed.";
+                result = new ChangePasswordResultModel("Your password could not be changed.", false);
             }
 
             return result;

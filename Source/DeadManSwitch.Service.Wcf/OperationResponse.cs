@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Service.Wcf
 {
+    //Name the data contract because otherwise WCF appends "random" values to generic class names to make them unique
     [Serializable]
     [DataContract(Name = "ReturnObjectOfType{0}")]
     public class OperationResponse<T>

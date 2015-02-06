@@ -20,18 +20,18 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
             this.PopulateModel();
         }
 
-        public UserProfileModel Model { get; set; }
+        public UserProfileEditModel Model { get; set; }
 
         private void PopulateModel()
         {
             var existingUser = this.AccountSvc.FindUser(this.CurrentUser.UserName);
 
-            this.Model = existingUser.ToUiModel();
+            this.Model = existingUser.ToUiEditModel();
         }
 
         public void SaveProfile()
         {
-            this.AccountSvc.UpdateProfile(this.Model.UserName, this.Model.ToServiceModel());
+            this.AccountSvc.UpdateProfile(this.CurrentUser.UserName, this.Model.ToServiceModel());
         }
 
     }

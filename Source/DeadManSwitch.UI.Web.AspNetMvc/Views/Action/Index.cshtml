@@ -1,0 +1,25 @@
+﻿@using DeadManSwitch.UI.Web.AspNetMvc.Extensions
+@model DeadManSwitch.UI.Models.UserActionListModel
+
+@{
+    ViewBag.Title = "Escalation Steps";
+}
+
+<h2>Escalation Steps</h2>
+
+<div>
+    <ul id="escalationsteps" class="grippable">
+        @foreach (var step in Model.UserActions)
+        {
+            <li id="step_@step.Id"><img src="@Html.ResolveUrl("~/images/blackgripper_sm.png")" class="gripper" /> @step.StepDescription @Html.ImageLink("~/images/edit.png", "Edit", "Action", new { id = step.Id }, "Edit escalation step") @Html.DeleteActionStepImageLink("~/images/delete.png", step.Id)</li>
+        }
+    </ul>
+</div>
+<br />
+<p>
+    @Html.ActionLink("Add a step", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/action.js")
+}

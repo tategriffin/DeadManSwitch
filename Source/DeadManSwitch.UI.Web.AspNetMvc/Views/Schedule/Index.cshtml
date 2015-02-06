@@ -1,0 +1,47 @@
+﻿@using DeadManSwitch.UI.Web.AspNetMvc.Extensions
+
+@model DeadManSwitch.UI.ScheduleListModel
+
+@{
+    ViewBag.Title = "Schedules";
+}
+
+<h2>Schedules</h2>
+
+@if (Model.Schedules.Any()) {
+    <table class="table">
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.Schedules.FirstOrDefault().Name)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(m => m.Schedules.FirstOrDefault().Enabled)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Schedules)
+        {
+            <tr>
+                <td class="text-center">
+                    @Html.DeleteScheduleImageLink("~/images/delete.png", item.Id)
+                </td>
+                <td>
+                    @Html.ActionLink(item.DisplayName, "Edit", new {id = item.Id})
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Enabled)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+<p>
+    @Html.ActionLink("Create schedule", "Create", null, new {@class = "btn btn-default"})
+</p>
+<p>
+    @Model.NextCheckInText
+</p>
+

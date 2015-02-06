@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DeadManSwitch.UI;
 using DeadManSwitch.Service;
 
 namespace DeadManSwitch.UI.Web.AspNet.Tasks

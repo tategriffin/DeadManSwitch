@@ -39,17 +39,17 @@ namespace DeadManSwitch.UI
         private TimeSpan Time;
         public TimeSpan ToTimeSpan() { return new TimeSpan(this.Time.Ticks); }
         
-        public string Hour
+        public int Hour
         {
             get
             {
-                if (this.Time.Hours == 0) return Midnight.ToString();
-                if (this.Time.Hours > Noon) return (this.Time.Hours - Noon).ToString();
+                if (this.Time.Hours == 0) return Midnight;
+                if (this.Time.Hours > Noon) return (this.Time.Hours - Noon);
 
-                return this.Time.Hours.ToString();
+                return this.Time.Hours;
             }
         }
-        public string Minute { get { return Time.Minutes.ToString(); } }
+        public int Minute { get { return Time.Minutes; } }
         public string AMPM { get { return (Time.Hours < Noon ? Morning : Afternoon); } }
 
         private void SetTime(int hour, int minute, string ampm)

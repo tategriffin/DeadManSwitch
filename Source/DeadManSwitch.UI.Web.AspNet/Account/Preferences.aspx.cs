@@ -72,7 +72,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
             PopulateUserTimeZoneFromUI(this.Presenter.Model);
         }
 
-        private void PopulateEarlyCheckInMinutesFromUI(UserPreferencesModel model)
+        private void PopulateEarlyCheckInMinutesFromUI(UserPreferenceEditModel model)
         {
             int mins;
             if (int.TryParse(this.EarlyCheckInMinutes.SelectedValue, out mins))
@@ -81,7 +81,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
             }
         }
 
-        private void PopulateUserTimeZoneFromUI(UserPreferencesModel model)
+        private void PopulateUserTimeZoneFromUI(UserPreferenceEditModel model)
         {
             if (this.TimeZone.SelectedIndex >= 0)
             {

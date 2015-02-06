@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.UI.Web.AspNetMvc", "..\..\Source\DeadManSwitch.UI.Web.AspNetMvc\DeadManSwitch.UI.Web.AspNetMvc.csproj", "{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.UI.Web.AspNet", "..\..\Source\DeadManSwitch.UI.Web.AspNet\DeadManSwitch.UI.Web.AspNet.csproj", "{FBD916FD-432A-49C0-9FC6-EA48071F1732}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch", "..\..\Source\DeadManSwitch\DeadManSwitch.csproj", "{4A666508-2F13-4098-AC32-A477CC4567B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Tests", "..\..\Source\DeadManSwitch.Tests\DeadManSwitch.Tests.csproj", "{EA292CDB-5C48-4E2C-BE9A-D3CABFFEF9D5}"
@@ -44,16 +42,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Service.Wcf.P
 		{0C5870E2-70FF-4F19-B1FF-E5AA8BF4ED7A} = {0C5870E2-70FF-4F19-B1FF-E5AA8BF4ED7A}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.UI.Web.AspNet", "..\..\Source\DeadManSwitch.UI.Web.AspNet\DeadManSwitch.UI.Web.AspNet.csproj", "{FBD916FD-432A-49C0-9FC6-EA48071F1732}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A666508-2F13-4098-AC32-A477CC4567B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A666508-2F13-4098-AC32-A477CC4567B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A666508-2F13-4098-AC32-A477CC4567B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -112,10 +112,10 @@ Global
 		{215317BB-BE40-4BC5-8649-CD8A88E01484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215317BB-BE40-4BC5-8649-CD8A88E01484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215317BB-BE40-4BC5-8649-CD8A88E01484}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

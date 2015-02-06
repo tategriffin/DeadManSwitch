@@ -41,14 +41,12 @@ namespace DeadManSwitch.Service.EntityMappers
             return targetEntity;
         }
 
-        public static DeadManSwitch.Schedule.DailySchedule ToDomainEntity(this DeadManSwitch.Service.DailySchedule sourceEntity, int userId)
+        public static DeadManSwitch.Schedule.DailySchedule ToDomainEntity(this DeadManSwitch.Service.DailySchedule sourceEntity)
         {
             if (sourceEntity == null) return null;
 
             var targetEntity = new DeadManSwitch.Schedule.DailySchedule();
             targetEntity.MapBaseValues(sourceEntity);
-
-            targetEntity.UserId = userId;
 
             targetEntity.CheckInTime = sourceEntity.CheckInTime;
             targetEntity.CheckInWindowStartTime = sourceEntity.CheckInWindowStartTime;

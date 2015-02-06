@@ -29,8 +29,10 @@ namespace DeadManSwitch
             this.UserId = userId;
             try
             {
+                int stepNumber = 1;
                 foreach (var item in actions)
                 {
+                    item.ExecutionOrder = stepNumber++;
                     SortedEscalationTasks.Add(item.ExecutionOrder, item);
                 }
             }

@@ -20,7 +20,7 @@ namespace DeadManSwitch.UI.Web.AspNet
             InternalServicesConfig.Configure(container, config);
 
             //Do this last
-            DeadManSwitch.UI.BootStrapper.Configure(container, config);
+            CurrentAppState.IoCContainer = container;
         }
 
     }

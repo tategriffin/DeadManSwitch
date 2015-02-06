@@ -1,0 +1,43 @@
+﻿@using DeadManSwitch.UI.Web.AspNetMvc.Extensions
+@model DeadManSwitch.UI.UserActionEditModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <h4>Escalation Step @Model.Step</h4>
+        <hr/>
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WaitMinutes, new {@class = "control-label"})
+            <div class="">
+                @Html.DropDownListFor(model => model.WaitMinutes, new SelectList(Model.WaitMinuteOptions, "Key", "Value", Model.WaitMinutes))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ActionType, new {@class = "control-label"})
+            <div class="">
+                @Html.DropDownListFor(model => model.ActionTypeId, new SelectList(Model.ActionTypeOptions, "Key", "Value", Model.ActionTypeId))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recipient, new {@class = "control-label"})
+            <div class="">
+                @Html.EditorFor(model => model.Recipient)
+                @Html.ValidationMessageFor(model => model.Recipient)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="">
+                <input type="submit" value="@Model.SubmitActionText" class="btn btn-primary"/>
+                @Html.ActionLink("Cancel", "Index", null, new {@class = "btn btn-default"})
+            </div>
+        </div>
+    </div>
+}
+

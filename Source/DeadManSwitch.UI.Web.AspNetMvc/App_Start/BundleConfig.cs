@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Optimization;
 
 namespace DeadManSwitch.UI.Web.AspNetMvc
@@ -8,8 +9,12 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            /* Any bundle names used here must also be updated in _Layout.cshtml */
+            
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui.js",
+                        "~/Scripts/jquery.ui.touch-punch.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -21,12 +26,26 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/bootbox.js"));
 
             //Use "Content" for virutual directory (rather than "bundles") so that relative paths in css continue to work.
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/content/css").Include(
+                      "~/Content/bootstrap-theme.css",
                       "~/Content/bootstrap.css",
+                      "~/Content/jquery-ui.css",
+                      "~/Content/jquery-ui.structure.css",
                       "~/Content/site.css"));
+
+            RegisterCustomBundles(bundles);
         }
+
+        private static void RegisterCustomBundles(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/bundles/site").Include(
+            "~/Scripts/shared.js"));
+
+        }
+
     }
 }

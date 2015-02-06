@@ -55,14 +55,14 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             }
         }
 
-        private void PopulateControls(EditDailyScheduleModel model)
+        private void PopulateControls(DailyScheduleEditModel model)
         {
             PopulateTimeOptions(model);
 
             this.UserTimeZone.Text = model.UserTimeZone;
         }
 
-        private void PopulateTimeOptions(EditDailyScheduleModel model)
+        private void PopulateTimeOptions(DailyScheduleEditModel model)
         {
             PopulateDDL(this.CheckInStartHour, model.CheckInHourOptions);
             PopulateDDL(this.CheckInStartMinute, model.CheckInMinuteOptions);
@@ -82,7 +82,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             }
         }
 
-        private void PopulateUIFromModel(EditDailyScheduleModel model)
+        private void PopulateUIFromModel(DailyScheduleEditModel model)
         {
             this.ScheduleName.Text = model.ScheduleName;
             this.ScheduleEnabled.Checked = model.IsEnabled;
@@ -104,9 +104,9 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             this.CheckInEndAmPm.SelectedValue = model.CheckIn.AMPM;
         }
 
-        private EditDailyScheduleModel PopulateModelFromUI()
+        private DailyScheduleEditModel PopulateModelFromUI()
         {
-            EditDailyScheduleModel model = this.Presenter.Model;
+            DailyScheduleEditModel model = this.Presenter.Model;
 
             model.ScheduleName = this.ScheduleName.Text;
             model.IsEnabled = this.ScheduleEnabled.Checked;
@@ -127,7 +127,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
 
         private void SaveChanges()
         {
-            EditDailyScheduleModel model = PopulateModelFromUI();
+            DailyScheduleEditModel model = PopulateModelFromUI();
 
             List<string> messages = this.Presenter.SaveSchedule(model);
             if (messages.Count > 0)

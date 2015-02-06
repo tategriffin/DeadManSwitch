@@ -8,7 +8,8 @@ using System.Web.Mvc;
 using DeadManSwitch.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using DeadManSwitch.UI.Web.AspNetMvc.Models;
+using DeadManSwitch.UI.Models;
+using DeadManSwitch.UI.Models.Builders;
 using Microsoft.Practices.Unity;
 
 namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
@@ -16,21 +17,17 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        public enum ManageMessageId
-        {
-            ChangePasswordSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            Error
-        }
-
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
         private readonly IAccountService AccountSvc;
 
+        private readonly UserProfileModelBuilder ModelBuilder;
+
         public AccountController(IAccountService accountService)
         {
             AccountSvc = accountService;
+
+            ModelBuilder = new UserProfileModelBuilder(accountService);
         }
 
         //
@@ -49,21 +46,29 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = LoginAndSetAuthCookie(model.UserName, model.Password);
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToLocal(returnUrl);
+                    var user = LoginAndSetAuthCookie(model.UserName, model.Password);
+                    if (user != null)
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid username or password.");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
-            }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                // If we got this far, something failed, redisplay form
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return View("Error");
+            }
         }
 
         private User LoginAndSetAuthCookie(string userName, string password)
@@ -145,16 +150,69 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Account/Manage
-        public ActionResult ChangePassword(ManageMessageId? message)
+        public ActionResult Manage()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
+            var model = ModelBuilder.BuildUserProfileViewModel(User.Identity.Name);
 
-            ViewBag.ReturnUrl = Url.Action("ChangePassword");
+            return View("ProfileView", model);
+        }
+
+        //
+        // GET: /Account/EditProfile
+        public ActionResult EditProfile()
+        {
+            var model = ModelBuilder.BuildUserProfileEditModel(User.Identity.Name);
+
+            return View("ProfileEdit", model);
+        }
+
+        //
+        // POST: /Account/EditProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile(UserProfileEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userProfile = model.ToServiceModel();
+                AccountSvc.UpdateProfile(User.Identity.Name, userProfile);
+
+                return RedirectToAction("Manage");
+            }
+
+            return RedirectToAction("EditProfile");
+        }
+
+        //
+        // GET: /Account/EditProfile
+        public ActionResult EditPreferences()
+        {
+            var model = ModelBuilder.BuildUserPreferenceEditModel(User.Identity.Name);
+
+            return View("PreferenceEdit", model);
+        }
+
+        //
+        // POST: /Account/EditProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPreferences(UserPreferenceEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userProfile = model.ToServiceEntity();
+                AccountSvc.UpdatePreferences(User.Identity.Name, userProfile);
+
+                return RedirectToAction("Manage");
+            }
+
+            return RedirectToAction("EditPreferences");
+        }
+
+        //
+        // GET: /Account/ChangePassword
+        public ActionResult ChangePassword()
+        {
             return View();
         }
 
@@ -162,7 +220,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         // POST: /Account/Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(ManageUserViewModel model)
+        public ActionResult ChangePassword(ChangePasswordEditModel model)
         {
             ViewBag.ReturnUrl = Url.Action("ChangePassword");
             if (ModelState.IsValid)
@@ -170,7 +228,8 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
                 bool passwordChanged = AccountSvc.ChangePassword(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
                 if (passwordChanged)
                 {
-                    return RedirectToAction("ChangePassword", new { Message = ManageMessageId.ChangePasswordSuccess });
+                    var resultModel = new ChangePasswordResultModel("Your password has been changed.");
+                    return ChangePasswordResult(resultModel);
                 }
                 else
                 {
@@ -180,6 +239,16 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        // GET: /Account/ChangePasswordResult
+        public ActionResult ChangePasswordResult(ChangePasswordResultModel model)
+        {
+            var userProfileModel = ModelBuilder.BuildUserProfileViewModel(User.Identity.Name);
+            userProfileModel.Message = model.ResultMessage;
+
+            return View("ProfileView", userProfileModel);
         }
 
         //

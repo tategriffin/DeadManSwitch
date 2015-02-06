@@ -20,8 +20,14 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
             InternalServicesConfig.Configure(container, config);
 
             //Do this last
-            //DeadManSwitch.UI.BootStrapper.Configure(container, config); //TODO: Move this class and CurrentAppState to AspNet project
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+        }
+
+        private static void ReferenceTypesForDeploy()
+        {
+            //This is simply a hack to make sure certain files are included in /bin during build and deploy.
+            var ref1 = typeof(DeadManSwitch.Service.Wcf.Proxy.AccountServiceProxy);
+            var ref2 = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
         }
 
     }

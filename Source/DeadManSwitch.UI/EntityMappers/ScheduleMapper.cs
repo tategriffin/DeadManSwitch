@@ -10,21 +10,21 @@ namespace DeadManSwitch.UI
 {
     public static class ScheduleMapper
     {
-        public static List<ViewSchedulesModel> ToViewSchedulesModel(this IEnumerable<ISchedule> svcSchedule)
+        public static List<ScheduleViewModel> ToScheduleViewModel(this IEnumerable<ISchedule> svcSchedule)
         {
-            List<ViewSchedulesModel> model = new List<ViewSchedulesModel>();
+            List<ScheduleViewModel> model = new List<ScheduleViewModel>();
 
             foreach (var item in svcSchedule)
             {
-                model.Add(item.ToViewSchedulesModel());
+                model.Add(item.ToScheduleViewModel());
             }
 
             return model;
         }
 
-        public static ViewSchedulesModel ToViewSchedulesModel(this ISchedule svcSchedule)
+        public static ScheduleViewModel ToScheduleViewModel(this ISchedule svcSchedule)
         {
-            ViewSchedulesModel model = new ViewSchedulesModel();
+            ScheduleViewModel model = new ScheduleViewModel();
 
             model.Id = svcSchedule.Id;
             model.Enabled = svcSchedule.Enabled;
@@ -35,9 +35,9 @@ namespace DeadManSwitch.UI
             return model;
         }
 
-        public static EditDailyScheduleModel ToEditDailyScheduleModel(this DeadManSwitch.Service.DailySchedule schedule)
+        public static DailyScheduleEditModel ToEditDailyScheduleModel(this DeadManSwitch.Service.DailySchedule schedule)
         {
-            EditDailyScheduleModel model = new EditDailyScheduleModel();
+            DailyScheduleEditModel model = new DailyScheduleEditModel();
 
             model.Id = schedule.Id;
             model.IsEnabled = schedule.Enabled;
@@ -57,7 +57,7 @@ namespace DeadManSwitch.UI
             return model;
         }
 
-        public static DeadManSwitch.Service.DailySchedule ToDailySchedule(this EditDailyScheduleModel model)
+        public static DeadManSwitch.Service.DailySchedule ToDailySchedule(this DailyScheduleEditModel model)
         {
             var schedule = new DeadManSwitch.Service.DailySchedule();
 

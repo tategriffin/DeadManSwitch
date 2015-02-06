@@ -8,7 +8,17 @@ namespace DeadManSwitch.UI
 {
     public static class UserPreferencesMapper
     {
-        public static DeadManSwitch.Service.UserPreferences ToServiceEntity(this DeadManSwitch.UI.UserPreferencesModel source)
+        public static DeadManSwitch.UI.UserPreferenceEditModel ToUiEditModel(this DeadManSwitch.Service.UserPreferences source)
+        {
+            var target = new DeadManSwitch.UI.UserPreferenceEditModel();
+
+            target.EarlyCheckInMinutes = (int)source.EarlyCheckInOffset.TotalMinutes;
+            target.TimeZoneId = source.TzInfo.Id;
+
+            return target;
+        }
+
+        public static DeadManSwitch.Service.UserPreferences ToServiceEntity(this DeadManSwitch.UI.UserPreferenceEditModel source)
         {
             var target = new DeadManSwitch.Service.UserPreferences();
 

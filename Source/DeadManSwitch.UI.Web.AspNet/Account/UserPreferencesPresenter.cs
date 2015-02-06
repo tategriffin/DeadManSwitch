@@ -20,7 +20,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
             this.PopulateModel();
         }
 
-        public UserPreferencesModel Model { get; private set; }
+        public UserPreferenceEditModel Model { get; private set; }
 
         public void SavePreferences()
         {
@@ -32,7 +32,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
 
         private void PopulateModel()
         {
-            UserPreferencesModel model = new UserPreferencesModel();
+            UserPreferenceEditModel model = new UserPreferenceEditModel();
             UserPreferences existingPrefs = this.AccountSvc.FindUserPreferences(this.CurrentUser.UserName);
 
             model.EarlyCheckInMinutes = (int)existingPrefs.EarlyCheckInOffset.TotalMinutes;
@@ -43,7 +43,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Account
             this.Model = model;
         }
 
-        private void PopulateReadOnlyModelValues(UserPreferencesModel model)
+        private void PopulateReadOnlyModelValues(UserPreferenceEditModel model)
         {
             model.TimeZoneOptions = BuildTimeZoneOptions();
             model.EarlyCheckInOptions = BuildEarlyCheckInOptions();

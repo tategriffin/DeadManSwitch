@@ -36,7 +36,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                ViewUserActionModel action = (ViewUserActionModel)e.Item.DataItem;
+                UserActionViewModel action = (UserActionViewModel)e.Item.DataItem;
 
                 //HyperLink deleteScheduleLink = (HyperLink)e.Item.FindControl("DeleteHyperLink");
                 //HyperLink editScheduleLink = (HyperLink)e.Item.FindControl("EditHyperLink");

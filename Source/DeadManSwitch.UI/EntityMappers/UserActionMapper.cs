@@ -8,7 +8,7 @@ namespace DeadManSwitch.UI
 {
     public static class UserActionMapper
     {
-        public static List<DeadManSwitch.Service.EscalationStep> ToServiceEntityList(this IEnumerable<EditUserActionModel> sourceList)
+        public static List<DeadManSwitch.Service.EscalationStep> ToServiceEntityList(this IEnumerable<UserActionEditModel> sourceList)
         {
             var targetList = new List<DeadManSwitch.Service.EscalationStep>();
 
@@ -20,7 +20,7 @@ namespace DeadManSwitch.UI
             return targetList;
         }
 
-        public static DeadManSwitch.Service.EscalationStep ToServiceEntity(this EditUserActionModel source)
+        public static DeadManSwitch.Service.EscalationStep ToServiceEntity(this UserActionEditModel source)
         {
             var target = new DeadManSwitch.Service.EscalationStep();
 
@@ -33,9 +33,9 @@ namespace DeadManSwitch.UI
             return target;
         }
 
-        public static List<EditUserActionModel> ToUiEditModelList(this IEnumerable<DeadManSwitch.Service.EscalationStep> sourceList)
+        public static List<UserActionEditModel> ToUiEditModelList(this IEnumerable<DeadManSwitch.Service.EscalationStep> sourceList)
         {
-            var targetList = new List<EditUserActionModel>();
+            var targetList = new List<UserActionEditModel>();
 
             foreach (var item in sourceList)
             {
@@ -45,9 +45,9 @@ namespace DeadManSwitch.UI
             return targetList;
         }
 
-        public static EditUserActionModel ToUiEditModel(this DeadManSwitch.Service.EscalationStep source)
+        public static UserActionEditModel ToUiEditModel(this DeadManSwitch.Service.EscalationStep source)
         {
-            var target = new EditUserActionModel();
+            var target = new UserActionEditModel();
 
             target.Id = source.Id;
             target.Step = source.Number;
@@ -58,9 +58,9 @@ namespace DeadManSwitch.UI
             return target;
         }
 
-        public static List<ViewUserActionModel> ToUiViewModelList(this IEnumerable<DeadManSwitch.Service.EscalationStep> sourceList)
+        public static List<UserActionViewModel> ToUiViewModelList(this IEnumerable<DeadManSwitch.Service.EscalationStep> sourceList)
         {
-            var targetList = new List<ViewUserActionModel>();
+            var targetList = new List<UserActionViewModel>();
 
             bool isFirst = true;
             foreach (var item in sourceList)
@@ -72,55 +72,18 @@ namespace DeadManSwitch.UI
             return targetList;
         }
 
-        private static ViewUserActionModel ToUiViewModel(this DeadManSwitch.Service.EscalationStep source, bool isFirstStep)
+        private static UserActionViewModel ToUiViewModel(this DeadManSwitch.Service.EscalationStep source, bool isFirstStep)
         {
-            var target = new ViewUserActionModel();
+            var target = new UserActionViewModel();
 
             target.Id = source.Id;
             target.StepNumber = source.Number;
-            target.StepDescription = BuildActionDescription(source, isFirstStep);
+            target.ActionType = source.ActionType;
+            target.WaitMinutes = source.WaitMinutes;
+            target.Recipient = source.Recipient;
 
             return target;
         }
 
-        private static string BuildActionDescription(DeadManSwitch.Service.EscalationStep step, bool isFirstStep)
-        {
-            string desc = BuildStepPrefix(step, isFirstStep) + BuildStepDetails(step);
-
-            return desc;
-        }
-
-        private static string BuildStepPrefix(DeadManSwitch.Service.EscalationStep step, bool isFirstStep)
-        {
-            if (isFirstStep)
-            {
-                return "If I miss a check in, ";
-            }
-            else
-            {
-                return string.Format("then wait {0} minutes, and ", step.WaitMinutes);
-            }
-        }
-
-        private static string BuildStepDetails(DeadManSwitch.Service.EscalationStep step)
-        {
-            string desc;
-            switch (step.ActionType)
-            {
-                case ActionType.EmailMessage:
-                    desc = "send an email to " + step.Recipient;
-                    break;
-
-                case ActionType.TextMessage:
-                    desc = "send a text to " + step.Recipient.ToPhoneNumber();
-                    break;
-
-                default:
-                    desc = "do nothing";
-                    break;
-            }
-
-            return desc;
-        }
     }
 }

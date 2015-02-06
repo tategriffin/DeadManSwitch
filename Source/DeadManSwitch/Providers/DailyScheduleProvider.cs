@@ -46,10 +46,12 @@ namespace DeadManSwitch.Providers
             if (schedule == null) throw new ArgumentNullException("schedule");
             if (IsUserAuthorized(user, schedule) == false) throw new Exception("You're not authorized to save this schedule.");
 
-            if (schedule.Id == 0 && schedule.UserId == 0)   //this is a new schedule
-            {
-                schedule.UserId = user.UserId;
-            }
+            schedule.UserId = user.UserId;
+
+//            if (schedule.Id == 0 && schedule.UserId == 0)   //this is a new schedule
+//            {
+//                schedule.UserId = user.UserId;
+//            }
 
             ThrowExceptionvalidationMessages(schedule);
 
@@ -110,7 +112,9 @@ namespace DeadManSwitch.Providers
             }
             else
             {
-                if (schedule.UserId == user.UserId)
+                //Don't trust schedule.UserId to be correct. Ask the DB instead.
+                DailySchedule existingSchedule = FindDailySchedule(user, schedule.Id);
+                if (existingSchedule != null)
                 {
                     isAuthorized = true;
                 }

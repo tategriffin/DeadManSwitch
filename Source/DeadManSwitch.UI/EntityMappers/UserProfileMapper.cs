@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeadManSwitch.UI.Models;
 
 namespace DeadManSwitch.UI
 {
     public static class UserProfileMapper
     {
-        public static UserProfileModel ToUiModel(this DeadManSwitch.Service.User source)
+        public static UserProfileEditModel ToUiEditModel(this DeadManSwitch.Service.User source)
         {
-            UserProfileModel target = new UserProfileModel();
+            var target = new UserProfileEditModel();
 
-            target.UserName = source.UserName;
-            target.Email = source.Email;
-            target.FirstName = source.FirstName;
-            target.LastName = source.LastName;
+            MapServiceUserToUserProfile(source, target);
 
             return target;
         }
 
-        public static DeadManSwitch.Service.UserProfile ToServiceModel(this UserProfileModel source)
+        public static UserProfileViewModel ToUiViewModel(this DeadManSwitch.Service.User source)
+        {
+            var target = new UserProfileViewModel();
+
+            MapServiceUserToUserProfile(source, target);
+
+            return target;
+        }
+
+        public static DeadManSwitch.Service.UserProfile ToServiceModel(this UserProfileEditModel source)
         {
             var target = new DeadManSwitch.Service.UserProfile();
 
@@ -31,5 +38,13 @@ namespace DeadManSwitch.UI
             return target;
         }
 
+
+        private static void MapServiceUserToUserProfile(DeadManSwitch.Service.User source, IUserProfile target)
+        {
+            target.UserName = source.UserName;
+            target.Email = source.Email;
+            target.FirstName = source.FirstName;
+            target.LastName = source.LastName;
+        }
     }
 }

@@ -23,12 +23,12 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             this.NextCheckInText = BuildNextCheckInText();
         }
 
-        public List<ViewSchedulesModel> Schedules { get; private set; }
+        public List<ScheduleViewModel> Schedules { get; private set; }
         public string NextCheckInText { get; private set; }
 
-        private List<ViewSchedulesModel> BuildUserSchedules()
+        private List<ScheduleViewModel> BuildUserSchedules()
         {
-            List<ViewSchedulesModel> userSchedules;
+            List<ScheduleViewModel> userSchedules;
 
             if (this.CurrentUser.IsAuthenticated)
             {
@@ -36,13 +36,13 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             }
             else
             {
-                userSchedules = new List<ViewSchedulesModel>();
+                userSchedules = new List<ScheduleViewModel>();
             }
 
             return userSchedules;
         }
 
-        private List<ViewSchedulesModel> GetUserSchedulesFromSvc()
+        private List<ScheduleViewModel> GetUserSchedulesFromSvc()
         {
             List<ISchedule> allUserSchedules = this.ScheduleSvc.SearchAllSchedulesByUser(this.CurrentUser.UserName);
             
@@ -51,7 +51,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             this.FlagDisabledSchedules(allUserSchedules);
             //TODO: End - Move sorting to service
 
-            return allUserSchedules.Take(10).ToViewSchedulesModel();
+            return allUserSchedules.Take(10).ToScheduleViewModel();
         }
 
         private void FlagDisabledSchedules(IEnumerable<ISchedule> schedules)

@@ -53,11 +53,11 @@ namespace DeadManSwitch.Data.SqlRepository
             //Good enough for now. Add a table later if needed.
             Dictionary<int, string> data = new Dictionary<int, string>();
 
-            data.Add(0, "0");
-            data.Add(15, "15");
-            data.Add(30, "30");
-            data.Add(45, "45");
-            data.Add(60, "60");
+            data.Add(0, "0 minutes");
+            data.Add(15, "15 minutes");
+            data.Add(30, "30 minutes");
+            data.Add(45, "45 minutes");
+            data.Add(60, "60 minutes");
 
             return data;
         }

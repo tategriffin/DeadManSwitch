@@ -28,7 +28,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                EditUserActionModel actionModel = (EditUserActionModel)e.Item.DataItem;
+                UserActionEditModel actionModel = (UserActionEditModel)e.Item.DataItem;
 
                 HiddenField stepId = (HiddenField)e.Item.FindControl("StepId");
                 Label stepNumber = (Label)e.Item.FindControl("StepNumber");
@@ -86,7 +86,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
 
         private void SaveChanges()
         {
-            List<EditUserActionModel> userActions = GatherUserActionsFromUI();
+            List<UserActionEditModel> userActions = GatherUserActionsFromUI();
             try
             {
                 Presenter.Save(userActions);
@@ -103,15 +103,15 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
         /// Gathers the user actions from the UI.
         /// </summary>
         /// <returns></returns>
-        private List<EditUserActionModel> GatherUserActionsFromUI()
+        private List<UserActionEditModel> GatherUserActionsFromUI()
         {
-            List<EditUserActionModel> userActions = new List<EditUserActionModel>();
+            List<UserActionEditModel> userActions = new List<UserActionEditModel>();
 
             int stepNumber = 1;
             for (int i = 0; i < this.ActionRepeater.Items.Count; i++)
             {
                 var item = this.ActionRepeater.Items[i];
-                EditUserActionModel userAction = GatherUserAction(item);
+                UserActionEditModel userAction = GatherUserAction(item);
                 if (userAction != null)
                 {
                     userAction.Step = stepNumber++;     //Only count non-null steps
@@ -127,9 +127,9 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
         /// </summary>
         /// <param name="item">The UI item.</param>
         /// <returns></returns>
-        private EditUserActionModel GatherUserAction(System.Web.UI.WebControls.RepeaterItem item)
+        private UserActionEditModel GatherUserAction(System.Web.UI.WebControls.RepeaterItem item)
         {
-            EditUserActionModel userAction = null;
+            UserActionEditModel userAction = null;
 
             TextBox stepRecipient = (TextBox)item.FindControl("StepRecipient");
             if (string.IsNullOrWhiteSpace(stepRecipient.Text) == false)
@@ -138,7 +138,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
                 DropDownList waitMinutesList = (DropDownList)item.FindControl("StepWaitMinutes");
                 DropDownList actionTypeList = (DropDownList)item.FindControl("StepAction");
 
-                userAction = new EditUserActionModel();
+                userAction = new UserActionEditModel();
                 userAction.Id = this.GetStepIdFromUI(stepId);
                 userAction.WaitMinutes = this.GetWaitMinutesFromUI(waitMinutesList);
                 userAction.ActionType = this.GetActionTypeFromUI(actionTypeList);

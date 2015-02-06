@@ -1,0 +1,87 @@
+﻿@model DeadManSwitch.UI.Models.UserProfileViewModel
+
+<div class="container">
+    <br />
+    <div class="row">
+        <div class="col-sm-10 accountsection">
+            <div class="col-xs-10"><h4 class="accountsectiontitle">Profile</h4></div><div class="col-xs-2">@Html.ActionLink("Edit", "EditProfile", null, new { @class = "btn btn-primary" })</div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(m => m.UserName)
+                    <div>
+                        @Model.UserName
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(m => m.FirstName)
+                    <div>
+                        @Model.FirstName
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(m => m.LastName)
+                    <div>
+                        @Model.LastName
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(m => m.Email)
+                    <div>
+                        @Model.Email
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            @Html.ActionLink("Change Password", "ChangePassword")
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-sm-10 accountsection">
+            <div class="col-xs-10"><h4 class="accountsectiontitle">Preferences</h4></div><div class="col-xs-2">@Html.ActionLink("Edit", "EditPreferences", null, new { @class = "btn btn-primary" })</div>
+            <br/>
+            <br/>
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(m => m.TimeZone)
+                    <div>
+                        @Model.TimeZone
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(m => m.EarlyCheckinDesc)
+                    <div>
+                        @Model.EarlyCheckinDesc
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @if (!String.IsNullOrWhiteSpace(Model.Message))
+    {
+        <script>
+            bootbox.alert("@Model.Message");
+        </script>
+    }
+
+}

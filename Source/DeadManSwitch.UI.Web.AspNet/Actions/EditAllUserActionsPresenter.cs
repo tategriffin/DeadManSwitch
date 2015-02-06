@@ -22,9 +22,9 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
             this.PopulateModel();
         }
 
-        public EditAllUserActionsModel Model { get; private set; }
+        public UserActionEditAllModel Model { get; private set; }
 
-        public void Save(List<EditUserActionModel> userActions)
+        public void Save(List<UserActionEditModel> userActions)
         {
             if (userActions == null) throw new ArgumentNullException("userActions");
 
@@ -34,7 +34,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
 
         private void PopulateModel()
         {
-            EditAllUserActionsModel model = new EditAllUserActionsModel();
+            UserActionEditAllModel model = new UserActionEditAllModel();
 
             model.UserActions = BuildUserActions();
 
@@ -44,9 +44,9 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
             this.Model = model;
         }
 
-        private List<EditUserActionModel> BuildUserActions()
+        private List<UserActionEditModel> BuildUserActions()
         {
-            List<EditUserActionModel> actions = new List<EditUserActionModel>();
+            List<UserActionEditModel> actions = new List<UserActionEditModel>();
 
             if (this.CurrentUser.IsAuthenticated)
             {
@@ -59,13 +59,14 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
             return actions;
         }
 
-        private List<EditUserActionModel> BuildEmptyUserActions(int existingActionCount)
+        private List<UserActionEditModel> BuildEmptyUserActions(int existingActionCount)
         {
-            List<EditUserActionModel> unusedSteps = new List<EditUserActionModel>();
+            List<UserActionEditModel> unusedSteps = new List<UserActionEditModel>();
 
             for (int step = existingActionCount + 1; step <= MaxEscalationActions; step++)
             {
-                unusedSteps.Add(EditUserActionModel.CreateNewStep(step));
+                var emptyStep = new UserActionEditModel() {Step = step};
+                unusedSteps.Add(emptyStep);
             }
 
             return unusedSteps;

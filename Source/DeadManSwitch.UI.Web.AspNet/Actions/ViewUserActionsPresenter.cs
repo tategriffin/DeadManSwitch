@@ -21,11 +21,11 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
             this.Model = BuildUserActions();
         }
 
-        public List<ViewUserActionModel> Model { get; private set; }
+        public List<UserActionViewModel> Model { get; private set; }
 
-        private List<ViewUserActionModel> BuildUserActions()
+        private List<UserActionViewModel> BuildUserActions()
         {
-            List<ViewUserActionModel> actions = new List<ViewUserActionModel>();
+            List<UserActionViewModel> actions = new List<UserActionViewModel>();
 
             if (this.CurrentUser.IsAuthenticated)
             {

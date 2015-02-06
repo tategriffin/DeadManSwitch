@@ -27,7 +27,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             AddHyperLink2.NavigateUrl = AddHyperLink.NavigateUrl;
         }
 
-        private void ShowExistingSchedules(IEnumerable<ViewSchedulesModel> allSchedules)
+        private void ShowExistingSchedules(IEnumerable<ScheduleViewModel> allSchedules)
         {
             if (!Page.IsPostBack)
             {
@@ -40,7 +40,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                ViewSchedulesModel sched = (ViewSchedulesModel)e.Item.DataItem;
+                ScheduleViewModel sched = (ScheduleViewModel)e.Item.DataItem;
 
                 HyperLink deleteScheduleLink = (HyperLink)e.Item.FindControl("DeleteHyperLink");
                 HyperLink editScheduleLink = (HyperLink)e.Item.FindControl("EditHyperLink");

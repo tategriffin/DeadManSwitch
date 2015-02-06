@@ -1,0 +1,76 @@
+﻿@using DeadManSwitch.UI.Models
+@using DeadManSwitch.UI.Web.AspNetMvc.Extensions
+@model DeadManSwitch.UI.DailyScheduleEditModel
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <br />
+        <br />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.IsEnabled, "IsEnabled", "Enabled"))
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ScheduleName, "Name", new {@class = "control-label"})
+            <div class="">
+                @Html.EditorFor(model => model.ScheduleName)
+                @Html.ValidationMessageFor(model => model.ScheduleName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Days", new {@class = "control-label"})
+            <div class="">
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Sunday, "Sunday", "Sunday"))
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Monday, "Monday", "Monday"))
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Tuesday, "Tuesday", "Tuesday"))
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Wednesday, "Wednesday", "Wednesday"))
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Thursday, "Thursday", "Thursday"))
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Friday, "Friday", "Friday"))
+                @Html.Partial("ResponsiveCheckBoxPartial", new CheckBoxToggleButtonModel(Model.Saturday, "Saturday", "Saturday"))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EarlyCheckIn, "Between", new {@class = "control-label"})
+            <div class="">
+                @Html.DropDownListFor(model => model.EarlyCheckInHour, new SelectList(Model.CheckInHourOptions, "Key", "Value", Model.EarlyCheckInHour)):
+                @Html.DropDownListFor(model => model.EarlyCheckInMinute, new SelectList(Model.CheckInMinuteOptions, "Key", "Value", Model.EarlyCheckInMinute))&nbsp;
+                @Html.DropDownListFor(model => model.EarlyCheckInAmPm, new SelectList(Model.CheckInAmPmOptions, "Key", "Value", Model.EarlyCheckInAmPm))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EarlyCheckIn, "And", new {@class = "control-label"})
+            <div class="">
+                @Html.DropDownListFor(model => model.CheckInHour, new SelectList(Model.CheckInHourOptions, "Key", "Value", Model.CheckInHour)):
+                @Html.DropDownListFor(model => model.CheckInMinute, new SelectList(Model.CheckInMinuteOptions, "Key", "Value", Model.CheckInMinute))&nbsp;
+                @Html.DropDownListFor(model => model.CheckInAmPm, new SelectList(Model.CheckInAmPmOptions, "Key", "Value", Model.CheckInAmPm))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserTimeZone, new {@class = "control-label"})
+            <div class="">
+                @Model.UserTimeZone
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="">
+                <input type="submit" value="@Model.SubmitActionText" class="btn btn-primary"/>
+                @Html.ActionLink("Cancel", "Index", null, new {@class = "btn btn-default"})
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

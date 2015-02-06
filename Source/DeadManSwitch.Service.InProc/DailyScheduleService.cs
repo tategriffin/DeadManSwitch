@@ -37,7 +37,7 @@ namespace DeadManSwitch.Service
             if (schedule == null) throw new ArgumentNullException("schedule");
 
             var existingUser = UserProvider.FindByUserName(userName);
-            this.DailyScheduleProvider.SaveDailySchedule(existingUser, schedule.ToDomainEntity(existingUser.UserId));
+            this.DailyScheduleProvider.SaveDailySchedule(existingUser, schedule.ToDomainEntity());
         }
 
         public void Delete(string userName, int scheduleId)

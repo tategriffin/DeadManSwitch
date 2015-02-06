@@ -1,0 +1,16 @@
+﻿@model DeadManSwitch.UI.Models.CheckBoxToggleButtonModel
+
+<div class="checkbox-inline hidden-xs hidden-sm">
+    @Html.CheckBox(Model.CheckBoxId, Model.Value, new { onclick = "syncToggleButton(this);" })@Html.Label(Model.LabelText, new { @for = Model.CheckBoxId, @class = "checkbox_label" })
+</div>
+
+<div class="onoffswitch_inline checkbox-inline hidden-md hidden-lg">
+    <div class="onoffswitch" style="display: inline-block;">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" onclick=" syncCheckBox(this) " id="@Model.ToggleButtonId" @Model.CheckedHtml>
+        <label class="onoffswitch-label" for="@Model.ToggleButtonId">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>@Html.Label(Model.LabelText, new {@class = "checkboxtogglebutton_label hidden-md hidden-lg"})
+</div>
+

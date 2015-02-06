@@ -17,7 +17,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             this.PopulateModel();
         }
 
-        public EditDailyScheduleModel Model { get; private set; }
+        public DailyScheduleEditModel Model { get; private set; }
 
         public bool IsAuthorizedUser()
         {
@@ -36,7 +36,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             return isAuthorized;
         }
 
-        public List<string> SaveSchedule(EditDailyScheduleModel model)
+        public List<string> SaveSchedule(DailyScheduleEditModel model)
         {
             List<string> messages = new List<string>();
 
@@ -70,9 +70,9 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             }
         }
 
-        private EditDailyScheduleModel BuildModelForAdd(UserPreferences preferences)
+        private DailyScheduleEditModel BuildModelForAdd(UserPreferences preferences)
         {
-            EditDailyScheduleModel model = new EditDailyScheduleModel(setAllDays: true, isEnabled: true);
+            DailyScheduleEditModel model = new DailyScheduleEditModel(setAllDays: true, isEnabled: true);
 
             TimeZoneInfo userTimeZoneInfo = preferences.TzInfo;
             DateTime userLocalTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, userTimeZoneInfo);
@@ -87,9 +87,9 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             return model;
         }
 
-        private EditDailyScheduleModel BuildModelForChange(UserPreferences preferences)
+        private DailyScheduleEditModel BuildModelForChange(UserPreferences preferences)
         {
-            EditDailyScheduleModel model;
+            DailyScheduleEditModel model;
 
             DailySchedule schedule = FindSchedule(this.ScheduleId);
             if (schedule == null)
@@ -116,7 +116,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Schedule
             return schedule;
         }
 
-        private void SetReadOnlyModelValues(EditDailyScheduleModel model, TimeZoneInfo userTimeZoneInfo)
+        private void SetReadOnlyModelValues(DailyScheduleEditModel model, TimeZoneInfo userTimeZoneInfo)
         {
             model.CheckInHourOptions = BuildCheckInHourOptions();
             model.CheckInMinuteOptions = BuildCheckInMinuteOptions();
