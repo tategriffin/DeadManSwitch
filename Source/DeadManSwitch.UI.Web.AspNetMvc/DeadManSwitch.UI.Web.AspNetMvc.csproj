@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="CurrentAppState.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -312,7 +313,7 @@
     <Content Include="Views\Account\ProfileView.cshtml" />
     <Content Include="Views\Account\ProfileEdit.cshtml" />
     <Content Include="Views\Account\PreferenceEdit.cshtml" />
-    <Content Include="Views\Home\Escalate.cshtml" />
+    <Content Include="Views\Task\Escalate.cshtml" />
     <None Include="Web.ArvixeTest.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
