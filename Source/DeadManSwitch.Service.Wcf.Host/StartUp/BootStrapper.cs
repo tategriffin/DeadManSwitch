@@ -23,7 +23,6 @@ namespace DeadManSwitch.Service.Wcf.Host
                 IHostSettingsReader config = new AppSettingReader();
 
                 InternalServicesConfig.Configure(container, config);
-                ClutchDiagConfig.Configure(config);
 
                 CurrentAppState.IoCContainer = container;
 

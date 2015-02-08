@@ -91,6 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DeadManSwitchDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EntityFrameworkConfiguration.cs" />
     <Compile Include="EntityMappers\CheckInMapper.cs" />
     <Compile Include="EntityMappers\EscalationWorkItemMapper.cs" />
     <Compile Include="EntityMappers\KillSwitchMapper.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="KillSwitchRule.cs">
       <DependentUpon>DeadManSwitchDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LoggingInterceptor.cs" />
     <Compile Include="PasswordFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceDataRepository.cs" />
