@@ -175,9 +175,7 @@ FakesAssemblies/
 
 # Slow Cheetah configs
 *PROD.config
-*Prod.config
 *TEST.config
-*Test.config
 *DEV.config
 *DevSingleTier.config
 *Debug.config

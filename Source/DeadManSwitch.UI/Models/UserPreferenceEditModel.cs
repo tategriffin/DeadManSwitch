@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,9 @@ namespace DeadManSwitch.UI
             this.EarlyCheckInOptions = new Dictionary<string, string>();
         }
 
+        [DisplayName("Time Zone")]
         public string TimeZoneId { get; set; }
+        [DisplayName("Check in window start")]
         public int EarlyCheckInMinutes { get; set; }
 
         public Dictionary<string, string> TimeZoneOptions { get; set; }

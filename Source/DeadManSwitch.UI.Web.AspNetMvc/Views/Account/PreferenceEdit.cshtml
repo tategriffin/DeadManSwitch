@@ -4,7 +4,7 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="">
         @Html.ValidationSummary(true)
         <div class="form-group">
             @Html.LabelFor(model => model.TimeZoneId, new { @class = "control-label" })
