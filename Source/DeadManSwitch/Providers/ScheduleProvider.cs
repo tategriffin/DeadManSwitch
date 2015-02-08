@@ -31,10 +31,6 @@ namespace DeadManSwitch.Providers
             if (user.UserId == 0) throw new ArgumentException("userId is not valid.");
 
             List<ISchedule> schedules = this.ScheduleRepository.SearchByUserId(user.UserId);
-            if (schedules != null && schedules.Count > 0)
-            {
-                schedules = schedules.OrderBy(s => s.Name).ToList();
-            }
 
             return schedules;
         }

@@ -80,6 +80,7 @@ li {
 
 .gripper {
     cursor: move;
+    display: inline;
 }
 
 .accountsection {

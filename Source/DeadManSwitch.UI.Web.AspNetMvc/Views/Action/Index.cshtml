@@ -11,7 +11,10 @@
     <ul id="escalationsteps" class="grippable">
         @foreach (var step in Model.UserActions)
         {
-            <li id="step_@step.Id"><img src="@Html.ResolveUrl("~/images/blackgripper_sm.png")" class="gripper" /> @step.StepDescription @Html.ImageLink("~/images/edit.png", "Edit", "Action", new { id = step.Id }, "Edit escalation step") @Html.DeleteActionStepImageLink("~/images/delete.png", step.Id)</li>
+            <li id="step_@step.Id">
+                <div class="gripper"><img src="@Html.ResolveUrl("~/images/gripper.png")" class="hidden-xs hidden-sm"/><img src="@Html.ResolveUrl("~/images/gripper_sm.png")" class="hidden-md hidden-lg"/></div>
+                @step.StepDescription @Html.ImageLink("~/images/edit.png", "Edit", "Action", new {id = step.Id}, "Edit escalation step") @Html.DeleteActionStepImageLink("~/images/delete.png", step.Id)
+            </li>
         }
     </ul>
 </div>

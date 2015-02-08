@@ -15,7 +15,6 @@ namespace DeadManSwitch.Configuration
         public const string OutOfProcessServicesAdaptersAssembly = "OutOfProcessServicesAdaptersAssembly";
         public const string SMSGatewayAccountId = "SMSGatewayAccountId";
         public const string SMSGatewayAccountToken = "SMSGatewayAccountToken";
-        public const string TraceEFSql = "TraceEFSql";
         public const string UseUnitTestRepository = "UseUnitTestRepository";
     }
 }

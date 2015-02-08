@@ -220,9 +220,10 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="images\add.png" />
-    <Content Include="images\blackgripper_sm.png" />
     <Content Include="images\delete.png" />
     <Content Include="images\edit.png" />
+    <Content Include="images\gripper.png" />
+    <Content Include="images\gripper_sm.png" />
     <Content Include="Logs\README.txt" />
     <Content Include="Scripts\action.js" />
     <Content Include="Scripts\bootbox.js" />
@@ -259,6 +260,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\ArvixeProd.pubxml" />
     <None Include="Properties\PublishProfiles\ArvixeTest.pubxml" />
     <None Include="Properties\PublishProfiles\DevSingleTier.pubxml" />
     <Content Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
@@ -314,6 +316,9 @@
     <Content Include="Views\Account\ProfileEdit.cshtml" />
     <Content Include="Views\Account\PreferenceEdit.cshtml" />
     <Content Include="Views\Task\Escalate.cshtml" />
+    <None Include="Web.ArvixeProd.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.ArvixeTest.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
