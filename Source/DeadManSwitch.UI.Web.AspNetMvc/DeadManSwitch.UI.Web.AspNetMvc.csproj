@@ -194,11 +194,15 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="CurrentAppState.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HttpExceptionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\MustReauthenticateAttribute.cs" />
+    <Compile Include="Security\ReauthenticateAttribute.cs" />
+    <Compile Include="Security\Reauthenticator.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

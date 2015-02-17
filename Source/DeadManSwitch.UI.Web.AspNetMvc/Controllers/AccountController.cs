@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DeadManSwitch.Configuration;
 using DeadManSwitch.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -17,10 +18,15 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+#if DEBUG
+        private const int ReauthenticationMinutes = 2;
+#else
+        private const int ReauthenticationMinutes = 30;
+#endif
+
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
         private readonly IAccountService AccountSvc;
-
         private readonly UserProfileModelBuilder ModelBuilder;
 
         public AccountController(IAccountService accountService)
@@ -77,6 +83,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             if (user != null)
             {
                 SetAuthCookie(user);
+                Reauthenticator.SlideReauthenticatedExpiration(HttpContext, ReauthenticationMinutes);
             }
 
             return user;
@@ -100,7 +107,6 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
             return new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
         }
-
 
         //
         // GET: /Account/Register
@@ -159,6 +165,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Account/EditProfile
+        [MustReauthenticate(ReauthenticationMinutes)]
         public ActionResult EditProfile()
         {
             var model = ModelBuilder.BuildUserProfileEditModel(User.Identity.Name);
@@ -170,6 +177,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         // POST: /Account/EditProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [MustReauthenticate(ReauthenticationMinutes)]
         public ActionResult EditProfile(UserProfileEditModel model)
         {
             if (ModelState.IsValid)
@@ -185,6 +193,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Account/EditProfile
+        [MustReauthenticate(ReauthenticationMinutes)]
         public ActionResult EditPreferences()
         {
             var model = ModelBuilder.BuildUserPreferenceEditModel(User.Identity.Name);
@@ -196,6 +205,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         // POST: /Account/EditProfile
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [MustReauthenticate(ReauthenticationMinutes)]
         public ActionResult EditPreferences(UserPreferenceEditModel model)
         {
             if (ModelState.IsValid)
@@ -228,8 +238,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
                 bool passwordChanged = AccountSvc.ChangePassword(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
                 if (passwordChanged)
                 {
-                    var resultModel = new ChangePasswordResultModel("Your password has been changed.");
-                    return ChangePasswordResult(resultModel);
+                    Reauthenticator.SlideReauthenticatedExpiration(HttpContext, ReauthenticationMinutes);
+
+                    return ChangePasswordResult(new ChangePasswordResultModel("Your password has been changed."));
                 }
                 else
                 {
