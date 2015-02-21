@@ -12,9 +12,14 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
     {
         private const string LastLoginCookieKey = "LastAddress";
 
-        public static void SlideReauthenticatedExpiration(HttpContextBase httpContext, int expirationInMinutes)
+        /// <remarks>
+        /// When initially logging in, httpContext.User.Identity.GetUserName()
+        /// returns an empty string, so pass in the userName, rather than
+        /// relying on it being populated in httpContext.
+        /// </remarks>>
+        public static void SlideReauthenticatedExpiration(HttpContextBase httpContext, string userName, int expirationInMinutes)
         {
-            var cookie = Reauthenticator.BuildReauthenticationCookie(httpContext.User.Identity.GetUserName(), DateTime.UtcNow.AddMinutes(expirationInMinutes));
+            var cookie = Reauthenticator.BuildReauthenticationCookie(userName, DateTime.UtcNow.AddMinutes(expirationInMinutes));
             if (cookie != null)
             {
                 httpContext.Response.SetCookie(cookie);

@@ -56,7 +56,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = LoginAndSetAuthCookie(model.UserName, model.Password);
+                    var user = LoginAndSetAuthCookie(model.UserName, model.Password, model.RememberMe);
                     if (user != null)
                     {
                         return RedirectToLocal(returnUrl);
@@ -77,21 +77,21 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             }
         }
 
-        private User LoginAndSetAuthCookie(string userName, string password)
+        private User LoginAndSetAuthCookie(string userName, string password, bool rememberMe = false)
         {
             var user = AccountSvc.Login(userName, password);
             if (user != null)
             {
-                SetAuthCookie(user);
-                Reauthenticator.SlideReauthenticatedExpiration(HttpContext, ReauthenticationMinutes);
+                SetAuthCookie(user, rememberMe);
+                Reauthenticator.SlideReauthenticatedExpiration(HttpContext, userName, ReauthenticationMinutes);
             }
 
             return user;
         }
 
-        private void SetAuthCookie(User user)
+        private void SetAuthCookie(User user, bool rememberMe)
         {
-            var properties = new AuthenticationProperties() {IsPersistent = true};
+            var properties = new AuthenticationProperties() { IsPersistent = rememberMe };
             var id = BuildClaimsIdentity(user);
 
             Request.GetOwinContext().Authentication.SignIn(properties, id);
@@ -238,7 +238,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
                 bool passwordChanged = AccountSvc.ChangePassword(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
                 if (passwordChanged)
                 {
-                    Reauthenticator.SlideReauthenticatedExpiration(HttpContext, ReauthenticationMinutes);
+                    Reauthenticator.SlideReauthenticatedExpiration(HttpContext, User.Identity.GetUserName(), ReauthenticationMinutes);
 
                     return ChangePasswordResult(new ChangePasswordResultModel("Your password has been changed."));
                 }

@@ -29,7 +29,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
                 var hasReauthenticated = Reauthenticator.HasUserReauthenticatedRecently(httpContext.User.Identity.GetUserName(), httpContext.Request.Cookies);
                 if (hasReauthenticated)
                 {
-                    Reauthenticator.SlideReauthenticatedExpiration(httpContext, ReauthenticationExpiresInMinutes);
+                    Reauthenticator.SlideReauthenticatedExpiration(httpContext, httpContext.User.Identity.GetUserName(), ReauthenticationExpiresInMinutes);
                 }
 
                 isAuthorized = hasReauthenticated;

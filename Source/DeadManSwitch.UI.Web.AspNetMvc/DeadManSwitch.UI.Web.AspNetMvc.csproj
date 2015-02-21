@@ -201,7 +201,6 @@
     <Compile Include="HttpExceptionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\MustReauthenticateAttribute.cs" />
-    <Compile Include="Security\ReauthenticateAttribute.cs" />
     <Compile Include="Security\Reauthenticator.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
