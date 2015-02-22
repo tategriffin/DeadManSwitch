@@ -54,5 +54,19 @@ namespace DeadManSwitch.Providers
             return this.ReferenceDataRepository.EarlyCheckInOptions();
         }
 
+        public Dictionary<int, string> HourOptions()
+        {
+            return this.ReferenceDataRepository.CheckInHourOptions();
+        }
+
+        public Dictionary<int, string> MinuteOptions()
+        {
+            return this.ReferenceDataRepository.CheckInMinuteOptions();
+        }
+
+        public Dictionary<string, string> AmPmOptions()
+        {
+            return this.ReferenceDataRepository.CheckInAmPmOptions();
+        }
     }
 }

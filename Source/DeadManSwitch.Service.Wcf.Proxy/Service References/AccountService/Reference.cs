@@ -44,6 +44,9 @@ namespace DeadManSwitch.Service.Wcf.Proxy.AccountService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/GetSystemTimeZones", ReplyAction="http://tempuri.org/IAccountService/GetSystemTimeZonesResponse")]
         DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<string, string>> GetSystemTimeZones();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccountService/GetCheckInWindowOptions", ReplyAction="http://tempuri.org/IAccountService/GetCheckInWindowOptionsResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<string, string>> GetCheckInWindowOptions();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -111,6 +114,10 @@ namespace DeadManSwitch.Service.Wcf.Proxy.AccountService {
         
         public DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<string, string>> GetSystemTimeZones() {
             return base.Channel.GetSystemTimeZones();
+        }
+        
+        public DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<string, string>> GetCheckInWindowOptions() {
+            return base.Channel.GetCheckInWindowOptions();
         }
     }
 }

@@ -12,8 +12,9 @@ namespace DeadManSwitch.Service
 {
     public class DailyScheduleService : IDailyScheduleService
     {
-        private UserProvider UserProvider;
-        private DailyScheduleProvider DailyScheduleProvider;
+        private readonly UserProvider UserProvider;
+        private readonly DailyScheduleProvider DailyScheduleProvider;
+        private readonly ReferenceDataProvider RefDataProvider;
 
         public DailyScheduleService(IUnityContainer container)
         {
@@ -21,6 +22,7 @@ namespace DeadManSwitch.Service
 
             this.UserProvider = new UserProvider(container);
             this.DailyScheduleProvider = new DailyScheduleProvider(container);
+            this.RefDataProvider = new ReferenceDataProvider(container);
         }
 
         public DailySchedule FindByScheduleId(string userName, int scheduleId)
@@ -49,5 +51,19 @@ namespace DeadManSwitch.Service
             this.DailyScheduleProvider.DeleteSchedule(existingUser, scheduleId);
         }
 
+        public Dictionary<int, string> CheckInHourOptions()
+        {
+            return RefDataProvider.HourOptions();
+        }
+
+        public Dictionary<int, string> CheckInMinuteOptions()
+        {
+            return RefDataProvider.MinuteOptions();
+        }
+
+        public Dictionary<string, string> CheckInAmPmOptions()
+        {
+            return RefDataProvider.AmPmOptions();
+        }
     }
 }

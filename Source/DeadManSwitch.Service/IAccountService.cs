@@ -28,5 +28,8 @@ namespace DeadManSwitch.Service
         bool ChangePassword(string userName, string oldPassword, string newPassword);
 
         Dictionary<string, string> GetSupportedTimeZones();
+
+        Dictionary<string, string> GetCheckInWindowOptions();
+
     }
 }

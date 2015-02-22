@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" />
+      <xsd:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IScheduleService_SearchAllSchedulesByUser_InputMessage">
@@ -31,6 +32,24 @@
   <wsdl:message name="IScheduleService_SaveDailySchedule_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveDailyScheduleResponse" />
   </wsdl:message>
+  <wsdl:message name="IScheduleService_CheckInHourOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInHourOptions" />
+  </wsdl:message>
+  <wsdl:message name="IScheduleService_CheckInHourOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInHourOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IScheduleService_CheckInMinuteOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInMinuteOptions" />
+  </wsdl:message>
+  <wsdl:message name="IScheduleService_CheckInMinuteOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInMinuteOptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IScheduleService_CheckInAmPmOptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInAmPmOptions" />
+  </wsdl:message>
+  <wsdl:message name="IScheduleService_CheckInAmPmOptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInAmPmOptionsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IScheduleService">
     <wsdl:operation name="SearchAllSchedulesByUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IScheduleService/SearchAllSchedulesByUser" message="tns:IScheduleService_SearchAllSchedulesByUser_InputMessage" />
@@ -47,6 +66,18 @@
     <wsdl:operation name="SaveDailySchedule">
       <wsdl:input wsaw:Action="http://tempuri.org/IScheduleService/SaveDailySchedule" message="tns:IScheduleService_SaveDailySchedule_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IScheduleService/SaveDailyScheduleResponse" message="tns:IScheduleService_SaveDailySchedule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckInHourOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IScheduleService/CheckInHourOptions" message="tns:IScheduleService_CheckInHourOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IScheduleService/CheckInHourOptionsResponse" message="tns:IScheduleService_CheckInHourOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckInMinuteOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IScheduleService/CheckInMinuteOptions" message="tns:IScheduleService_CheckInMinuteOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IScheduleService/CheckInMinuteOptionsResponse" message="tns:IScheduleService_CheckInMinuteOptions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckInAmPmOptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IScheduleService/CheckInAmPmOptions" message="tns:IScheduleService_CheckInAmPmOptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IScheduleService/CheckInAmPmOptionsResponse" message="tns:IScheduleService_CheckInAmPmOptions_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IScheduleService" type="tns:IScheduleService">
@@ -80,6 +111,33 @@
     </wsdl:operation>
     <wsdl:operation name="SaveDailySchedule">
       <soap:operation soapAction="http://tempuri.org/IScheduleService/SaveDailySchedule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckInHourOptions">
+      <soap:operation soapAction="http://tempuri.org/IScheduleService/CheckInHourOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckInMinuteOptions">
+      <soap:operation soapAction="http://tempuri.org/IScheduleService/CheckInMinuteOptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckInAmPmOptions">
+      <soap:operation soapAction="http://tempuri.org/IScheduleService/CheckInAmPmOptions" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

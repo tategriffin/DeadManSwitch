@@ -21,11 +21,12 @@
     <MetadataSource Address="http://localhost:1659/ScheduleService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ScheduleService.wsdl" MetadataType="Wsdl" ID="037362e8-ef6c-4c2a-bc81-b4744908d663" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?wsdl" />
+    <MetadataFile FileName="ScheduleService1.xsd" MetadataType="Schema" ID="4226d52c-4085-4c34-b4c5-ab98bb42e0a0" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?xsd=xsd0" />
     <MetadataFile FileName="ScheduleService.xsd" MetadataType="Schema" ID="227f3d5f-649c-4faf-9e20-37a59b2842b3" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?xsd=xsd1" />
     <MetadataFile FileName="ScheduleService.disco" MetadataType="Disco" ID="5c4fa74a-a757-4e24-bac8-b5af940ea31a" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?disco" />
-    <MetadataFile FileName="ScheduleService1.xsd" MetadataType="Schema" ID="4226d52c-4085-4c34-b4c5-ab98bb42e0a0" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ScheduleService.wsdl" MetadataType="Wsdl" ID="037362e8-ef6c-4c2a-bc81-b4744908d663" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?wsdl" />
     <MetadataFile FileName="ScheduleService2.xsd" MetadataType="Schema" ID="2d2cd776-c9df-42db-9d63-159bc36482f7" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ScheduleService3.xsd" MetadataType="Schema" ID="c7a8e7d7-421a-4689-9b60-3a9b07bc3b86" SourceId="1" SourceUrl="http://localhost:1659/ScheduleService.svc?xsd=xsd3" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

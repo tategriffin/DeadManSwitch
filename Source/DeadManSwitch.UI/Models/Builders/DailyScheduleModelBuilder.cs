@@ -8,10 +8,12 @@ namespace DeadManSwitch.UI.Models.Builders
     public class DailyScheduleModelBuilder
     {
         private readonly IAccountService AccountSvc;
+        private readonly IScheduleService ScheduleSvc;
 
-        public DailyScheduleModelBuilder(IAccountService accountService)
+        public DailyScheduleModelBuilder(IAccountService accountService, IScheduleService scheduleService)
         {
             AccountSvc = accountService;
+            ScheduleSvc = scheduleService;
         }
 
         public DailyScheduleEditModel BuildModelForCreate(string userName)
@@ -64,36 +66,19 @@ namespace DeadManSwitch.UI.Models.Builders
 
         private Dictionary<string, string> BuildCheckInHourOptions()
         {
-            Dictionary<string, string> options = new Dictionary<string, string>();
-
-            for (int i = 1; i < 13; i++)
-            {
-                options.Add(i.ToString(), i.ToString("00"));
-            }
-
-            return options;
+            return ScheduleSvc.DailyScheduleService.CheckInHourOptions()
+                .ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 
         private Dictionary<string, string> BuildCheckInMinuteOptions()
         {
-            Dictionary<string, string> options = new Dictionary<string, string>();
-
-            options.Add("0", "00");
-            options.Add("15", "15");
-            options.Add("30", "30");
-            options.Add("45", "45");
-
-            return options;
+            return ScheduleSvc.DailyScheduleService.CheckInMinuteOptions()
+                .ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 
         private Dictionary<string, string> BuildCheckInAmPmOptions()
         {
-            Dictionary<string, string> options = new Dictionary<string, string>();
-
-            options.Add("AM", "AM");
-            options.Add("PM", "PM");
-
-            return options;
+            return ScheduleSvc.DailyScheduleService.CheckInAmPmOptions();
         }
 
     }

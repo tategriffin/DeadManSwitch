@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:1659/ScheduleService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="ReturnObjectOfTypeArrayOfSchedule">
     <xs:annotation>
       <xs:appinfo>
@@ -81,4 +82,40 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ReturnObjectOfTypeDailySchedule" nillable="true" type="tns:ReturnObjectOfTypeDailySchedule" />
+  <xs:complexType name="ReturnObjectOfTypeArrayOfKeyValueOfintstring">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ReturnObjectOfType{0}" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfKeyValueOf{0}{1}{#}" Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema" />
+            <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Result" nillable="true" type="q1:ArrayOfKeyValueOfintstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObjectOfTypeArrayOfKeyValueOfintstring" nillable="true" type="tns:ReturnObjectOfTypeArrayOfKeyValueOfintstring" />
+  <xs:complexType name="ReturnObjectOfTypeArrayOfKeyValueOfstringstring">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ReturnObjectOfType{0}" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfKeyValueOf{0}{1}{#}" Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+            <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+            <GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema" />
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Result" nillable="true" type="q2:ArrayOfKeyValueOfstringstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObjectOfTypeArrayOfKeyValueOfstringstring" nillable="true" type="tns:ReturnObjectOfTypeArrayOfKeyValueOfstringstring" />
 </xs:schema>

@@ -391,5 +391,43 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                 }
             }
         }
+
+        public Dictionary<string, string> GetCheckInWindowOptions()
+        {
+            var client = new AccountService.AccountServiceClient();
+            try
+            {
+                var result = client.GetCheckInWindowOptions();
+                if (!result.IsSuccessful) throw new Exception(result.Message);
+
+                return new Dictionary<string, string>(result.Result);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
     }
 }

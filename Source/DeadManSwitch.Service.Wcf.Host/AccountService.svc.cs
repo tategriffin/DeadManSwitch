@@ -204,5 +204,24 @@ namespace DeadManSwitch.Service.Wcf.Host
             return response;
         }
 
+        public OperationResponse<Dictionary<string, string>> GetCheckInWindowOptions()
+        {
+            OperationResponse<Dictionary<string, string>> response;
+            try
+            {
+                var svc = new Service.AccountService(CurrentAppState.IoCContainer);
+                var result = svc.GetCheckInWindowOptions();
+
+                var list = new Dictionary<string, string>(result);
+                response = new OperationResponse<Dictionary<string, string>>(list);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                response = new OperationResponse<Dictionary<string, string>>("An error occurred while attempting to retrieve all check in window options.");
+            }
+
+            return response;
+        }
     }
 }

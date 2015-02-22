@@ -15,7 +15,6 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
     {
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
-        private readonly IAccountService AccountSvc;
         private readonly ICheckInService CheckInSvc;
         private readonly IScheduleService ScheduleSvc;
 
@@ -23,10 +22,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         public ScheduleController(IAccountService accountService, IScheduleService scheduleService, ICheckInService checkInService)
         {
-            AccountSvc = accountService;
             CheckInSvc = checkInService;
             ScheduleSvc = scheduleService;
-            ModelBuilder = new DailyScheduleModelBuilder(accountService);
+            ModelBuilder = new DailyScheduleModelBuilder(accountService, scheduleService);
         }
 
         //

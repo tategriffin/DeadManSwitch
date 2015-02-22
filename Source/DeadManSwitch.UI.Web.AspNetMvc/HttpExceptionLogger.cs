@@ -9,35 +9,36 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
 {
     internal class HttpExceptionLogger
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public void Log(HttpException ex)
         {
+            string ip = HttpContext.Current.Request.UserHostAddress;
             int httpStatusCode = ex.GetHttpCode();
 
             if (httpStatusCode >= 400 && httpStatusCode < 500)
             {
-                this.Log4xxRange(httpStatusCode, ex);
+                this.Log4xxRange(ip, httpStatusCode, ex);
             }
             else if (httpStatusCode >= 500)
             {
-                logger.Fatal("HttpStatusCode: {0} Exception: {1}", httpStatusCode, ex.ToString());
+                logger.Fatal("IP Address: {0}; HttpStatusCode: {1} Exception: {2}", ip, httpStatusCode, ex);
             }
             else
             {
-                logger.Error("HttpStatusCode: {0} Exception: {1}", httpStatusCode, ex.ToString());
+                logger.Error("IP Address: {0}; HttpStatusCode: {1} Exception: {2}", ip, httpStatusCode, ex);
             }
         }
 
-        private void Log4xxRange(int httpStatusCode, HttpException ex)
+        private void Log4xxRange(string ip, int httpStatusCode, HttpException ex)
         {
             switch (httpStatusCode)
             {
                 case 404:
-                    logger.Warn("HttpStatusCode: {0} Message: {1}", httpStatusCode, ex.Message);
+                    logger.Warn("IP Address: {0}; HttpStatusCode: {1} Exception: {2}", ip, httpStatusCode, ex);
                     break;
                 default:
-                    logger.Error("HttpStatusCode: {0} Details: {1}", httpStatusCode, ex.ToString());
+                    logger.Error("IP Address: {0}; HttpStatusCode: {1} Exception: {2}", ip, httpStatusCode, ex);
                     break;
             }
         }

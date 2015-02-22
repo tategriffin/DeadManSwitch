@@ -88,6 +88,61 @@ namespace DeadManSwitch.Service.Wcf.Host
 
             return response;
         }
+
+        public OperationResponse<Dictionary<int, string>> CheckInHourOptions()
+        {
+            OperationResponse<Dictionary<int, string>> response;
+            try
+            {
+                var svc = new Service.DailyScheduleService(CurrentAppState.IoCContainer);
+
+                response = new OperationResponse<Dictionary<int, string>>(svc.CheckInHourOptions());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                response = new OperationResponse<Dictionary<int, string>>("An error occurred while attempting to retrieve the check in hour options.");
+            }
+
+            return response;
+        }
+
+        public OperationResponse<Dictionary<int, string>> CheckInMinuteOptions()
+        {
+            OperationResponse<Dictionary<int, string>> response;
+            try
+            {
+                var svc = new Service.DailyScheduleService(CurrentAppState.IoCContainer);
+
+                response = new OperationResponse<Dictionary<int, string>>(svc.CheckInMinuteOptions());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                response = new OperationResponse<Dictionary<int, string>>("An error occurred while attempting to retrieve the check in minute options.");
+            }
+
+            return response;
+        }
+
+        public OperationResponse<Dictionary<string, string>> CheckInAmPmOptions()
+        {
+            OperationResponse<Dictionary<string, string>> response;
+            try
+            {
+                var svc = new Service.DailyScheduleService(CurrentAppState.IoCContainer);
+
+                response = new OperationResponse<Dictionary<string, string>>(svc.CheckInAmPmOptions());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                response = new OperationResponse<Dictionary<string, string>>("An error occurred while attempting to retrieve the check in AMPM options.");
+            }
+
+            return response;
+        }
+
         #endregion
 
     }

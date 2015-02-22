@@ -135,6 +135,9 @@
     <None Include="Service References\ScheduleService\ScheduleService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ScheduleService\ScheduleService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DeadManSwitch.Service.Wcf\DeadManSwitch.Service.Wcf.csproj">

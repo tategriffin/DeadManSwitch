@@ -26,6 +26,15 @@ namespace DeadManSwitch.Service.Wcf.Proxy.ScheduleService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScheduleService/SaveDailySchedule", ReplyAction="http://tempuri.org/IScheduleService/SaveDailyScheduleResponse")]
         DeadManSwitch.Service.Wcf.OperationResponse<bool> SaveDailySchedule(string userName, DeadManSwitch.Service.Wcf.DailySchedule schedule);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScheduleService/CheckInHourOptions", ReplyAction="http://tempuri.org/IScheduleService/CheckInHourOptionsResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<int, string>> CheckInHourOptions();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScheduleService/CheckInMinuteOptions", ReplyAction="http://tempuri.org/IScheduleService/CheckInMinuteOptionsResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<int, string>> CheckInMinuteOptions();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScheduleService/CheckInAmPmOptions", ReplyAction="http://tempuri.org/IScheduleService/CheckInAmPmOptionsResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<string, string>> CheckInAmPmOptions();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +78,18 @@ namespace DeadManSwitch.Service.Wcf.Proxy.ScheduleService {
         
         public DeadManSwitch.Service.Wcf.OperationResponse<bool> SaveDailySchedule(string userName, DeadManSwitch.Service.Wcf.DailySchedule schedule) {
             return base.Channel.SaveDailySchedule(userName, schedule);
+        }
+        
+        public DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<int, string>> CheckInHourOptions() {
+            return base.Channel.CheckInHourOptions();
+        }
+        
+        public DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<int, string>> CheckInMinuteOptions() {
+            return base.Channel.CheckInMinuteOptions();
+        }
+        
+        public DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<string, string>> CheckInAmPmOptions() {
+            return base.Channel.CheckInAmPmOptions();
         }
     }
 }

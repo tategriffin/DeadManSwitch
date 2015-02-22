@@ -23,7 +23,7 @@ namespace DeadManSwitch.UI.Models.Builders
 
             UserPreferences preferences = AccountSvc.FindUserPreferences(userName);
             profileModel.TimeZone = preferences.TzInfo.DisplayName;
-            profileModel.EarlyCheckinDesc = preferences.EarlyCheckInOffset.TotalMinutes.ToString() + " minutes";
+            profileModel.EarlyCheckinDesc = preferences.EarlyCheckInOffset.TotalMinutes + " minutes";
 
             return profileModel;
         }
@@ -47,43 +47,10 @@ namespace DeadManSwitch.UI.Models.Builders
             return preferenceModel;
         }
 
-        #region Duplicate code
         private Dictionary<string, string> BuildEarlyCheckInOptions()
         {
-            Dictionary<string, string> options = new Dictionary<string, string>();
-
-            List<KeyValuePair<string, string>> optionPairs = BuildEarlyCheckInOptionPairs();
-            foreach (var item in optionPairs)
-            {
-                options.Add(item.Key, item.Value);
-            }
-
-            return options;
+            return AccountSvc.GetCheckInWindowOptions();
         }
-
-        private List<KeyValuePair<string, string>> BuildEarlyCheckInOptionPairs()
-        {
-            List<KeyValuePair<string, string>> optionKvps = new List<KeyValuePair<string, string>>();
-
-            optionKvps.Add(BuildMinuteOption(15));
-            optionKvps.Add(BuildMinuteOption(30));
-            optionKvps.Add(BuildMinuteOption(45));
-            optionKvps.Add(BuildMinuteOption(60));
-            optionKvps.Add(BuildMinuteOption(90));
-            optionKvps.Add(BuildMinuteOption(120));
-
-            return optionKvps;
-        }
-
-        private KeyValuePair<string, string> BuildMinuteOption(int totalMinutes)
-        {
-            //TODO: Update this to allow hours (30 minutes, 1 hour, 1.5 hours, etc.)
-
-            KeyValuePair<string, string> option = new KeyValuePair<string, string>(totalMinutes.ToString(), totalMinutes.ToString() + " minutes");
-
-            return option;
-        }
-        #endregion
 
     }
 }

@@ -39,5 +39,8 @@ namespace DeadManSwitch.Service.Wcf
 
         [OperationContract]
         OperationResponse<Dictionary<string, string>> GetSystemTimeZones();
+
+        [OperationContract]
+        OperationResponse<Dictionary<string, string>> GetCheckInWindowOptions(); 
     }
 }

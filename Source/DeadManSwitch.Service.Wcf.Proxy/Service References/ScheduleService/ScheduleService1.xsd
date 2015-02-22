@@ -61,4 +61,40 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CheckInHourOptions">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckInHourOptionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="CheckInHourOptionsResult" nillable="true" type="q6:ReturnObjectOfTypeArrayOfKeyValueOfintstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckInMinuteOptions">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckInMinuteOptionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="CheckInMinuteOptionsResult" nillable="true" type="q7:ReturnObjectOfTypeArrayOfKeyValueOfintstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckInAmPmOptions">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckInAmPmOptionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" minOccurs="0" name="CheckInAmPmOptionsResult" nillable="true" type="q8:ReturnObjectOfTypeArrayOfKeyValueOfstringstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

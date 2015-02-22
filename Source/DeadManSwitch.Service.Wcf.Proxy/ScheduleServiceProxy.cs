@@ -172,5 +172,122 @@ namespace DeadManSwitch.Service.Wcf.Proxy
         {
             this.DeleteSchedule(userName, DeadManSwitch.Service.DailySchedule.IntervalId, scheduleId);
         }
+
+        Dictionary<int, string> IDailyScheduleService.CheckInHourOptions()
+        {
+            var client = new ScheduleService.ScheduleServiceClient();
+            try
+            {
+                var response = client.CheckInHourOptions();
+                if (!response.IsSuccessful) throw new Exception(response.Message);
+
+                Log.Debug("Service result: {0}", response.Result);
+                return response.Result;
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
+
+        Dictionary<int, string> IDailyScheduleService.CheckInMinuteOptions()
+        {
+            var client = new ScheduleService.ScheduleServiceClient();
+            try
+            {
+                var response = client.CheckInMinuteOptions();
+                if (!response.IsSuccessful) throw new Exception(response.Message);
+
+                Log.Debug("Service result: {0}", response.Result);
+                return response.Result;
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
+
+        Dictionary<string, string> IDailyScheduleService.CheckInAmPmOptions()
+        {
+            var client = new ScheduleService.ScheduleServiceClient();
+            try
+            {
+                var response = client.CheckInAmPmOptions();
+                if (!response.IsSuccessful) throw new Exception(response.Message);
+
+                Log.Debug("Service result: {0}", response.Result);
+                return response.Result;
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
     }
 }

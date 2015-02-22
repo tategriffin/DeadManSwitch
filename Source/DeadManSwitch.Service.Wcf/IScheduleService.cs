@@ -16,11 +16,20 @@ namespace DeadManSwitch.Service.Wcf
         [OperationContract]
         OperationResponse<bool> DeleteSchedule(string userName, int scheduleTypeId, int scheduleId);
 
-        #region DailyRecurrenceInterval
+        #region DailyScheduleOperations
+
         [OperationContract]
         OperationResponse<DailySchedule> FindDailySchedule(string userName, int scheduleId);
         [OperationContract]
         OperationResponse<bool> SaveDailySchedule(string userName, DailySchedule schedule);
+
+        [OperationContract]
+        OperationResponse<Dictionary<int, string>> CheckInHourOptions();
+        [OperationContract]
+        OperationResponse<Dictionary<int, string>> CheckInMinuteOptions();
+        [OperationContract]
+        OperationResponse<Dictionary<string, string>> CheckInAmPmOptions();
+
         #endregion
 
     }

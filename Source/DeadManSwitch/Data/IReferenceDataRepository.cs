@@ -28,5 +28,11 @@ namespace DeadManSwitch.Data
 
         Dictionary<int, string> EscalationDelayMinuteOptions();
 
+        Dictionary<int, string> CheckInHourOptions();
+
+        Dictionary<int, string> CheckInMinuteOptions();
+
+        Dictionary<string, string> CheckInAmPmOptions();
+
     }
 }

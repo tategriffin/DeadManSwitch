@@ -13,5 +13,12 @@ namespace DeadManSwitch.Service
         void Save(string userName, DailySchedule schedule);
 
         void Delete(string userName, int scheduleId);
+
+        Dictionary<int, string> CheckInHourOptions();
+
+        Dictionary<int, string> CheckInMinuteOptions();
+
+        Dictionary<string, string> CheckInAmPmOptions();
+
     }
 }

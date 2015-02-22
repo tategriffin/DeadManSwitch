@@ -16,14 +16,16 @@ namespace DeadManSwitch.Service
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        private ApplicationSettingsProvider AppSettingsPvdr;
+        private ReferenceDataProvider ReferenceDataPvdr;
         private UserProvider UserPvdr;
         private UserPreferenceProvider UserPrefPvdr;
-        private ApplicationSettingsProvider AppSettingsPvdr;
 
         public AccountService(IUnityContainer container)
         {
             if (container == null) throw new ArgumentNullException("container");
 
+            this.ReferenceDataPvdr = new ReferenceDataProvider(container);
             this.UserPvdr = new UserProvider(container);
             this.UserPrefPvdr = new UserPreferenceProvider(container);
             this.AppSettingsPvdr = new ApplicationSettingsProvider(container);
@@ -134,6 +136,12 @@ namespace DeadManSwitch.Service
             }
 
             return timeZones;
+        }
+
+        public Dictionary<string, string> GetCheckInWindowOptions()
+        {
+            return ReferenceDataPvdr.EarlyCheckInOptions()
+                .ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
     }
 }
