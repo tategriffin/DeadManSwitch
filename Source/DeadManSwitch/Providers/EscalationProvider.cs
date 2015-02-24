@@ -42,19 +42,24 @@ namespace DeadManSwitch.Providers
         {
             if (userId == 0) throw new ArgumentException("userId is not valid.");
 
-            //Clean start
-            this.EscalationRepository.RemoveByUser(userId);
-
             EscalationProcedures userEscalationProcedures = this.UserEscalationProcedureProvider.FindByUserId(userId);
-            if (userEscalationProcedures != null)
+            if (userEscalationProcedures == null || !userEscalationProcedures.EscalationList.Any())
             {
+                logger.Warn("No escalation procedures found for userId: " + userId);
+            }
+            else
+            {
+                //Clean start
+                this.EscalationRepository.RemoveByUser(userId);
+
                 DateTime startTime = DateTime.UtcNow.AddMinutes(-1).ToMinutePrecision();
                 if (delayStartTime.HasValue && delayStartTime.Value.TotalMilliseconds > 0)
                 {
                     startTime = startTime.Add(delayStartTime.Value).ToMinutePrecision();
                 }
 
-                IEnumerable<EscalationWorkItem> escalationWorkItems = userEscalationProcedures.ToEscalationWorkItems(startTime);
+                IEnumerable<EscalationWorkItem> escalationWorkItems =
+                    userEscalationProcedures.ToEscalationWorkItems(startTime);
                 this.EscalationRepository.Add(escalationWorkItems);
                 logger.Info("Started escalation procedures for userId: " + userId);
             }

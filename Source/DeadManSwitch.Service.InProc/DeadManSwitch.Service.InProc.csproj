@@ -73,6 +73,7 @@
     <Compile Include="EntityMappers\ScheduleMapper.cs" />
     <Compile Include="EntityMappers\UserMapper.cs" />
     <Compile Include="EntityMappers\UserPreferenceMapper.cs" />
+    <Compile Include="EscalationDaemon.cs" />
     <Compile Include="EscalationService.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,6 +23,7 @@ namespace DeadManSwitch.Service
             {
                 RepositoryConfig.Configure(container, config);
                 ExternalServicesConfig.Configure(container,config);
+                EscalationDaemon.Start(container, config);
 
                 IsConfigured = true;
             }

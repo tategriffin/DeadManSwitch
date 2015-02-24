@@ -12,7 +12,9 @@ namespace DeadManSwitch.Service
 {
     public class EscalationService : IEscalationService
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger(); 
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly object Padlock = new object();
+        private static bool IsRunning = false;
         
         private IUnityContainer Container;
 
@@ -25,10 +27,23 @@ namespace DeadManSwitch.Service
 
         public bool Run()
         {
-            bool promoteMissedCheckInsResult = ProcessMissedCheckIns();
-            bool processMissedCheckInsResult = ProcessEscalations();
+            if(IsRunning) return true;
 
-            return (promoteMissedCheckInsResult && processMissedCheckInsResult);
+            lock (Padlock)
+            {
+                IsRunning = true;
+                try
+                {
+                    bool promoteMissedCheckInsResult = ProcessMissedCheckIns();
+                    bool processMissedCheckInsResult = ProcessEscalations();
+
+                    return (promoteMissedCheckInsResult && processMissedCheckInsResult);
+                }
+                finally
+                {
+                    IsRunning = false;
+                }
+            }
         }
 
         private bool ProcessMissedCheckIns()

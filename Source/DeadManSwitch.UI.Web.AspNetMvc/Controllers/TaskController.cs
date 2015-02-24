@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DeadManSwitch.Configuration;
 using DeadManSwitch.Service;
+using Microsoft.Practices.Unity;
 
 namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 {
@@ -12,10 +14,10 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
     {
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
-        private readonly IEscalationService EscalationSvc;
-        public TaskController(IEscalationService escalationService)
+        private readonly IUnityContainer Container;
+        public TaskController(IUnityContainer container)
         {
-            EscalationSvc = escalationService;
+            Container = container;
         }
 
         // GET: Task
@@ -66,11 +68,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             System.Net.HttpStatusCode statusCode = System.Net.HttpStatusCode.InternalServerError;
             try
             {
-                bool successful = this.EscalationSvc.Run();
-                if (successful)
-                {
-                    statusCode = System.Net.HttpStatusCode.OK;
-                }
+                EscalationDaemon.Start(Container, Container.Resolve<IHostSettingsReader>());
+
+                statusCode = System.Net.HttpStatusCode.OK;
             }
             catch (Exception ex)
             {

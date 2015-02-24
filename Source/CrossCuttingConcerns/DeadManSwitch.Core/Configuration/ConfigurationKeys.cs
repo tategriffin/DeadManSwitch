@@ -10,6 +10,7 @@ namespace DeadManSwitch.Configuration
     {
         public const string ApplicationName = "ApplicationName";
         public const string AllowOutgoingMessages = "AllowOutgoingMessages";
+        public const string EscalateInterval = "EscalateInterval";
         public const string ExternalServiceFileOutputRedirect = "ExternalServiceFileOutputRedirect";
         public const string InProcessServicesEnabled = "InProcessServicesEnabled";
         public const string OutOfProcessServicesAdaptersAssembly = "OutOfProcessServicesAdaptersAssembly";

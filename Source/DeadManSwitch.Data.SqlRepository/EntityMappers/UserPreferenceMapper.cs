@@ -10,6 +10,8 @@ namespace DeadManSwitch.Data.SqlRepository.EntityMappers
     {
         internal static DeadManSwitch.UserPreferences ToDomain(this SqlRepository.UserPreference preferenceData)
         {
+            if (preferenceData == null) return DeadManSwitch.UserPreferences.GetDefaultPreferences();
+
             DeadManSwitch.UserPreferences domainPreferences = new UserPreferences();
 
             domainPreferences.UserId = preferenceData.UserId;
