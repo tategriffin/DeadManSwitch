@@ -10,8 +10,12 @@ namespace DeadManSwitch.Data
 {
     public interface IUserEscalationProcedureRepository
     {
-        void Upsert(EscalationProcedures userEscalationProcedures, DateTime? nextCheckInDateTime);
+        UserEscalationTask FindTaskById(int userId, int taskId);
+        EscalationProcedures FindProceduresByUserId(int userId);
 
-        EscalationProcedures FindByUserId(int userId);
+        void UpsertTask(UserEscalationTask userEscalationTask, DateTime? nextCheckInDateTime);
+        void UpsertProcedures(EscalationProcedures userEscalationProcedures, DateTime? nextCheckInDateTime);
+
+        void DeleteTask(UserEscalationTask userEscalationTask, DateTime? nextCheckInDateTime);
     }
 }

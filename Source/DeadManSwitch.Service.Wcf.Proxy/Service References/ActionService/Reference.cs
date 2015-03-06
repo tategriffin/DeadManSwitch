@@ -21,11 +21,23 @@ namespace DeadManSwitch.Service.Wcf.Proxy.ActionService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/GetAllEscalationWaitMinutes", ReplyAction="http://tempuri.org/IActionService/GetAllEscalationWaitMinutesResponse")]
         DeadManSwitch.Service.Wcf.OperationResponse<System.Collections.Generic.Dictionary<int, string>> GetAllEscalationWaitMinutes();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/FindUserEscalationStep", ReplyAction="http://tempuri.org/IActionService/FindUserEscalationStepResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<DeadManSwitch.Service.Wcf.EscalationStep> FindUserEscalationStep(string userName, int stepId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/FindUserEscalationSteps", ReplyAction="http://tempuri.org/IActionService/FindUserEscalationStepsResponse")]
         DeadManSwitch.Service.Wcf.OperationResponse<DeadManSwitch.Service.Wcf.EscalationStep[]> FindUserEscalationSteps(string userName);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/SaveUserEscalationStep", ReplyAction="http://tempuri.org/IActionService/SaveUserEscalationStepResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<bool> SaveUserEscalationStep(string userName, DeadManSwitch.Service.Wcf.EscalationStep step);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/SaveUserEscalationSteps", ReplyAction="http://tempuri.org/IActionService/SaveUserEscalationStepsResponse")]
         DeadManSwitch.Service.Wcf.OperationResponse<bool> SaveUserEscalationSteps(string userName, DeadManSwitch.Service.Wcf.EscalationStep[] allSteps);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/DeleteUserEscalationStep", ReplyAction="http://tempuri.org/IActionService/DeleteUserEscalationStepResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<bool> DeleteUserEscalationStep(string userName, int stepId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionService/ReorderUserEscalationSteps", ReplyAction="http://tempuri.org/IActionService/ReorderUserEscalationStepsResponse")]
+        DeadManSwitch.Service.Wcf.OperationResponse<DeadManSwitch.Service.Wcf.EscalationStep[]> ReorderUserEscalationSteps(string userName, int[] orderedStepIds);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,12 +75,28 @@ namespace DeadManSwitch.Service.Wcf.Proxy.ActionService {
             return base.Channel.GetAllEscalationWaitMinutes();
         }
         
+        public DeadManSwitch.Service.Wcf.OperationResponse<DeadManSwitch.Service.Wcf.EscalationStep> FindUserEscalationStep(string userName, int stepId) {
+            return base.Channel.FindUserEscalationStep(userName, stepId);
+        }
+        
         public DeadManSwitch.Service.Wcf.OperationResponse<DeadManSwitch.Service.Wcf.EscalationStep[]> FindUserEscalationSteps(string userName) {
             return base.Channel.FindUserEscalationSteps(userName);
         }
         
+        public DeadManSwitch.Service.Wcf.OperationResponse<bool> SaveUserEscalationStep(string userName, DeadManSwitch.Service.Wcf.EscalationStep step) {
+            return base.Channel.SaveUserEscalationStep(userName, step);
+        }
+        
         public DeadManSwitch.Service.Wcf.OperationResponse<bool> SaveUserEscalationSteps(string userName, DeadManSwitch.Service.Wcf.EscalationStep[] allSteps) {
             return base.Channel.SaveUserEscalationSteps(userName, allSteps);
+        }
+        
+        public DeadManSwitch.Service.Wcf.OperationResponse<bool> DeleteUserEscalationStep(string userName, int stepId) {
+            return base.Channel.DeleteUserEscalationStep(userName, stepId);
+        }
+        
+        public DeadManSwitch.Service.Wcf.OperationResponse<DeadManSwitch.Service.Wcf.EscalationStep[]> ReorderUserEscalationSteps(string userName, int[] orderedStepIds) {
+            return base.Channel.ReorderUserEscalationSteps(userName, orderedStepIds);
         }
     }
 }

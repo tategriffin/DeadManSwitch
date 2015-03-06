@@ -29,7 +29,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
             if (userActions == null) throw new ArgumentNullException("userActions");
 
             List<EscalationStep> allSteps = userActions.ToServiceEntityList();
-            this.ActionSvc.SaveUserEscalationSteps(this.CurrentUser.UserName, allSteps);
+            this.ActionSvc.SaveEscalationSteps(this.CurrentUser.UserName, allSteps);
         }
 
         private void PopulateModel()
@@ -50,7 +50,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
 
             if (this.CurrentUser.IsAuthenticated)
             {
-                var allSteps = this.ActionSvc.FindUserEscalationSteps(this.CurrentUser.UserName);
+                var allSteps = this.ActionSvc.FindAllEscalationStepsByUserName(this.CurrentUser.UserName);
                 actions.AddRange(allSteps.ToUiEditModelList());
 
                 actions.AddRange(this.BuildEmptyUserActions(actions.Count));

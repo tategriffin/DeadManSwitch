@@ -20,17 +20,41 @@
   <wsdl:message name="IActionService_GetAllEscalationWaitMinutes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllEscalationWaitMinutesResponse" />
   </wsdl:message>
+  <wsdl:message name="IActionService_FindUserEscalationStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindUserEscalationStep" />
+  </wsdl:message>
+  <wsdl:message name="IActionService_FindUserEscalationStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindUserEscalationStepResponse" />
+  </wsdl:message>
   <wsdl:message name="IActionService_FindUserEscalationSteps_InputMessage">
     <wsdl:part name="parameters" element="tns:FindUserEscalationSteps" />
   </wsdl:message>
   <wsdl:message name="IActionService_FindUserEscalationSteps_OutputMessage">
     <wsdl:part name="parameters" element="tns:FindUserEscalationStepsResponse" />
   </wsdl:message>
+  <wsdl:message name="IActionService_SaveUserEscalationStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveUserEscalationStep" />
+  </wsdl:message>
+  <wsdl:message name="IActionService_SaveUserEscalationStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveUserEscalationStepResponse" />
+  </wsdl:message>
   <wsdl:message name="IActionService_SaveUserEscalationSteps_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveUserEscalationSteps" />
   </wsdl:message>
   <wsdl:message name="IActionService_SaveUserEscalationSteps_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveUserEscalationStepsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActionService_DeleteUserEscalationStep_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserEscalationStep" />
+  </wsdl:message>
+  <wsdl:message name="IActionService_DeleteUserEscalationStep_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserEscalationStepResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActionService_ReorderUserEscalationSteps_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReorderUserEscalationSteps" />
+  </wsdl:message>
+  <wsdl:message name="IActionService_ReorderUserEscalationSteps_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReorderUserEscalationStepsResponse" />
   </wsdl:message>
   <wsdl:portType name="IActionService">
     <wsdl:operation name="GetAllEscalationActionTypes">
@@ -41,13 +65,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IActionService/GetAllEscalationWaitMinutes" message="tns:IActionService_GetAllEscalationWaitMinutes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IActionService/GetAllEscalationWaitMinutesResponse" message="tns:IActionService_GetAllEscalationWaitMinutes_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="FindUserEscalationStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActionService/FindUserEscalationStep" message="tns:IActionService_FindUserEscalationStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActionService/FindUserEscalationStepResponse" message="tns:IActionService_FindUserEscalationStep_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="FindUserEscalationSteps">
       <wsdl:input wsaw:Action="http://tempuri.org/IActionService/FindUserEscalationSteps" message="tns:IActionService_FindUserEscalationSteps_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IActionService/FindUserEscalationStepsResponse" message="tns:IActionService_FindUserEscalationSteps_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SaveUserEscalationStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActionService/SaveUserEscalationStep" message="tns:IActionService_SaveUserEscalationStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActionService/SaveUserEscalationStepResponse" message="tns:IActionService_SaveUserEscalationStep_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="SaveUserEscalationSteps">
       <wsdl:input wsaw:Action="http://tempuri.org/IActionService/SaveUserEscalationSteps" message="tns:IActionService_SaveUserEscalationSteps_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IActionService/SaveUserEscalationStepsResponse" message="tns:IActionService_SaveUserEscalationSteps_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserEscalationStep">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActionService/DeleteUserEscalationStep" message="tns:IActionService_DeleteUserEscalationStep_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActionService/DeleteUserEscalationStepResponse" message="tns:IActionService_DeleteUserEscalationStep_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReorderUserEscalationSteps">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActionService/ReorderUserEscalationSteps" message="tns:IActionService_ReorderUserEscalationSteps_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActionService/ReorderUserEscalationStepsResponse" message="tns:IActionService_ReorderUserEscalationSteps_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IActionService" type="tns:IActionService">
@@ -70,6 +110,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="FindUserEscalationStep">
+      <soap:operation soapAction="http://tempuri.org/IActionService/FindUserEscalationStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="FindUserEscalationSteps">
       <soap:operation soapAction="http://tempuri.org/IActionService/FindUserEscalationSteps" style="document" />
       <wsdl:input>
@@ -79,8 +128,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SaveUserEscalationStep">
+      <soap:operation soapAction="http://tempuri.org/IActionService/SaveUserEscalationStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SaveUserEscalationSteps">
       <soap:operation soapAction="http://tempuri.org/IActionService/SaveUserEscalationSteps" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserEscalationStep">
+      <soap:operation soapAction="http://tempuri.org/IActionService/DeleteUserEscalationStep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReorderUserEscalationSteps">
+      <soap:operation soapAction="http://tempuri.org/IActionService/ReorderUserEscalationSteps" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

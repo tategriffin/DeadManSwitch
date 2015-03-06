@@ -12,8 +12,14 @@ namespace DeadManSwitch.Service
 
         Dictionary<int, string> GetAllEscalationWaitMinutes();
 
-        List<EscalationStep> FindUserEscalationSteps(string userName);
+        EscalationStep FindEscalationStepById(string userName, int stepId);
+        List<EscalationStep> FindAllEscalationStepsByUserName(string userName);
 
-        void SaveUserEscalationSteps(string userName, IEnumerable<EscalationStep> allSteps);
+        void SaveEscalationStep(string userName, EscalationStep step);
+        void SaveEscalationSteps(string userName, IEnumerable<EscalationStep> allSteps);
+
+        void DeleteEscalationStep(string userName, int stepId);
+
+        List<EscalationStep> ReorderEscalationSteps(string userName, IEnumerable<int> orderedStepIds);
     }
 }

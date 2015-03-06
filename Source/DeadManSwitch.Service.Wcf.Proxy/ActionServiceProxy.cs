@@ -88,7 +88,45 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
-        public List<Service.EscalationStep> FindUserEscalationSteps(string userName)
+        public Service.EscalationStep FindEscalationStepById(string userName, int stepId)
+        {
+            var client = new ActionService.ActionServiceClient();
+            try
+            {
+                var result = client.FindUserEscalationStep(userName, stepId);
+                if (!result.IsSuccessful) throw new Exception(result.Message);
+
+                return result.Result.ToServiceEntity();
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
+
+        public List<Service.EscalationStep> FindAllEscalationStepsByUserName(string userName)
         {
             var client = new ActionService.ActionServiceClient();
             try
@@ -126,7 +164,45 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
-        public void SaveUserEscalationSteps(string userName, IEnumerable<Service.EscalationStep> allSteps)
+        public void SaveEscalationStep(string userName, Service.EscalationStep step)
+        {
+            var client = new ActionService.ActionServiceClient();
+            try
+            {
+                var result = client.SaveUserEscalationStep(userName, step.ToWcfEntity());
+                if (!result.IsSuccessful) throw new Exception(result.Message);
+
+                Log.Debug("Service result: {0}", result.Result);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
+
+        public void SaveEscalationSteps(string userName, IEnumerable<Service.EscalationStep> allSteps)
         {
             var client = new ActionService.ActionServiceClient();
             try
@@ -135,6 +211,83 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                 if (!result.IsSuccessful) throw new Exception(result.Message);
 
                 Log.Debug("Service result: {0}", result.Result);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
+
+        public void DeleteEscalationStep(string userName, int stepId)
+        {
+            var client = new ActionService.ActionServiceClient();
+            try
+            {
+                var result = client.DeleteUserEscalationStep(userName, stepId);
+                if (!result.IsSuccessful) throw new Exception(result.Message);
+
+                Log.Debug("Service result: {0}", result.Result);
+            }
+            catch (CommunicationException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (TimeoutException ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
+            }
+        }
+
+        public List<Service.EscalationStep> ReorderEscalationSteps(string userName, IEnumerable<int> orderedStepIds)
+        {
+            var client = new ActionService.ActionServiceClient();
+            try
+            {
+                var result = client.ReorderUserEscalationSteps(userName, orderedStepIds.ToArray());
+                if (!result.IsSuccessful) throw new Exception(result.Message);
+
+                Log.Debug("Service result: {0}", result.Result);
+                return new List<Service.EscalationStep>(result.Result.ToServiceEntity());
             }
             catch (CommunicationException ex)
             {

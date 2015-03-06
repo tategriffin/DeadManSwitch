@@ -19,6 +19,31 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ReturnObjectOfTypeArrayOfKeyValueOfintstring" nillable="true" type="tns:ReturnObjectOfTypeArrayOfKeyValueOfintstring" />
+  <xs:complexType name="ReturnObjectOfTypeEscalationStep">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ReturnObjectOfType{0}" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="EscalationStep" Namespace="http://schemas.datacontract.org/2004/07/DeadManSwitch.Service.Wcf" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" nillable="true" type="tns:EscalationStep" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObjectOfTypeEscalationStep" nillable="true" type="tns:ReturnObjectOfTypeEscalationStep" />
+  <xs:complexType name="EscalationStep">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActionType" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Number" type="xs:int" />
+      <xs:element minOccurs="0" name="Recipient" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WaitMinutes" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EscalationStep" nillable="true" type="tns:EscalationStep" />
   <xs:complexType name="ReturnObjectOfTypeArrayOfEscalationStep">
     <xs:annotation>
       <xs:appinfo>
@@ -40,16 +65,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfEscalationStep" nillable="true" type="tns:ArrayOfEscalationStep" />
-  <xs:complexType name="EscalationStep">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ActionType" type="xs:int" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Number" type="xs:int" />
-      <xs:element minOccurs="0" name="Recipient" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="WaitMinutes" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EscalationStep" nillable="true" type="tns:EscalationStep" />
   <xs:complexType name="ReturnObjectOfTypeboolean">
     <xs:annotation>
       <xs:appinfo>

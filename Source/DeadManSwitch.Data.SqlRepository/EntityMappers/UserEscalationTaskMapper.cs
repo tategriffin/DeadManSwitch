@@ -34,6 +34,7 @@ namespace DeadManSwitch.Data.SqlRepository.EntityMappers
 
         internal static DeadManSwitch.Action.UserEscalationTask ToDomain(this SqlRepository.UserEscalationAction data)
         {
+            if (data == null) return null;
             DeadManSwitch.Action.UserEscalationTask domain = new Action.UserEscalationTask();
             
             domain.Id = data.UserEscalationActionId;

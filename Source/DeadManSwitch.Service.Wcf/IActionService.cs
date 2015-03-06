@@ -17,9 +17,19 @@ namespace DeadManSwitch.Service.Wcf
         OperationResponse<Dictionary<int, string>> GetAllEscalationWaitMinutes();
 
         [OperationContract]
+        OperationResponse<EscalationStep> FindUserEscalationStep(string userName, int stepId);
+        [OperationContract]
         OperationResponse<List<EscalationStep>> FindUserEscalationSteps(string userName);
 
         [OperationContract]
+        OperationResponse<bool> SaveUserEscalationStep(string userName, EscalationStep step);
+        [OperationContract]
         OperationResponse<bool> SaveUserEscalationSteps(string userName, IEnumerable<EscalationStep> allSteps);
+
+        [OperationContract]
+        OperationResponse<bool> DeleteUserEscalationStep(string userName, int stepId);
+
+        [OperationContract]
+        OperationResponse<List<EscalationStep>> ReorderUserEscalationSteps(string userName, IEnumerable<int> orderedStepIds);
     }
 }

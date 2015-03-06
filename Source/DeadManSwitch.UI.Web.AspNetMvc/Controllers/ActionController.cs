@@ -29,7 +29,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         // GET: /Action/
         public ActionResult Index()
         {
-            var model = new UserActionListModel(ActionSvc.FindUserEscalationSteps(User.Identity.Name).ToUiViewModelList());
+            var model = new UserActionListModel(ActionSvc.FindAllEscalationStepsByUserName(User.Identity.Name).ToUiViewModelList());
 
             return View(model);
         }
@@ -41,11 +41,12 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         {
             try
             {
-                List<EscalationStep> existingSteps = ActionSvc.FindUserEscalationSteps(User.Identity.Name);
+                //TODO: This is inefficient. Implement client logic to change text on first item if necessary
+                List<EscalationStep> existingSteps = ActionSvc.FindAllEscalationStepsByUserName(User.Identity.Name);
                 if (!existingSteps.Any()) throw new Exception(string.Format("No existing execution steps found for user {0}", User.Identity.Name));
 
                 EscalationStep previousFirstStep = existingSteps.Single(s => s.Number == 1);
-                List<EscalationStep> reorderedEscalationSteps = ReorderExecutionSteps(existingSteps, stepOrder);
+                List<EscalationStep> reorderedEscalationSteps = ActionSvc.ReorderEscalationSteps(User.Identity.Name, stepOrder);
 
                 if (previousFirstStep.Id == reorderedEscalationSteps.Single(s => s.Number == 1).Id)
                 {
@@ -62,24 +63,6 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
                 //POSTed via ajax, so need to redirect rather than return a view.
                 return Json(new { redirectUrl = Url.Action("Index") });
             }
-        }
-
-        private List<EscalationStep> ReorderExecutionSteps(List<EscalationStep> existingSteps, IEnumerable<int> requestedStepOrder)
-        {
-            var reorderedSteps = new List<EscalationStep>();
-
-            int stepNumber = 1;
-            foreach (var id in requestedStepOrder)
-            {
-                var step = existingSteps.SingleOrDefault(s => s.Id == id);
-                if (step == null) throw new Exception(string.Format("No existing execution step with id {0} found for user {1}", id, User.Identity.Name));
-
-                step.Number = stepNumber++;
-                reorderedSteps.Add(step);
-            }
-
-            ActionSvc.SaveUserEscalationSteps(User.Identity.Name, reorderedSteps);
-            return reorderedSteps;
         }
 
         //
@@ -100,11 +83,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    DeadManSwitch.Service.EscalationStep step = model.ToServiceEntity();
-                    var allSteps = ActionSvc.FindUserEscalationSteps(User.Identity.Name);
-
-                    allSteps.Add(step);
-                    ActionSvc.SaveUserEscalationSteps(User.Identity.Name, allSteps);
+                    ActionSvc.SaveEscalationStep(User.Identity.Name, model.ToServiceEntity());
 
                     return RedirectToAction("Index");
                 }
@@ -124,7 +103,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         // GET: /Action/Edit/5
         public ActionResult Edit(int id)
         {
-            var step = ActionSvc.FindUserEscalationSteps(User.Identity.Name).SingleOrDefault(s => s.Id == id);
+            var step = ActionSvc.FindAllEscalationStepsByUserName(User.Identity.Name).SingleOrDefault(s => s.Id == id);
             if (step == null)
             {
                 Log.Warn("Step ID: {0} was not found for user {1}.", id, User.Identity.Name);
@@ -144,14 +123,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    DeadManSwitch.Service.EscalationStep step = stepModel.ToServiceEntity();
-                    var allSteps = ActionSvc.FindUserEscalationSteps(User.Identity.Name);
-                    int idx = allSteps.FindIndex(s => s.Id == id);
-                    if (idx < 0) throw new Exception(string.Format("Step Id: {0} was not found.", id));
-
-                    allSteps.Insert(idx, step);
-                    allSteps.RemoveAt(idx + 1);
-                    ActionSvc.SaveUserEscalationSteps(User.Identity.Name, allSteps);
+                    ActionSvc.SaveEscalationStep(User.Identity.Name, stepModel.ToServiceEntity());
 
                     return RedirectToAction("Index");
                 }
@@ -174,12 +146,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         {
             try
             {
-                var allSteps = ActionSvc.FindUserEscalationSteps(User.Identity.Name);
-                int idx = allSteps.FindIndex(s => s.Id == id);
-                if (idx < 0) throw new Exception(string.Format("Step Id: {0} was not found.", id));
-
-                allSteps.RemoveAt(idx);
-                ActionSvc.SaveUserEscalationSteps(User.Identity.Name, allSteps);
+                ActionSvc.DeleteEscalationStep(User.Identity.Name, id);
 
                 return Json(new { redirectUrl = Url.Action("Index") });
             }

@@ -19,7 +19,7 @@ namespace DeadManSwitch.UI.Models.Builders
         public UserActionEditModel BuildCreateModel(string userName)
         {
             int stepNumber = 1;
-            var existingSteps = ActionSvc.FindUserEscalationSteps(userName);
+            var existingSteps = ActionSvc.FindAllEscalationStepsByUserName(userName);
             if (existingSteps.Any())
             {
                 stepNumber = existingSteps.Last().Number + 1;

@@ -29,7 +29,7 @@ namespace DeadManSwitch.UI.Web.AspNet.Actions
 
             if (this.CurrentUser.IsAuthenticated)
             {
-                var allSteps = this.ActionSvc.FindUserEscalationSteps(this.CurrentUser.UserName);
+                var allSteps = this.ActionSvc.FindAllEscalationStepsByUserName(this.CurrentUser.UserName);
                 actions.AddRange(allSteps.ToUiViewModelList());
             }
 

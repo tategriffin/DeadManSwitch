@@ -42,7 +42,7 @@ namespace DeadManSwitch.Providers
         {
             if (userId == 0) throw new ArgumentException("userId is not valid.");
 
-            EscalationProcedures userEscalationProcedures = this.UserEscalationProcedureProvider.FindByUserId(userId);
+            EscalationProcedures userEscalationProcedures = this.UserEscalationProcedureProvider.FindProceduresByUserId(userId);
             if (userEscalationProcedures == null || !userEscalationProcedures.EscalationList.Any())
             {
                 logger.Warn("No escalation procedures found for userId: " + userId);

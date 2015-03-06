@@ -53,13 +53,13 @@ namespace DeadManSwitch.Providers
 //                schedule.UserId = user.UserId;
 //            }
 
-            ThrowExceptionvalidationMessages(schedule);
+            ThrowExceptionValidationMessages(schedule);
 
             DateTime? nextCheckIn = RecalculateNextCheckInOnSave(user, schedule);
             this.DailyScheduleRepository.UpsertDailySchedule(schedule, nextCheckIn);
         }
 
-        private void ThrowExceptionvalidationMessages(DailySchedule schedule)
+        private void ThrowExceptionValidationMessages(DailySchedule schedule)
         {
             List<string> validationMessages = ValidateDailySchedule(schedule);
             if (validationMessages.Count != 0)
