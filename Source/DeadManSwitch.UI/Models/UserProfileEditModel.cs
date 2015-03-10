@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using DeadManSwitch.UI.Models;
 
 namespace DeadManSwitch.UI
@@ -8,6 +9,7 @@ namespace DeadManSwitch.UI
         [DisplayName("User Name")]
         public string UserName { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }

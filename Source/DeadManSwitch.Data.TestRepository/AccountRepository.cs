@@ -20,7 +20,7 @@ namespace DeadManSwitch.Data.TestRepository
                 throw new Exception(string.Format("UserName '{0}' already exists", user.UserName));
             }
 
-            Context.UserAccounts.Add(new UserAccountTableRow(user, password));
+            Context.UserAccountTable.Add(user, password);
 
             return this.FindAccount(user.UserName);
         }

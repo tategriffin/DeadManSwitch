@@ -81,7 +81,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\DeadManSwitch.Service.Wcf.EscalationStep.datasource" />
     <None Include="README.rtf" />
     <None Include="Service References\AccountService\AccountService.wsdl" />
     <None Include="Service References\AccountService\AccountService.xsd">

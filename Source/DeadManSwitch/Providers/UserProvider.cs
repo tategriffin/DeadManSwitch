@@ -122,11 +122,11 @@ namespace DeadManSwitch.Providers
             return pwdChanged;
         }
 
-        public IList<string> SaveProfile(User user)
+        public List<string> SaveProfile(User user)
         {
-            if (user == null) throw new ArgumentNullException("acct");
+            if (user == null) throw new ArgumentNullException("user");
 
-            IList<string> validationMessages = ValidateUserProperties(user);
+            List<string> validationMessages = ValidateUserProperties(user);
             if (validationMessages.Count == 0)
             {
                 this.AcctRepository.Update(user);

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
 using DeadManSwitch.Data.TestRepository.Tables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,6 +17,25 @@ namespace DeadManSwitch.Tests
     [TestClass]
     public class UserProviderTests
     {
+        [TestMethod]
+        public void UserProviderCreateAccount_CreatesUser_WhenAllFieldsAreValid()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+            string userName = Stopwatch.GetTimestamp().ToString();  //some unique user name
+
+            User user = new User(userName, "x@example.com", "Test", "User");
+            string pwd = "1234";
+
+            //Act
+            cut.CreateAccount(user, pwd);
+            var actual = cut.FindByUserName(userName);
+
+            //Assert
+            Assert.IsNotNull(actual, "CreateAccount should create a new user.");
+        }
+
         [TestMethod]
         public void UserProviderCreateAccount_ThrowsEx_WhenUserIsNotZero()
         {
@@ -115,6 +137,47 @@ namespace DeadManSwitch.Tests
         }
 
         [TestMethod]
+        public void UserProviderUserNameExists_ReturnsTrueWhenUserNamesAreDifferentCase()
+        {
+            //Arrange
+            var context = new RepositoryContext();
+            string userName = "CaseInsensitiveUserName";
+            context.UserAccounts.Add(new UserAccountTableRow(new User(userName, "me@example.com", "test", "user"), "1234"));
+
+            IUnityContainer container = TestIoCConfig.BuildContainer(context);
+            UserProvider cut = new UserProvider(container);
+
+            string upperUserName = userName.ToUpper();
+
+            //Act
+            bool actual = cut.UserNameExists(upperUserName);
+
+            //Assert
+            Assert.AreEqual(true, actual);
+        }
+
+        [TestMethod]
+        public void UserProviderCreateAccount_FailsValidation_WhenUserNameAlreadyExists()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            string pwd = "1234";
+            User user = new User("UnitTestDuplicateUserNameValidation", "anyone@example.com", "user", "test");
+            cut.CreateAccount(user, pwd);
+
+            User duplicateUser = new User("UnitTestDuplicateUserNameValidation", "anyoneelse@example.com", "user2", "test2");
+            //Act
+            var validationMsgs = cut.CreateAccount(duplicateUser, pwd);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("already exists"));
+        }
+
+        [TestMethod]
         public void UserProviderCreateAccount_FailsValidation_WhenFirstNameIsEmpty()
         {
             //Arrange
@@ -129,15 +192,12 @@ namespace DeadManSwitch.Tests
             user.LastName = "test";
 
             //Act
-            try
-            {
-                cut.CreateAccount(user, pwd);
-            }
-            catch (Exception ex)
-            {
-                //Assert
-                Assert.IsTrue(ex.Message.Contains("first"));    //expect error related to blank first name
-            }
+            var validationMsgs = cut.CreateAccount(user, pwd);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("First"));
         }
 
         [TestMethod]
@@ -155,15 +215,58 @@ namespace DeadManSwitch.Tests
             user.LastName = string.Empty;
 
             //Act
-            try
-            {
-                cut.CreateAccount(user, pwd);
-            }
-            catch (Exception ex)
-            {
-                //Assert
-                Assert.IsTrue(ex.Message.Contains("last"));    //expect error related to blank last name
-            }
+            var validationMsgs = cut.CreateAccount(user, pwd);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("Last"));
+        }
+
+        [TestMethod]
+        public void UserProviderCreateAccount_FailsValidation_WhenEmailIsMissingAtSign()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyoneexample.com";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            //Act
+            var validationMsgs = cut.CreateAccount(user, pwd);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("email"));
+        }
+
+        [TestMethod]
+        public void UserProviderCreateAccount_FailsValidation_WhenEmailIsMissingPeriod()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyone@examplecom";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            //Act
+            var validationMsgs = cut.CreateAccount(user, pwd);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("email"));
         }
 
         [TestMethod]
@@ -251,6 +354,26 @@ namespace DeadManSwitch.Tests
 
             //Assert
             Assert.IsNull(usr);
+        }
+
+        [TestMethod]
+        public void UserProviderFindUserById_ReturnsUser_WhenUserIsFound()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            string pwd = "1234";
+            User user = new User("UnitTest", "anyone@example.com", "test", "user");
+            var validationMsgs = cut.CreateAccount(user, pwd);
+            user = cut.FindByUserName(user.UserName);
+
+            //Act
+            var actual = cut.FindById(user.UserId);
+
+            //Assert
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(user.UserName, actual.UserName);
         }
 
         [TestMethod]
@@ -380,23 +503,201 @@ namespace DeadManSwitch.Tests
         }
 
         [TestMethod]
-        public void UserProviderUserNameExists_ReturnsTrueWhenUserNamesAreDifferentCase()
+        public void UserProviderTryChangePassword_ReturnsFalseAndMessages_WhenUserAuthenticationFails()
         {
             //Arrange
-            var context = new RepositoryContext();
-            string userName = "CaseInsensitiveUserName";
-            context.UserAccounts.Add(new UserAccountTableRow(new User(userName, "me@example.com", "test", "user"), "1234"));
-
-            IUnityContainer container = TestIoCConfig.BuildContainer(context);
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
             UserProvider cut = new UserProvider(container);
+            string userName = Stopwatch.GetTimestamp().ToString();  //some unique user name
 
-            string upperUserName = userName.ToUpper();
+            User user = new User(userName, "x@example.com", "Test", "User");
+            string pwd = "1234";
+
+            cut.CreateAccount(user, pwd);
+            var actual = cut.FindByUserName(userName);
+            List<string> failureMsgList;
+            const string expected = "User authentication failed.";
 
             //Act
-            bool actual = cut.UserNameExists(upperUserName);
+            bool changed = cut.TryChangePassword(actual.UserName, "wrongpassword", "newPassword", out failureMsgList);
 
             //Assert
-            Assert.AreEqual(true, actual);
+            Assert.IsFalse(changed);
+            Assert.IsNotNull(failureMsgList);
+            Assert.IsTrue(failureMsgList.Count == 1);
+            Assert.AreEqual(expected, failureMsgList.First());
+        }
+
+        [TestMethod]
+        public void UserProviderTryChangePassword_ReturnsTrueAndNoMessages_WhenUserAuthenticationSucceeds()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+            string userName = Stopwatch.GetTimestamp().ToString();  //some unique user name
+
+            User user = new User(userName, "x@example.com", "Test", "User");
+            string pwd = "1234";
+
+            cut.CreateAccount(user, pwd);
+            var actual = cut.FindByUserName(userName);
+            List<string> failureMsgList;
+            const string expected = "User authentication failed.";
+
+            //Act
+            bool changed = cut.TryChangePassword(actual.UserName, pwd, "newPassword", out failureMsgList);
+
+            //Assert
+            Assert.IsTrue(changed);
+            Assert.IsNotNull(failureMsgList);
+            Assert.IsTrue(failureMsgList.Count == 0);
+        }
+
+        [TestMethod]
+        public void UserProviderSaveProfile_FailsValidation_WhenFirstNameIsEmpty()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            string expected = string.Empty;
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyone@example.com";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            cut.CreateAccount(user, pwd);
+            user = cut.FindByUserName(user.UserName);
+            user.FirstName = expected;
+
+            //Act
+            var validationMsgs = cut.SaveProfile(user);
+            var actual = cut.FindByUserName(user.UserName);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("First"));
+        }
+
+        [TestMethod]
+        public void UserProviderSaveProfile_FailsValidation_WhenLastNameIsEmpty()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            string expected = string.Empty;
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyone@example.com";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            cut.CreateAccount(user, pwd);
+            user = cut.FindByUserName(user.UserName);
+            user.LastName = expected;
+
+            //Act
+            var validationMsgs = cut.SaveProfile(user);
+            var actual = cut.FindByUserName(user.UserName);
+            
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("Last"));
+        }
+
+        [TestMethod]
+        public void UserProviderSaveProfile_FailsValidation_WhenEmailIsMissingAtSign()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            const string expected = "updatedEmailexample.com";
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyone@example.com";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            cut.CreateAccount(user, pwd);
+            user = cut.FindByUserName(user.UserName);
+            user.Email = expected;
+
+            //Act
+            var validationMsgs = cut.SaveProfile(user);
+            var actual = cut.FindByUserName(user.UserName);
+
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("email"));
+        }
+
+        [TestMethod]
+        public void UserProviderSaveProfile_FailsValidation_WhenEmailIsMissingPeriod()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            const string expected = "updatedEmail@examplecom";
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyone@example.com";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            cut.CreateAccount(user, pwd);
+            user = cut.FindByUserName(user.UserName);
+            user.Email = expected;
+
+            //Act
+            var validationMsgs = cut.SaveProfile(user);
+            var actual = cut.FindByUserName(user.UserName);
+
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 1);
+            Assert.IsTrue(validationMsgs.First().Contains("email"));
+        }
+
+        [TestMethod]
+        public void UserProviderSaveProfile_ReturnsEmptyList_WhenProfileIsSuccessfullyUpdated()
+        {
+            //Arrange
+            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
+            UserProvider cut = new UserProvider(container);
+
+            const string expected = "updatedEmail@example.com";
+            string pwd = "1234";
+            User user = new User();
+            user.UserName = "UnitTestEmailValidation";
+            user.Email = "anyone@example.com";
+            user.FirstName = "test";
+            user.LastName = "user";
+
+            cut.CreateAccount(user, pwd);
+            user = cut.FindByUserName(user.UserName);
+            user.Email = expected;
+
+            //Act
+            var validationMsgs = cut.SaveProfile(user);
+            var actual = cut.FindByUserName(user.UserName);
+
+            //Assert
+            Assert.IsNotNull(validationMsgs);
+            Assert.IsTrue(validationMsgs.Count == 0);
+            Assert.AreEqual(expected, actual.Email);
         }
 
     }

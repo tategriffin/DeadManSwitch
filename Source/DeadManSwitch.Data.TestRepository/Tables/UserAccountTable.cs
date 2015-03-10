@@ -18,6 +18,11 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         public List<UserAccountTableRow> Rows { get; private set; }
 
+        public void Add(User user, string password)
+        {
+            Add(user.UserName, user.Email, user.FirstName, user.LastName, password);
+        }
+
         public void Add(string userName, string email, string firstName, string lastName, string password)
         {
             UserAccountTableRow row = CreateFakeUserAccount(userName, email, firstName, lastName, password);
@@ -37,7 +42,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         private UserAccountTableRow CreateFakeUserAccount(string userName, string email, string firstName, string lastName, string password)
         {
-            return CreateFakeUserAccount(userName, email, firstName, lastName, password, TableKeyIdentity++);
+            return CreateFakeUserAccount(userName, email, firstName, lastName, password, ++TableKeyIdentity);
         }
 
         private UserAccountTableRow CreateFakeUserAccount(string userName, string email, string firstName, string lastName, string password, int userId)

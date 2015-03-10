@@ -42,6 +42,8 @@ namespace DeadManSwitch.Data.TestRepository
 
         private readonly Lazy<UserAccountTable> UserAccountTableLazy = new Lazy<UserAccountTable>();
         public List<UserAccountTableRow> UserAccounts { get { return UserAccountTableLazy.Value.Rows; } }
+        //HACK
+        internal UserAccountTable UserAccountTable { get { return UserAccountTableLazy.Value; } }
 
         private readonly Lazy<UserEscalationActionTable> UserEscalationActionTableLazy = new Lazy<UserEscalationActionTable>();
         public List<UserEscalationTask> UserEscalationActions { get { return UserEscalationActionTableLazy.Value.Rows; } }
