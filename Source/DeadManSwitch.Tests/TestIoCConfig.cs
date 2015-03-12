@@ -38,6 +38,7 @@ namespace DeadManSwitch.Tests
             container.RegisterType<IEscalationRepository, Data.TestRepository.EscalationRepository>(new InjectionConstructor(context));
             container.RegisterType<IUserEscalationProcedureRepository, Data.TestRepository.UserEscalationProcedureRepository>(new InjectionConstructor(context));
             container.RegisterType<IScheduleRepository, Data.TestRepository.ScheduleRepository>(new InjectionConstructor(context));
+            container.RegisterType<IDailyScheduleRepository, Data.TestRepository.DailyScheduleRepository>(new InjectionConstructor(context));
             container.RegisterType<IUserPreferenceRepository, Data.TestRepository.UserPreferenceRepository>(new InjectionConstructor(context));
             container.RegisterType<IReferenceDataRepository, Data.TestRepository.ReferenceDataRepository>(new InjectionConstructor(context));
             container.RegisterType<IKillSwitchRepository, Data.TestRepository.KillSwitchRepository>(new InjectionConstructor(context));

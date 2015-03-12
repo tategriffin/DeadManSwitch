@@ -21,6 +21,8 @@ namespace DeadManSwitch.Data.TestRepository.Tables
         {
             List<UserPreferences> persistentRows = new List<UserPreferences>();
 
+            persistentRows.Add(new UserPreferences() { UserId = 1, TzInfo = TimeZoneInfo.Local });
+
             return persistentRows;
         }
 

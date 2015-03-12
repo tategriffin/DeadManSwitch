@@ -24,21 +24,17 @@ namespace DeadManSwitch.Data.TestRepository.Tables
         {
             List<DailySchedule> persistentRows = new List<DailySchedule>();
 
+            DateTime checkInTime = DateTime.Now.AddMinutes(60);
+            DateTime checkInStartTime = checkInTime.AddMinutes(-30);
             persistentRows.Add(
-                new DailySchedule() 
+                new DailySchedule(true) 
                 { 
                     Id=TableRowIdentity++,
                     UserId = 1,
                     Name = "UserId1Schedule1",
-                    CheckInTime = new TimeSpan(9, 0, 0),
-                    CheckInWindowStartTime = new TimeSpan(0, 0, 0),
-                    Monday = true,
-                    Tuesday = true,
-                    Wednesday = true,
-                    Thursday = true,
-                    Friday = true,
+                    CheckInTime = new TimeSpan(checkInTime.Hour, checkInTime.Minute, 0),
+                    CheckInWindowStartTime = new TimeSpan(checkInStartTime.Hour, checkInStartTime.Minute, 0),
                 });
-                    
 
             return persistentRows;
         }

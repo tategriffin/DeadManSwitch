@@ -21,8 +21,10 @@ namespace DeadManSwitch.Data.TestRepository
             }
 
             Context.UserAccountTable.Add(user, password);
+            var addedUser = this.FindAccount(user.UserName);
+            Context.UserPreferences.Add(UserPreferences.GetDefaultPreferences(addedUser.UserId));
 
-            return this.FindAccount(user.UserName);
+            return addedUser;
         }
 
         public User AuthenticateUser(string userName, string password)
