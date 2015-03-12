@@ -65,6 +65,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DailyScheduleProviderTests.cs" />
     <Compile Include="Fakes\SendEmailAdapterFake.cs" />
     <Compile Include="Fakes\SendSMSAdapterFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

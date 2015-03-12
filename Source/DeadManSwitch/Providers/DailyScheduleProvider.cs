@@ -71,7 +71,7 @@ namespace DeadManSwitch.Providers
                 }
                 else
                 {
-                    errMsg = "The account could not be created because " + string.Join(" and ", validationMessages);
+                    errMsg = "The schedule could not be saved because " + string.Join(" and ", validationMessages);
                 }
 
                 throw new Exception(errMsg);

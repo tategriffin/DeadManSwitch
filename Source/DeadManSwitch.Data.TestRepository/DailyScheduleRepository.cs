@@ -30,9 +30,17 @@ namespace DeadManSwitch.Data.TestRepository
 
         public void UpsertDailySchedule(Schedule.DailySchedule schedule, DateTime? nextCheckInDateTime)
         {
-            DeleteDailySchedule(schedule, nextCheckInDateTime);
+            var existing = Context.DailySchedules.SingleOrDefault(s => s.Id == schedule.Id);
+            if (existing != null)
+            {
+                Context.DailyScheduleTable.Update(schedule);
+            }
+            else
+            {
+                Context.DailyScheduleTable.Add(schedule);
+            }
 
-            Context.DailySchedules.Add(schedule);
+            UpdateUserNextCheckIn(schedule.UserId, nextCheckInDateTime);
         }
 
         public void DeleteDailySchedule(Schedule.DailySchedule schedule, DateTime? nextCheckInDateTime)

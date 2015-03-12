@@ -14,8 +14,29 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         public ScheduleDailyTable()
         {
-            TableRowIdentity = 1;
+            TableRowIdentity = 0;
             this.Rows = BuildPersistentRows();
+        }
+
+        public DailySchedule Add(DailySchedule schedule)
+        {
+            schedule.Id = ++TableRowIdentity;
+
+            Rows.Add(schedule);
+
+            return schedule;
+        }
+
+        public DailySchedule Update(DailySchedule schedule)
+        {
+            var existing = Rows.SingleOrDefault(s => s.Id == schedule.Id);
+            if (existing != null)
+            {
+                Rows.Remove(existing);
+                Rows.Add(schedule);
+            }
+
+            return schedule;
         }
 
         public List<DailySchedule> Rows { get; private set; }
@@ -29,7 +50,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
             persistentRows.Add(
                 new DailySchedule(true) 
                 { 
-                    Id=TableRowIdentity++,
+                    Id=++TableRowIdentity,
                     UserId = 1,
                     Name = "UserId1Schedule1",
                     CheckInTime = new TimeSpan(checkInTime.Hour, checkInTime.Minute, 0),

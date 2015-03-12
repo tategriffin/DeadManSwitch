@@ -39,6 +39,8 @@ namespace DeadManSwitch.Data.TestRepository
 
         private readonly Lazy<ScheduleDailyTable> ScheduleDailyTableLazy = new Lazy<ScheduleDailyTable>();
         public List<DailySchedule> DailySchedules { get { return ScheduleDailyTableLazy.Value.Rows; } }
+        //HACK
+        internal ScheduleDailyTable DailyScheduleTable { get { return ScheduleDailyTableLazy.Value; } }
 
         private readonly Lazy<UserAccountTable> UserAccountTableLazy = new Lazy<UserAccountTable>();
         public List<UserAccountTableRow> UserAccounts { get { return UserAccountTableLazy.Value.Rows; } }
