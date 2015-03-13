@@ -60,6 +60,7 @@
     <Compile Include="Tables\KillSwitchRuleTable.cs" />
     <Compile Include="Tables\KillSwitchTable.cs" />
     <Compile Include="Tables\ScheduleDailyTable.cs" />
+    <Compile Include="Tables\Table.cs" />
     <Compile Include="Tables\UserAccountTable.cs" />
     <Compile Include="Tables\UserEscalationActionTable.cs" />
     <Compile Include="Tables\UserPreferenceTable.cs" />

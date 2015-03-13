@@ -6,59 +6,30 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class UserAccountTable
+    internal class UserAccountTable : Table<UserAccountTableRow>
     {
         private int TableKeyIdentity;
 
         public UserAccountTable()
         {
-            TableKeyIdentity = 0;
-            this.Rows = BuildPersistentRows();
-        }
-
-        public List<UserAccountTableRow> Rows { get; private set; }
-
-        public void Add(User user, string password)
-        {
-            Add(user.UserName, user.Email, user.FirstName, user.LastName, password);
-        }
-
-        public void Add(string userName, string email, string firstName, string lastName, string password)
-        {
-            UserAccountTableRow row = CreateFakeUserAccount(userName, email, firstName, lastName, password);
-
-            Rows.Add(row);
+            AddRange(BuildPersistentRows());
         }
 
         private List<UserAccountTableRow> BuildPersistentRows()
         {
             List<UserAccountTableRow> persistentRows = new List<UserAccountTableRow>();
 
-            persistentRows.Add(CreateFakeUserAccount("testuser", "test@test.com", "test", "user", "123"));
-            persistentRows.Add(CreateFakeUserAccount("UserProviderUnitTestUser", "UserProviderUnitTestUser@test.com", "UserProviderUnitTest", "user", "1234"));
+            persistentRows.Add(UserAccountTableRow.CreateRow("testuser", "test@test.com", "test", "user", "123"));
+            persistentRows.Add(UserAccountTableRow.CreateRow("UserProviderUnitTestUser", "UserProviderUnitTestUser@test.com", "UserProviderUnitTest", "user", "1234"));
 
             return persistentRows;
         }
 
-        private UserAccountTableRow CreateFakeUserAccount(string userName, string email, string firstName, string lastName, string password)
+        public override void Add(UserAccountTableRow item)
         {
-            return CreateFakeUserAccount(userName, email, firstName, lastName, password, ++TableKeyIdentity);
+            item.Data.UserId = ++TableKeyIdentity;
+            base.Add(item);
         }
-
-        private UserAccountTableRow CreateFakeUserAccount(string userName, string email, string firstName, string lastName, string password, int userId)
-        {
-            User fakeUser = new User()
-            {
-                UserId = userId,
-                UserName = userName,
-                Email = email,
-                FirstName = firstName,
-                LastName = lastName,
-            };
-
-            return new UserAccountTableRow(fakeUser, password);
-        }
-
     }
 
     public class UserAccountTableRow
@@ -73,6 +44,20 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         public User Data { get; set; }
         public string Password { get; set; }
+
+        public static UserAccountTableRow CreateRow(string userName, string email, string firstName, string lastName, string password)
+        {
+            User fakeUser = new User()
+            {
+                UserName = userName,
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName,
+            };
+
+            return new UserAccountTableRow(fakeUser, password);
+        }
+
     }
 
 }

@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeadManSwitch.Action;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class UserEscalationActionTable
+    internal class UserEscalationActionTable : Table<DeadManSwitch.Action.UserEscalationTask>
     {
-        private int TableKeyIdentity = 1;
+        private int TableKeyIdentity;
 
         public UserEscalationActionTable()
         {
-            this.Rows = BuildPersistentRows();
+            AddRange(BuildPersistentRows());
         }
 
-        public List<DeadManSwitch.Action.UserEscalationTask> Rows { get; private set; }
+        public override void Add(UserEscalationTask item)
+        {
+            item.Id = ++TableKeyIdentity;
+            base.Add(item);
+        }
 
         private List<DeadManSwitch.Action.UserEscalationTask> BuildPersistentRows()
         {
@@ -31,7 +36,6 @@ namespace DeadManSwitch.Data.TestRepository.Tables
             persistentRows.Add(
                 new DeadManSwitch.Action.UserEscalationTask()
                 {
-                    Id = TableKeyIdentity++,
                     UserId = 1,
                     ExecutionOrder = stepNumber++,
                     WaitTimeSpan = new TimeSpan(),
@@ -41,7 +45,6 @@ namespace DeadManSwitch.Data.TestRepository.Tables
             persistentRows.Add(
                 new DeadManSwitch.Action.UserEscalationTask()
                 {
-                    Id = TableKeyIdentity++,
                     UserId = 1,
                     ExecutionOrder = stepNumber++,
                     WaitTimeSpan = new TimeSpan(0, 5, 0),
@@ -51,7 +54,6 @@ namespace DeadManSwitch.Data.TestRepository.Tables
             persistentRows.Add(
                 new DeadManSwitch.Action.UserEscalationTask()
                 {
-                    Id = TableKeyIdentity++,
                     UserId = 1,
                     ExecutionOrder = stepNumber++,
                     WaitTimeSpan = new TimeSpan(0, 15, 0),

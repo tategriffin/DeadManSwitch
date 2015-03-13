@@ -35,7 +35,7 @@ namespace DeadManSwitch.Data.TestRepository
                 .Where(r => r.UserId == userId)
                 .ToList();
 
-            if (existingRows != null && existingRows.Count > 0)
+            if (existingRows.Count > 0)
             {
                 procedures = new EscalationProcedures(userId, existingRows);
             }
@@ -54,16 +54,10 @@ namespace DeadManSwitch.Data.TestRepository
             }
             else
             {
-                ReplaceExistingTask(existingTask, userEscalationTask);
+                int idx = Context.UserEscalationActions.IndexOf(existingTask);
+                Context.UserEscalationActions[idx] = userEscalationTask;
             }
 
-        }
-
-        private void ReplaceExistingTask(UserEscalationTask existingTask, UserEscalationTask replacementTask)
-        {
-            int idx = Context.UserEscalationActions.IndexOf(existingTask);
-            Context.UserEscalationActions.Insert(idx, replacementTask);
-            Context.UserEscalationActions.RemoveAt(idx + 1);
         }
 
         public void UpsertProcedures(EscalationProcedures userEscalationProcedures, DateTime? nextCheckInDateTime)
@@ -81,7 +75,11 @@ namespace DeadManSwitch.Data.TestRepository
             }
 
             //Add
-            Context.UserEscalationActions.AddRange(userEscalationProcedures.EscalationList);
+            foreach (var item in userEscalationProcedures.EscalationList)
+            {
+                Context.UserEscalationActions.Add(item);
+            }
+
         }
 
         public void DeleteTask(UserEscalationTask userEscalationTask, DateTime? nextCheckInDateTime)

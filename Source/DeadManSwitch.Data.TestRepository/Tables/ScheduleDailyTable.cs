@@ -8,38 +8,33 @@ using DeadManSwitch.Schedule;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class ScheduleDailyTable
+    internal class ScheduleDailyTable : Table<DailySchedule>
     {
         private int TableRowIdentity;
 
         public ScheduleDailyTable()
         {
-            TableRowIdentity = 0;
-            this.Rows = BuildPersistentRows();
+            AddRange(BuildPersistentRows());
         }
 
-        public DailySchedule Add(DailySchedule schedule)
+        public override void Add(DailySchedule item)
         {
-            schedule.Id = ++TableRowIdentity;
+            item.Id = ++TableRowIdentity;
 
-            Rows.Add(schedule);
-
-            return schedule;
+            base.Add(item);
         }
 
         public DailySchedule Update(DailySchedule schedule)
         {
-            var existing = Rows.SingleOrDefault(s => s.Id == schedule.Id);
+            var existing = this.AsQueryable().SingleOrDefault(s => s.Id == schedule.Id);
             if (existing != null)
             {
-                Rows.Remove(existing);
-                Rows.Add(schedule);
+                this.Remove(existing);
+                this.Add(schedule);
             }
 
             return schedule;
         }
-
-        public List<DailySchedule> Rows { get; private set; }
 
         private List<DailySchedule> BuildPersistentRows()
         {
@@ -58,17 +53,6 @@ namespace DeadManSwitch.Data.TestRepository.Tables
                 });
 
             return persistentRows;
-        }
-
-        private DailySchedule CreateDailySchedule(int userId)
-        {
-            DailySchedule schedule = new DailySchedule()
-            {
-                Id = TableRowIdentity++,
-                UserId = userId,
-            };
-
-            return schedule;
         }
 
     }

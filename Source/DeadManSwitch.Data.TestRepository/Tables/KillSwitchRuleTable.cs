@@ -8,23 +8,7 @@ using DeadManSwitch.Action.KillSwitches;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class KillSwitchRuleTable
+    internal class KillSwitchRuleTable : Table<KillSwitchRule>
     {
-        public KillSwitchRuleTable()
-        {
-            List<KillSwitchRule> persistentRows = BuildPersistentRows();
-
-            Rows = persistentRows;
-        }
-
-        public List<KillSwitchRule> Rows { get; private set; }
-
-        private List<KillSwitchRule> BuildPersistentRows()
-        {
-            List<KillSwitchRule> persistentRows = new List<KillSwitchRule>();
-
-            return persistentRows;
-        }
-
     }
 }

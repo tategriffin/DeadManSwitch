@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class UserPreferenceTable
+    internal class UserPreferenceTable : Table<UserPreferences>
     {
         public UserPreferenceTable()
         {
-            List<UserPreferences> persistentRows = BuildPersistentRows();
-
-            Rows = persistentRows;
+            AddRange(BuildPersistentRows());
         }
-
-        public List<UserPreferences> Rows { get; private set; }
 
         private List<UserPreferences> BuildPersistentRows()
         {

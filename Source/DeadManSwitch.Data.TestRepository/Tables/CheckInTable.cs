@@ -6,25 +6,8 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class CheckInTable
+    internal class CheckInTable : Table<CheckInTableRow>
     {
-        public CheckInTable()
-        {
-            List<CheckInTableRow> persistentRows = BuildPersistentRows();
-
-            Rows = persistentRows;
-        }
-
-        public List<CheckInTableRow> Rows { get; private set; }
-
-        private static List<CheckInTableRow> BuildPersistentRows()
-        {
-            List<CheckInTableRow> persistentRows = new List<CheckInTableRow>();
-            //careful what you add here. Every instance will see what you add.
-
-            return persistentRows;
-        }
-
     }
 
     public class CheckInTableRow

@@ -33,11 +33,12 @@ namespace DeadManSwitch.Data.TestRepository
             var existing = Context.DailySchedules.SingleOrDefault(s => s.Id == schedule.Id);
             if (existing != null)
             {
-                Context.DailyScheduleTable.Update(schedule);
+                int idx = Context.DailySchedules.IndexOf(existing);
+                Context.DailySchedules[idx] = schedule;
             }
             else
             {
-                Context.DailyScheduleTable.Add(schedule);
+                Context.DailySchedules.Add(schedule);
             }
 
             UpdateUserNextCheckIn(schedule.UserId, nextCheckInDateTime);

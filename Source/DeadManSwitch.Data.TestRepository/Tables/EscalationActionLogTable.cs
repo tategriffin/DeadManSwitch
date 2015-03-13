@@ -6,24 +6,8 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class EscalationActionLogTable
+    internal class EscalationActionLogTable : Table<EscalationActionLogTableRow>
     {
-        public EscalationActionLogTable()
-        {
-            List<EscalationActionLogTableRow> persistentRows = BuildPersistentRows();
-
-            Rows = persistentRows;
-        }
-
-        public List<EscalationActionLogTableRow> Rows { get; private set; }
-
-        private static List<EscalationActionLogTableRow> BuildPersistentRows()
-        {
-            List<EscalationActionLogTableRow> persistentRows = new List<EscalationActionLogTableRow>();
-
-            return persistentRows;
-        }
-
     }
 
     public class EscalationActionLogTableRow

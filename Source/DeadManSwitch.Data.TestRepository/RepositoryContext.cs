@@ -23,35 +23,31 @@ namespace DeadManSwitch.Data.TestRepository
         public Dictionary<string, string> ApplicationSettings { get { return ApplicationSettingsLazy.Value.Rows; } }
 
         private readonly Lazy<CheckInTable> CheckInTableLazy = new Lazy<CheckInTable>();
-        public List<CheckInTableRow> CheckIns { get { return CheckInTableLazy.Value.Rows; } }
+        public IList<CheckInTableRow> CheckIns { get { return CheckInTableLazy.Value; } }
 
         private readonly Lazy<EscalationActionLogTable> EscalationActionLogTableLazy = new Lazy<EscalationActionLogTable>();
-        public List<EscalationActionLogTableRow> EscalationActionLogs { get { return EscalationActionLogTableLazy.Value.Rows; } }
+        public IList<EscalationActionLogTableRow> EscalationActionLogs { get { return EscalationActionLogTableLazy.Value; } }
 
         private readonly Lazy<EscalationWorkTable> EscalationWorkTableLazy = new Lazy<EscalationWorkTable>();
-        public List<EscalationWorkTableRow> EscalationWorkItems { get { return EscalationWorkTableLazy.Value.Rows; } }
+        public IList<EscalationWorkTableRow> EscalationWorkItems { get { return EscalationWorkTableLazy.Value; } }
 
         private readonly Lazy<KillSwitchRuleTable> KillSwitchRuleTableLazy = new Lazy<KillSwitchRuleTable>();
-        public List<KillSwitchRule> KillSwitchRules { get { return KillSwitchRuleTableLazy.Value.Rows; } }
+        public IList<KillSwitchRule> KillSwitchRules { get { return KillSwitchRuleTableLazy.Value; } }
 
         private readonly Lazy<KillSwitchTable> KillSwitchTableLazy = new Lazy<KillSwitchTable>();
-        public List<KillSwitch> KillSwitches { get { return KillSwitchTableLazy.Value.Rows; } }
+        public IList<KillSwitch> KillSwitches { get { return KillSwitchTableLazy.Value; } }
 
         private readonly Lazy<ScheduleDailyTable> ScheduleDailyTableLazy = new Lazy<ScheduleDailyTable>();
-        public List<DailySchedule> DailySchedules { get { return ScheduleDailyTableLazy.Value.Rows; } }
-        //HACK
-        internal ScheduleDailyTable DailyScheduleTable { get { return ScheduleDailyTableLazy.Value; } }
+        public IList<DailySchedule> DailySchedules { get { return ScheduleDailyTableLazy.Value; } }
 
         private readonly Lazy<UserAccountTable> UserAccountTableLazy = new Lazy<UserAccountTable>();
-        public List<UserAccountTableRow> UserAccounts { get { return UserAccountTableLazy.Value.Rows; } }
-        //HACK
-        internal UserAccountTable UserAccountTable { get { return UserAccountTableLazy.Value; } }
+        public IList<UserAccountTableRow> UserAccounts { get { return UserAccountTableLazy.Value; } }
 
         private readonly Lazy<UserEscalationActionTable> UserEscalationActionTableLazy = new Lazy<UserEscalationActionTable>();
-        public List<UserEscalationTask> UserEscalationActions { get { return UserEscalationActionTableLazy.Value.Rows; } }
+        public IList<UserEscalationTask> UserEscalationActions { get { return UserEscalationActionTableLazy.Value; } }
 
         private readonly Lazy<UserPreferenceTable> UserPreferenceTableLazy = new Lazy<UserPreferenceTable>();
-        public List<UserPreferences> UserPreferences { get { return UserPreferenceTableLazy.Value.Rows; } }
+        public IList<UserPreferences> UserPreferences { get { return UserPreferenceTableLazy.Value; } }
 
     }
 }

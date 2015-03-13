@@ -9,16 +9,12 @@ using DeadManSwitch.Action.KillSwitches;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class KillSwitchTable
+    internal class KillSwitchTable : Table<KillSwitch>
     {
         public KillSwitchTable()
         {
-            List<KillSwitch> persistentRows = BuildPersistentRows();
-
-            Rows = persistentRows;
+            AddRange(BuildPersistentRows());
         }
-
-        public List<KillSwitch> Rows { get; private set; }
 
         private List<KillSwitch> BuildPersistentRows()
         {

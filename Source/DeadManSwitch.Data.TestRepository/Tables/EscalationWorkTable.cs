@@ -6,30 +6,15 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class EscalationWorkTable
+    internal class EscalationWorkTable : Table<EscalationWorkTableRow>
     {
         private int TableKeyIdentity;
 
-        public EscalationWorkTable()
+        public override void Add(EscalationWorkTableRow item)
         {
-            TableKeyIdentity = 0;
-            this.Rows = BuildPersistentRows();
+            item.Data.Id = ++TableKeyIdentity;
+            base.Add(item);
         }
-
-        public List<EscalationWorkTableRow> Rows { get; private set; }
-        public void AddRow(EscalationWorkTableRow row)
-        {
-            row.Data.Id = TableKeyIdentity++;
-            Rows.Add(row);
-        }
-
-        private List<EscalationWorkTableRow> BuildPersistentRows()
-        {
-            List<EscalationWorkTableRow> persistentRows = new List<EscalationWorkTableRow>();
-
-            return persistentRows;
-        }
-
     }
 
     public class EscalationWorkTableRow
