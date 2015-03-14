@@ -14,9 +14,7 @@ namespace DeadManSwitch.Providers
 {
     public class ReferenceDataProvider
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger(); 
-        
-        private IReferenceDataRepository ReferenceDataRepository;
+        private readonly IReferenceDataRepository ReferenceDataRepository;
 
         public ReferenceDataProvider(IUnityContainer container)
         {
@@ -32,41 +30,44 @@ namespace DeadManSwitch.Providers
 
         private Dictionary<int, string> GetEscalationActionTypes()
         {
-            string key = "AllEscalationActionTypes";
-
-            Dictionary<int, string> cacheItem = HttpContext.Current.Cache[key] as Dictionary<int, string>;
-            if (cacheItem == null)
-            {
-                cacheItem = this.ReferenceDataRepository.EscalationActionTypes();
-                HttpContext.Current.Cache.Insert(key, cacheItem, null, DateTime.Now.AddMinutes(15), Cache.NoSlidingExpiration);
-            }
-
-            return cacheItem;
+            return RetrieveFromCacheOrDataStore("AllEscalationActionTypes", ReferenceDataRepository.EscalationActionTypes);
         }
 
         public Dictionary<int, string> EscalationWaitMinuteOptions()
         {
-            return this.ReferenceDataRepository.EscalationDelayMinuteOptions();
+            return RetrieveFromCacheOrDataStore("AllEscalationDelayMinuteOptions", ReferenceDataRepository.EscalationDelayMinuteOptions);
         }
 
         public Dictionary<int, string> EarlyCheckInOptions()
         {
-            return this.ReferenceDataRepository.EarlyCheckInOptions();
+            return RetrieveFromCacheOrDataStore("AllEarlyCheckInOptions", ReferenceDataRepository.EarlyCheckInOptions);
         }
 
         public Dictionary<int, string> HourOptions()
         {
-            return this.ReferenceDataRepository.CheckInHourOptions();
+            return RetrieveFromCacheOrDataStore("AllCheckInHourOptions", ReferenceDataRepository.CheckInHourOptions);
         }
 
         public Dictionary<int, string> MinuteOptions()
         {
-            return this.ReferenceDataRepository.CheckInMinuteOptions();
+            return RetrieveFromCacheOrDataStore("AllCheckInMinuteOptions", ReferenceDataRepository.CheckInMinuteOptions);
         }
 
         public Dictionary<string, string> AmPmOptions()
         {
-            return this.ReferenceDataRepository.CheckInAmPmOptions();
+            return RetrieveFromCacheOrDataStore("AllCheckInAmPmOptions", ReferenceDataRepository.CheckInAmPmOptions);
+        }
+
+        private T RetrieveFromCacheOrDataStore<T>(string cacheKey, Func<T> dataStoreFunc, int cacheMinutes = 15) where T : class
+        {
+            T cacheItem = HttpContext.Current.Cache[cacheKey] as T;
+            if (cacheItem == null)
+            {
+                cacheItem = dataStoreFunc();
+                HttpContext.Current.Cache.Insert(cacheKey, cacheItem, null, DateTime.Now.AddMinutes(cacheMinutes), Cache.NoSlidingExpiration);
+            }
+
+            return cacheItem;
         }
     }
 }

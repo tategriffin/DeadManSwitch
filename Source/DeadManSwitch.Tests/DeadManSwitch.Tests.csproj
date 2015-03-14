@@ -66,6 +66,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DailyScheduleProviderTests.cs" />
+    <Compile Include="EscalationProviderTests.cs" />
     <Compile Include="Fakes\SendEmailAdapterFake.cs" />
     <Compile Include="Fakes\SendSMSAdapterFake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="KillSwitchProviderTests.cs" />
     <Compile Include="DailyScheduleTests.cs" />
     <Compile Include="TestIoCConfig.cs" />
+    <Compile Include="UserPreferenceProviderTests.cs" />
     <Compile Include="UserProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>

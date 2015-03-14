@@ -94,5 +94,13 @@ namespace DeadManSwitch.Data.TestRepository
             return lockedItem;
         }
 
+        public List<Tables.EscalationWorkTableRow> FindByUserId(int userId)
+        {
+            return
+                Context.EscalationWorkItems
+                .Where(w => w.Data.UserId == userId)
+                .ToList();
+        }
+
     }
 }

@@ -17,17 +17,6 @@ namespace DeadManSwitch.Data
 
         void RemoveByUser(int userId);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="lockTimeout"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// TriggerTime >= UtcNow
-        /// Success = null
-        /// NumberOfFailures less than maxFailures
-        /// LockExpiration less than UtcNow
-        /// </remarks>
         EscalationWorkItem LockNextUnexecuted(TimeSpan lockTimeout, int maxFailures);
     }
 }

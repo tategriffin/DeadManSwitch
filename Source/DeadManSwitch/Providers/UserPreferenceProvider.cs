@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 using DeadManSwitch.Data;
 using Microsoft.Practices.Unity;
+using NLog;
 
 namespace DeadManSwitch.Providers
 {
     public class UserPreferenceProvider
     {
+        private static Logger Log = LogManager.GetCurrentClassLogger();
+
         private IUserPreferenceRepository UserPreferenceRepository;
 
         public UserPreferenceProvider(IUnityContainer container)
@@ -28,6 +31,8 @@ namespace DeadManSwitch.Providers
             UserPreferences preferences = UserPreferenceRepository.FindById(user.UserId);
             if (preferences == null)
             {
+                Log.Warn("User '{0}' does not have any preferences.", user.UserName);
+
                 preferences = UserPreferences.GetDefaultPreferences(user.UserId);
             }
 

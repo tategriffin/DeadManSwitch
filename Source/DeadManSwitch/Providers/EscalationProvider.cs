@@ -15,9 +15,9 @@ namespace DeadManSwitch.Providers
     {
         private static Logger logger = LogManager.GetCurrentClassLogger(); 
         
-        private IEscalationRepository EscalationRepository;
-        private UserEscalationProcedureProvider UserEscalationProcedureProvider;
-        private ApplicationSettingsProvider AppSettingsPvdr;
+        private readonly IEscalationRepository EscalationRepository;
+        private readonly UserEscalationProcedureProvider UserEscalationProcedureProvider;
+        private readonly ApplicationSettingsProvider AppSettingsPvdr;
 
         public EscalationProvider(IUnityContainer container)
         {
@@ -52,7 +52,7 @@ namespace DeadManSwitch.Providers
                 //Clean start
                 this.EscalationRepository.RemoveByUser(userId);
 
-                DateTime startTime = DateTime.UtcNow.AddMinutes(-1).ToMinutePrecision();
+                DateTime startTime = DateTime.UtcNow.ToMinutePrecision();
                 if (delayStartTime.HasValue && delayStartTime.Value.TotalMilliseconds > 0)
                 {
                     startTime = startTime.Add(delayStartTime.Value).ToMinutePrecision();

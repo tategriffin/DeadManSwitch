@@ -21,6 +21,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
             persistentRows.Add(UserAccountTableRow.CreateRow("testuser", "test@test.com", "test", "user", "123"));
             persistentRows.Add(UserAccountTableRow.CreateRow("UserProviderUnitTestUser", "UserProviderUnitTestUser@test.com", "UserProviderUnitTest", "user", "1234"));
+            persistentRows.Add(UserAccountTableRow.CreateRow("UserPreferenceProviderUnitTestUser", "UserProviderUnitTestUser@test.com", "UserProviderUnitTest", "user", "1234"));
 
             return persistentRows;
         }

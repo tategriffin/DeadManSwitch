@@ -50,6 +50,24 @@ namespace DeadManSwitch
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            bool areEqual = false;
+
+            var other = obj as UserPreferences;
+            if (other != null)
+            {
+                areEqual = (TzInfo.Equals(other.TzInfo) &&
+                            EarlyCheckInOffset.EqualHourAndMinutes(other.EarlyCheckInOffset));
+            }
+
+            return areEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            return ((int)TzInfo.BaseUtcOffset.TotalMinutes)*((int)EarlyCheckInOffset.TotalMinutes);
+        }
 
         public static UserPreferences GetDefaultPreferences()
         {
