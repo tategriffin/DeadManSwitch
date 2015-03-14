@@ -18,8 +18,8 @@ namespace DeadManSwitch.Providers
     /// </remarks>
     public class UserEscalationProcedureProvider
     {
-        private IUnityContainer Container;
-        private IUserEscalationProcedureRepository UserEscalationProceduresRepository;
+        private readonly IUnityContainer Container;
+        private readonly IUserEscalationProcedureRepository UserEscalationProceduresRepository;
 
         public UserEscalationProcedureProvider(IUnityContainer container)
         {

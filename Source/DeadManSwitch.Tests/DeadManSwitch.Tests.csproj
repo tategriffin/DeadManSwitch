@@ -75,6 +75,7 @@
     <Compile Include="KillSwitchProviderTests.cs" />
     <Compile Include="DailyScheduleTests.cs" />
     <Compile Include="TestIoCConfig.cs" />
+    <Compile Include="UserEscalationProcedureProviderTests.cs" />
     <Compile Include="UserPreferenceProviderTests.cs" />
     <Compile Include="UserProviderTests.cs" />
   </ItemGroup>

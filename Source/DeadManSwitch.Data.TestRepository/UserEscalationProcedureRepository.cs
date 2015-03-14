@@ -69,7 +69,8 @@ namespace DeadManSwitch.Data.TestRepository
                 .Where(r => r.UserId == userEscalationProcedures.UserId);
 
             //Delete existing
-            foreach (var item in existingRows)
+            var itemsToDelete = existingRows.ToList();
+            foreach (var item in itemsToDelete)
             {
                 Context.UserEscalationActions.Remove(item);
             }
@@ -87,7 +88,7 @@ namespace DeadManSwitch.Data.TestRepository
             this.ClearEscalationWorkTableByCheckingInUser(userEscalationTask.UserId, nextCheckInDateTime);
 
             var existingTask = Context.UserEscalationActions.SingleOrDefault(t => t.Id == userEscalationTask.Id);
-            if (existingTask == null)
+            if (existingTask != null)
             {
                 Context.UserEscalationActions.Remove(userEscalationTask);
             }
