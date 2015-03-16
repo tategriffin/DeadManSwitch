@@ -8,10 +8,8 @@ using DeadManSwitch.Schedule;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class ScheduleDailyTable : Table<DailySchedule>
+    internal class ScheduleDailyTable : TableWithId<DailySchedule>
     {
-        private int TableRowIdentity;
-
         public ScheduleDailyTable()
         {
             AddRange(BuildPersistentRows());
@@ -19,7 +17,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         public override void Add(DailySchedule item)
         {
-            item.Id = ++TableRowIdentity;
+            item.Id = GetNextIdentity();
 
             base.Add(item);
         }
@@ -44,8 +42,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
             DateTime checkInStartTime = checkInTime.AddMinutes(-30);
             persistentRows.Add(
                 new DailySchedule(true) 
-                { 
-                    Id=++TableRowIdentity,
+                {
                     UserId = 1,
                     Name = "UserId1Schedule1",
                     CheckInTime = new TimeSpan(checkInTime.Hour, checkInTime.Minute, 0),

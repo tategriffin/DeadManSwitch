@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class UserAccountTable : Table<UserAccountTableRow>
+    internal class UserAccountTable : TableWithId<UserAccountTableRow>
     {
-        private int TableKeyIdentity;
-
         public UserAccountTable()
         {
             AddRange(BuildPersistentRows());
@@ -28,7 +26,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         public override void Add(UserAccountTableRow item)
         {
-            item.Data.UserId = ++TableKeyIdentity;
+            item.Data.UserId = GetNextIdentity();
             base.Add(item);
         }
     }

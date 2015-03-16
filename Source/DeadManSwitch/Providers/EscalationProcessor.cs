@@ -49,8 +49,8 @@ namespace DeadManSwitch.Providers
                 }
                 finally
                 {
-                    IsProcessing = false;
                     logger.Debug("Finished processing.");
+                    IsProcessing = false;
                 }
             }
         }
@@ -126,13 +126,13 @@ namespace DeadManSwitch.Providers
             if (workItem.Action == null) throw new ArgumentNullException("workItem.Action for workItem ID: " + workItem.Id);
 
             bool result = false;
-            logger.Debug(string.Format("Start executing workItem {0}", workItem));
+            logger.Debug("Start executing workItem {0}", workItem);
 
             ActionFactory factory = new ActionFactory();
             IEscalationWorkItemProcessor itemProcessor = factory.CreateWorkItemProcessor(workItem.Action.ActionType);
             result = itemProcessor.Execute(workItem, this.Container);
 
-            logger.Debug(string.Format("Finish executing workItem {0}", workItem));
+            logger.Debug("Finish executing workItem {0}", workItem);
             return result;
         }
     }

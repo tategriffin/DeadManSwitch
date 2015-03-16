@@ -12,6 +12,8 @@ namespace DeadManSwitch.Data.TestRepository
         public EscalationRepository(RepositoryContext context)
             :base(context) { }
 
+        public Guid ContextId { get { return Context.Id; } }
+
         public void Add(IEnumerable<Action.EscalationWorkItem> actions)
         {
             DateTime utcNow = DateTime.UtcNow;
@@ -33,8 +35,7 @@ namespace DeadManSwitch.Data.TestRepository
         {
             Tables.EscalationWorkTableRow existingItem =
                 Context.EscalationWorkItems
-                .Where(w => w.Data.Id == workItem.Id)
-                .SingleOrDefault();
+                .Single(w => w.Data.Id == workItem.Id);
 
             if (existingItem != null)
             {
@@ -46,8 +47,7 @@ namespace DeadManSwitch.Data.TestRepository
         {
             Tables.EscalationWorkTableRow existingItem =
                 Context.EscalationWorkItems
-                .Where(w => w.Data.Id == workItem.Id)
-                .SingleOrDefault();
+                .Single(w => w.Data.Id == workItem.Id);
 
             if (existingItem != null)
             {
@@ -92,6 +92,13 @@ namespace DeadManSwitch.Data.TestRepository
             }
 
             return lockedItem;
+        }
+
+        public List<Tables.EscalationWorkTableRow> All()
+        {
+            return
+                Context.EscalationWorkItems
+                .ToList();
         }
 
         public List<Tables.EscalationWorkTableRow> FindByUserId(int userId)

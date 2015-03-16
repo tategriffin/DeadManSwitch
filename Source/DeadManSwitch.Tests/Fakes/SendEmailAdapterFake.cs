@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ExternalServiceAdapters;
 
@@ -17,6 +18,22 @@ namespace DeadManSwitch.Tests.Fakes
             if (String.IsNullOrWhiteSpace(body)) throw new ArgumentNullException("body", "body cannot be null or empty.");
 
             return true;
+        }
+    }
+
+    internal class SendEmailAlwaysFailsAdapterFake : ISendEmailAdapter
+    {
+        public bool SendEmail(string from, string to, string subject, string body)
+        {
+            return false;
+        }
+    }
+
+    internal class SendEmailThrowsExAdapterFake : ISendEmailAdapter
+    {
+        public bool SendEmail(string from, string to, string subject, string body)
+        {
+            throw new Exception("Send email always throws exception for this test.");
         }
     }
 }

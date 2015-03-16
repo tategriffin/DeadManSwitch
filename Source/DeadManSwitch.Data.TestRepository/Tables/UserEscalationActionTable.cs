@@ -7,10 +7,8 @@ using DeadManSwitch.Action;
 
 namespace DeadManSwitch.Data.TestRepository.Tables
 {
-    internal class UserEscalationActionTable : Table<DeadManSwitch.Action.UserEscalationTask>
+    internal class UserEscalationActionTable : TableWithId<DeadManSwitch.Action.UserEscalationTask>
     {
-        private int TableKeyIdentity;
-
         public UserEscalationActionTable()
         {
             AddRange(BuildPersistentRows());
@@ -18,7 +16,7 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
         public override void Add(UserEscalationTask item)
         {
-            item.Id = ++TableKeyIdentity;
+            item.Id = GetNextIdentity();
             base.Add(item);
         }
 

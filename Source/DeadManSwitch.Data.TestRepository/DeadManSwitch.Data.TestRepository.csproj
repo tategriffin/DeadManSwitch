@@ -48,6 +48,7 @@
     <Compile Include="CheckInRepository.cs" />
     <Compile Include="DailyScheduleRepository.cs" />
     <Compile Include="EscalationRepository.cs" />
+    <Compile Include="IgnoreCheckInRepository.cs" />
     <Compile Include="KillSwitchRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceDataRepository.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Tables\KillSwitchTable.cs" />
     <Compile Include="Tables\ScheduleDailyTable.cs" />
     <Compile Include="Tables\Table.cs" />
+    <Compile Include="Tables\TableWithId.cs" />
     <Compile Include="Tables\UserAccountTable.cs" />
     <Compile Include="Tables\UserEscalationActionTable.cs" />
     <Compile Include="Tables\UserPreferenceTable.cs" />
