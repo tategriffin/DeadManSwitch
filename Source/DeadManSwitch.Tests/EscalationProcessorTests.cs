@@ -70,6 +70,25 @@ namespace DeadManSwitch.Tests
             };
         }
 
+        /// <summary>
+        /// EscalationProcessor.Execute will only allow one instance to execute at a time.
+        /// This is the behavior we want for production, but for these tests, the 
+        /// escalation repositories are isolated per test, so we need to call execute for each test.
+        /// Tests are multi-threaded, so one Execute may not complete before the next test calls Execute.
+        /// When that happens, Execute is skipped, and the expected escalation items are not added
+        /// to the repository, causing the test to fail.
+        /// </summary>
+        private void RetryExecute(EscalationProcessor cut, EscalationRepository escalationRepository)
+        {
+            do
+            {
+                int milliseconds = new Random().Next(5, 10);
+                Thread.Sleep(milliseconds);
+
+                cut.Execute();
+            } while (escalationRepository.All().Count == 0);
+        }
+
         [TestMethod]
         public void EscalationProcessorExecute_CallsEscalationProiderRecordActionSuccess_WhenActionSucceeds()
         {
@@ -87,11 +106,10 @@ namespace DeadManSwitch.Tests
             var user = userProvider.FindByUserName(testUserName);
             var procedureProvider = new EscalationProvider(container);
             procedureProvider.StartUserEscalationProcedures(user.UserId);
-            Thread.Sleep(5);
 
             var cut = new EscalationProcessor(container);
             //Act
-            cut.Execute();
+            RetryExecute(cut, escalationRepository);
 
             //Assert
             var workItemRows = escalationRepository.FindByUserId(user.UserId);
@@ -121,11 +139,10 @@ namespace DeadManSwitch.Tests
             var user = userProvider.FindByUserName(testUserName);
             var procedureProvider = new EscalationProvider(container);
             procedureProvider.StartUserEscalationProcedures(user.UserId);
-            Thread.Sleep(5);
 
             var cut = new EscalationProcessor(container);
             //Act
-            cut.Execute();
+            RetryExecute(cut, escalationRepository);
 
             //Assert
             var workItemRows = escalationRepository.FindByUserId(user.UserId);
@@ -154,11 +171,10 @@ namespace DeadManSwitch.Tests
             var user = userProvider.FindByUserName(testUserName);
             var procedureProvider = new EscalationProvider(container);
             procedureProvider.StartUserEscalationProcedures(user.UserId);
-            Thread.Sleep(5);
 
             var cut = new EscalationProcessor(container);
             //Act
-            cut.Execute();
+            RetryExecute(cut, escalationRepository);
 
             //Assert
             var workItemRows = escalationRepository.FindByUserId(user.UserId);

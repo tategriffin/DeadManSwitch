@@ -12,8 +12,6 @@ namespace DeadManSwitch.Data.TestRepository
         public EscalationRepository(RepositoryContext context)
             :base(context) { }
 
-        public Guid ContextId { get { return Context.Id; } }
-
         public void Add(IEnumerable<Action.EscalationWorkItem> actions)
         {
             DateTime utcNow = DateTime.UtcNow;

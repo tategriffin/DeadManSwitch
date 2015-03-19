@@ -22,7 +22,6 @@ namespace DeadManSwitch.Data.TestRepository.Tables
         public bool? Success { get; set; }
         public int NumberOfFailures { get; set; }
 
-#if DEBUG
         public override string ToString()
         {
             string result;
@@ -51,7 +50,6 @@ namespace DeadManSwitch.Data.TestRepository.Tables
 
             return instanceValues.ToString();
         }
-#endif
 
     }
 
