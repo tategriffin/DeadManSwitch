@@ -24,7 +24,7 @@ namespace DeadManSwitch.Data.TestRepository
 
         public IList<MissedCheckIn> FindMissedCheckInsNeedingEscalation(int limit, TimeSpan retryLockTimeout, int maxRetries)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("IgnoreCheckInRepository never has check-ins.");
         }
     }
 }

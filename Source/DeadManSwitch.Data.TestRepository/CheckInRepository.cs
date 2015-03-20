@@ -12,7 +12,7 @@ namespace DeadManSwitch.Data.TestRepository
         public CheckInRepository(RepositoryContext context)
             :base(context) { }
 
-        public void RecordCheckIn(int userId, DateTime checkInDateTime, DateTime? nextCheckInDateTime)
+        public virtual void RecordCheckIn(int userId, DateTime checkInDateTime, DateTime? nextCheckInDateTime)
         {
             Tables.CheckInTableRow existingRow =
                 Context.CheckIns
@@ -68,21 +68,29 @@ namespace DeadManSwitch.Data.TestRepository
         {
             List<MissedCheckIn> missedCheckIns = new List<MissedCheckIn>();
 
-            //DateTime utcNow = DateTime.UtcNow;
-            //IEnumerable<Tables.CheckInTableRow> foundRows =
-            //    Tables.CheckInTable.Rows
-            //    .Where(r => r.NextCheckIn.HasValue && r.NextCheckIn.Value < utcNow)
-            //    .Take(limit);
+            DateTime utcNow = DateTime.UtcNow;
+            var rows =
+                Context.CheckIns
+                    .Where(r =>
+                        r.NextCheckIn.HasValue && r.NextCheckIn.Value < utcNow
+                        && (r.LastCheckIn.HasValue == false || r.LastCheckIn.Value < r.NextCheckIn.Value)
+                    )
+                    .ToList();
 
-            //foreach (Tables.CheckInTableRow row in foundRows)
-            //{
-            //    MissedCheckIn item = new MissedCheckIn();
-            //    item.UserId = row.UserId;
-            //    item.ExpectedCheckIn = row.NextCheckIn.Value;
-            //    item.LastCheckIn = row.LastCheckIn;
+            foreach (var checkInTableRow in rows)
+            {
+                var escalationRow = Context.EscalationWorkItems.FirstOrDefault(w => w.Data.UserId == checkInTableRow.UserId);
 
-            //    missedCheckIns.Add(item);
-            //}
+                if (escalationRow != null)
+                {
+                    MissedCheckIn item = new MissedCheckIn();
+                    item.UserId = checkInTableRow.UserId;
+                    item.ExpectedCheckIn = checkInTableRow.NextCheckIn.Value;
+                    item.LastCheckIn = checkInTableRow.LastCheckIn;
+
+                    missedCheckIns.Add(item);
+                }
+            }
 
             return missedCheckIns;
         }
