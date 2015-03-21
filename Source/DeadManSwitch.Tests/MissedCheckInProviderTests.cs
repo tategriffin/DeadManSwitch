@@ -73,7 +73,7 @@ namespace DeadManSwitch.Tests
             var actual = cut.FindNextUnEscalatedMissedCheckIn();
 
             //Assert
-            Assert.IsNull(actual);
+            Assert.IsNotNull(actual);
         }
 
     }

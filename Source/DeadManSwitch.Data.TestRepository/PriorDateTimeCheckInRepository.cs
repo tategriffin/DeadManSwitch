@@ -17,11 +17,11 @@ namespace DeadManSwitch.Data.TestRepository
 
         public override void RecordCheckIn(int userId, DateTime checkInDateTime, DateTime? nextCheckInDateTime)
         {
-            DateTime modifiedCheckIn = checkInDateTime.AddDays(-1);
+            DateTime modifiedCheckIn = checkInDateTime.AddHours(-25);
             DateTime? modifiedNextCheckIn = null;
             if (nextCheckInDateTime.HasValue)
             {
-                modifiedNextCheckIn = nextCheckInDateTime.Value.AddDays(-1);
+                modifiedNextCheckIn = nextCheckInDateTime.Value.AddHours(-25);
             }
 
             base.RecordCheckIn(userId, modifiedCheckIn, modifiedNextCheckIn);

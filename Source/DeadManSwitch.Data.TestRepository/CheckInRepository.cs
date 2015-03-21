@@ -81,7 +81,7 @@ namespace DeadManSwitch.Data.TestRepository
             {
                 var escalationRow = Context.EscalationWorkItems.FirstOrDefault(w => w.Data.UserId == checkInTableRow.UserId);
 
-                if (escalationRow != null)
+                if (escalationRow == null)
                 {
                     MissedCheckIn item = new MissedCheckIn();
                     item.UserId = checkInTableRow.UserId;

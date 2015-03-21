@@ -70,6 +70,7 @@
     <Compile Include="EscalationProviderTests.cs" />
     <Compile Include="Fakes\SendEmailAdapterFake.cs" />
     <Compile Include="Fakes\SendSMSAdapterFake.cs" />
+    <Compile Include="MissedCheckInProcessorTests.cs" />
     <Compile Include="MissedCheckInProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CheckInProviderTests.cs" />
