@@ -40,7 +40,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
             string value = EncryptCookieValue(userName);
             if (!string.IsNullOrWhiteSpace(value))
             {
-                cookie = new HttpCookie(LastLoginCookieKey, value) { Expires = expiration };
+                cookie = new HttpCookie(LastLoginCookieKey, value) { Expires = expiration, HttpOnly = true};
             }
 
             return cookie;
