@@ -18,6 +18,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
             logger.Trace("start");
             logger.Info("ApplicationStart");
 
+            MvcHandler.DisableMvcResponseHeader = true;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
