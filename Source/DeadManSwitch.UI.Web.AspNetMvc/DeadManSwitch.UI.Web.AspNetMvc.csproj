@@ -189,6 +189,7 @@
     <Compile Include="App_Start\UnityDependencyResolver.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActionController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -319,6 +320,8 @@
     <Content Include="Views\Account\ProfileEdit.cshtml" />
     <Content Include="Views\Account\PreferenceEdit.cshtml" />
     <Content Include="Views\Task\Escalate.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\ServerError.cshtml" />
     <None Include="Web.ArvixeProd.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

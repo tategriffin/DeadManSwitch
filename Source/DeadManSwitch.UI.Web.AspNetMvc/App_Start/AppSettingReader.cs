@@ -12,7 +12,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
     {
         public string GetSetting(string key)
         {
-            if(ConfigurationManager.AppSettings.AllKeys.Contains(key) == false) throw new Exception(string.Format("Application Setting {0} does not exist.", key));
+            if(ConfigurationManager.AppSettings.AllKeys.Contains(key) == false) throw new Exception(string.Format("Application Setting {0} does not exist and no default value was specified.", key));
 
             return MappedSettingValue(key, ConfigurationManager.AppSettings[key]);
         }
