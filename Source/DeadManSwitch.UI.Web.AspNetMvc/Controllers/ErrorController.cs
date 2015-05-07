@@ -12,7 +12,8 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         public ActionResult NotFound()
         {
             Response.StatusCode = (int)System.Net.HttpStatusCode.NotFound;
-            
+            Response.TrySkipIisCustomErrors = true;
+
             return View();
         }
 
@@ -20,6 +21,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         public ActionResult ServerError()
         {
             Response.StatusCode = (int) System.Net.HttpStatusCode.InternalServerError;
+            Response.TrySkipIisCustomErrors = true;
 
             return View();
         }

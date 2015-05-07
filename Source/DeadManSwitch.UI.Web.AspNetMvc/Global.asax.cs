@@ -58,5 +58,14 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
                 logger.Fatal("Primary Exception: {0}; Secondary Exception: {1}", ex, secondaryEx);
             }
         }
+
+        protected void Application_PreSendRequestHeaders()
+        {
+            Response.Headers.Remove("Server");
+            Response.Headers.Remove("X-AspNet-Version");
+            Response.Headers.Remove("X-AspNetMvc-Version");
+
+            Response.AddHeader("X-Frame-Options", "DENY");
+        }
     }
 }
