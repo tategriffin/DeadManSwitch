@@ -8,9 +8,9 @@ namespace DeadManSwitch.Service
 {
     public interface IScheduleService
     {
-        List<ISchedule> SearchAllSchedulesByUser(string userName);
+        Task<List<ISchedule>> SearchAllSchedulesByUserAsync(string userName);
 
-        void DeleteSchedule(string userName, int scheduleTypeId, int scheduleId);
+        Task DeleteScheduleAsync(string userName, int scheduleTypeId, int scheduleId);
 
         IDailyScheduleService DailyScheduleService { get; }
     }

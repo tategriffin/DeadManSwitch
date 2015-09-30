@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net45": {
+      "wrappedProject": "../../SmtpSvcBridge.csproj",
+      "bin": {
+        "assembly": "../../obj/{configuration}/SmtpSvcBridge.dll",
+        "pdb": "../../obj/{configuration}/SmtpSvcBridge.pdb"
+      },
+      "dependencies": {
+        "DeadManSwitch": "1.0.0-*",
+        "ExternalServiceAdapters": "1.0.0-*"
+      }
+    }
+  }
+}

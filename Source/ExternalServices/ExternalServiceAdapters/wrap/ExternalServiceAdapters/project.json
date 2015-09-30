@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net45": {
+      "wrappedProject": "../../ExternalServiceAdapters.csproj",
+      "bin": {
+        "assembly": "../../obj/{configuration}/ExternalServiceAdapters.dll",
+        "pdb": "../../obj/{configuration}/ExternalServiceAdapters.pdb"
+      }
+    }
+  }
+}

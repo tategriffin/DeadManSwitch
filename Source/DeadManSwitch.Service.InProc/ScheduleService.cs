@@ -14,14 +14,14 @@ namespace DeadManSwitch.Service
 {
     public class ScheduleService : IScheduleService
     {
-        private UserProvider UserProvider;
-        private ScheduleProvider ScheduleProvider;
+        private readonly UserProvider UserProvider;
+        private readonly ScheduleProvider ScheduleProvider;
 
-        private IDailyScheduleService DailyScheduleSvc;
+        private readonly IDailyScheduleService DailyScheduleSvc;
 
         public ScheduleService(IUnityContainer container)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            if (container == null) throw new ArgumentNullException(nameof(container));
 
             this.UserProvider = new UserProvider(container);
             this.ScheduleProvider = new ScheduleProvider(container);
@@ -33,17 +33,29 @@ namespace DeadManSwitch.Service
         public IDailyScheduleService DailyScheduleService { get { return this.DailyScheduleSvc; } }
 
 
+        public Task<List<ISchedule>> SearchAllSchedulesByUserAsync(string userName)
+        {
+            return Task.FromResult(SearchAllSchedulesByUser(userName));
+        }
+
         public List<ISchedule> SearchAllSchedulesByUser(string userName)
         {
-            if (String.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException("userName", "userName cannot be null or empty.");
+            if (String.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName), "userName cannot be null or empty.");
 
             var existingUser = UserProvider.FindByUserName(userName);
             return this.ScheduleProvider.GetAllUserSchedules(existingUser).ToServiceInterfaceList();
         }
 
+        public Task DeleteScheduleAsync(string userName, int scheduleTypeId, int scheduleId)
+        {
+            DeleteSchedule(userName, scheduleTypeId, scheduleId);
+
+            return Task.CompletedTask;
+        }
+
         public void DeleteSchedule(string userName, int scheduleTypeId, int scheduleId)
         {
-            string exceptionMsg = string.Format("The specified schedule recurrence interval {0} is not supported.", scheduleTypeId);
+            string exceptionMsg = $"The specified schedule recurrence interval {scheduleTypeId} is not supported.";
 
             //TODO: Invert this functionality to ask known types if they can handle the specified schedule type
             try
@@ -52,7 +64,7 @@ namespace DeadManSwitch.Service
                 switch (interval)
                 {
                     case RecurrenceInterval.Daily:
-                        this.DailyScheduleSvc.Delete(userName, scheduleId);
+                        this.DailyScheduleSvc.DeleteAsync(userName, scheduleId);
                         break;
 
                     default:

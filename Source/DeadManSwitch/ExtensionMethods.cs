@@ -8,11 +8,6 @@ namespace DeadManSwitch
 {
     public static class StringExtensions
     {
-        public static string Inject(this string formattedString, params object[] args)
-        {
-            return string.Format(formattedString, args);
-        }
-
         public static void AddIfNonEmpty(this List<string> list, string item)
         {
             if (string.IsNullOrWhiteSpace(item) == false)

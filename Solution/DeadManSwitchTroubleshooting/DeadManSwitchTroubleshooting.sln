@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch", "..\..\Source\DeadManSwitch\DeadManSwitch.csproj", "{4A666508-2F13-4098-AC32-A477CC4567B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Tests", "..\..\Source\DeadManSwitch.Tests\DeadManSwitch.Tests.csproj", "{EA292CDB-5C48-4E2C-BE9A-D3CABFFEF9D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Data.TestRepository", "..\..\Source\DeadManSwitch.Data.TestRepository\DeadManSwitch.Data.TestRepository.csproj", "{F6BDAFCD-EAD9-4418-950F-A199FC64B88C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCuttingConcerns", "CrossCuttingConcerns", "{C86EEDF7-E60B-46BE-8EF0-9EE275449D9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Core", "..\..\Source\CrossCuttingConcerns\DeadManSwitch.Core\DeadManSwitch.Core.csproj", "{AE4B229C-9825-4CA1-B878-E15BDA9C4519}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Configuration", "..\..\Source\CrossCuttingConcerns\DeadManSwitch.Configuration\DeadManSwitch.Configuration.csproj", "{61DF0198-7DDB-489E-BE50-131CB3205D0B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalServices", "ExternalServices", "{538E8C96-6919-49B7-ADE1-1483B9FE578E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalServiceAdapters", "..\..\Source\ExternalServices\ExternalServiceAdapters\ExternalServiceAdapters.csproj", "{87134447-D20C-4568-9F03-6FF211046BEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A666508-2F13-4098-AC32-A477CC4567B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A666508-2F13-4098-AC32-A477CC4567B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A666508-2F13-4098-AC32-A477CC4567B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A666508-2F13-4098-AC32-A477CC4567B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA292CDB-5C48-4E2C-BE9A-D3CABFFEF9D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA292CDB-5C48-4E2C-BE9A-D3CABFFEF9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA292CDB-5C48-4E2C-BE9A-D3CABFFEF9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA292CDB-5C48-4E2C-BE9A-D3CABFFEF9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6BDAFCD-EAD9-4418-950F-A199FC64B88C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6BDAFCD-EAD9-4418-950F-A199FC64B88C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6BDAFCD-EAD9-4418-950F-A199FC64B88C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6BDAFCD-EAD9-4418-950F-A199FC64B88C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4B229C-9825-4CA1-B878-E15BDA9C4519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4B229C-9825-4CA1-B878-E15BDA9C4519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4B229C-9825-4CA1-B878-E15BDA9C4519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4B229C-9825-4CA1-B878-E15BDA9C4519}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DF0198-7DDB-489E-BE50-131CB3205D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DF0198-7DDB-489E-BE50-131CB3205D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DF0198-7DDB-489E-BE50-131CB3205D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DF0198-7DDB-489E-BE50-131CB3205D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87134447-D20C-4568-9F03-6FF211046BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87134447-D20C-4568-9F03-6FF211046BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87134447-D20C-4568-9F03-6FF211046BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87134447-D20C-4568-9F03-6FF211046BEA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AE4B229C-9825-4CA1-B878-E15BDA9C4519} = {C86EEDF7-E60B-46BE-8EF0-9EE275449D9C}
+		{61DF0198-7DDB-489E-BE50-131CB3205D0B} = {C86EEDF7-E60B-46BE-8EF0-9EE275449D9C}
+		{87134447-D20C-4568-9F03-6FF211046BEA} = {538E8C96-6919-49B7-ADE1-1483B9FE578E}
+	EndGlobalSection
+EndGlobal

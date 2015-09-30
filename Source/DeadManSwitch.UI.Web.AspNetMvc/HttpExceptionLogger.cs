@@ -18,7 +18,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
 
             if (httpStatusCode >= 400 && httpStatusCode < 500)
             {
-                this.Log4xxRange(ip, httpStatusCode, ex);
+                this.Log400Range(ip, httpStatusCode, ex);
             }
             else if (httpStatusCode >= 500)
             {
@@ -30,7 +30,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
             }
         }
 
-        private void Log4xxRange(string ip, int httpStatusCode, HttpException ex)
+        private void Log400Range(string ip, int httpStatusCode, HttpException ex)
         {
             switch (httpStatusCode)
             {

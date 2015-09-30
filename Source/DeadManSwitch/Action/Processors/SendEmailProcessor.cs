@@ -34,6 +34,7 @@ namespace DeadManSwitch.Action.Processors
         private bool BuildAndSendEmail(EscalationWorkItem workItem)
         {
             User user = this.UserPvdr.FindById(workItem.UserId);
+            if(user == null) throw new Exception($"UserID '{workItem.UserId}' was not found.");
 
             string from = this.AppSettingsPvdr.EmailMessageFrom();
             string to = workItem.Action.Recipient;

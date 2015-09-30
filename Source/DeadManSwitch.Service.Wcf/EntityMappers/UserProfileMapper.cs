@@ -11,7 +11,7 @@ namespace DeadManSwitch.Service.Wcf
     {
         static UserProfileMapper()
         {
-            Mapper.AddProfile(new UserPreferencesMapperProfile());
+            Mapper.AddProfile(new UserProfileMapperProfile());
         }
 
         public static DeadManSwitch.Service.UserProfile ToServiceEntity(this DeadManSwitch.Service.Wcf.UserProfile source)

@@ -81,7 +81,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
 
         private static string BuildCookiePurpose(string userName)
         {
-            return string.Format("Reauthenticate {0}", userName);
+            return $"Reauthenticate {userName}";
         }
 
     }

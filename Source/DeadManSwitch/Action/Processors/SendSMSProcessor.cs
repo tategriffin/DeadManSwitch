@@ -34,6 +34,7 @@ namespace DeadManSwitch.Action.Processors
         private bool BuildAndSendSMS(EscalationWorkItem workItem)
         {
             User user = this.UserPvdr.FindById(workItem.UserId);
+            if (user == null) throw new Exception($"UserID '{workItem.UserId}' was not found.");
 
             string from = this.AppSettingsPvdr.SMSMessageFrom();
             string to = workItem.Action.Recipient;

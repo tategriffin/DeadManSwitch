@@ -51,44 +51,16 @@ namespace DeadManSwitch.Providers
 
         public User FindById(int userId)
         {
-            User user;
-            if (TryFindById(userId, out user))
-            {
-                return user;
-            }
-            else
-            {
-                throw new Exception("UserID '{0}' was not found.".Inject(userId));
-            }
-        }
-
-        public bool TryFindById(int userId, out User user)
-        {
             if (0 == userId) { throw new ArgumentException("userId is not valid."); }
-            user = this.AcctRepository.FindAccount(userId);
 
-            return (user != null);
+            return AcctRepository.FindAccount(userId);
         }
 
         public User FindByUserName(string userName)
         {
-            User user;
-            if (TryFindByUserName(userName, out user))
-            {
-                return user;
-            }
-            else
-            {
-                throw new Exception("User '{0}' was not found.".Inject(userName));
-            }
-        }
-
-        public bool TryFindByUserName(string userName, out User user)
-        {
             if (String.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException("userName", "userName cannot be null or empty.");
-            user = this.AcctRepository.FindAccount(userName);
 
-            return (user != null);
+            return AcctRepository.FindAccount(userName);
         }
 
         public bool UserNameExists(string userName)
@@ -142,7 +114,7 @@ namespace DeadManSwitch.Providers
             {
                 if (this.UserNameExists(user.UserName))
                 {
-                    validationMessages.Add("The username '{0}' already exists.".Inject(user.UserName));
+                    validationMessages.Add($"The username '{user.UserName}' already exists.");
                 }
             }
 
@@ -177,7 +149,7 @@ namespace DeadManSwitch.Providers
             }
             else
             {
-                return "'{0}' is not a valid email address.".Inject(email);
+                return $"'{email}' is not a valid email address.";
             }
         }
 

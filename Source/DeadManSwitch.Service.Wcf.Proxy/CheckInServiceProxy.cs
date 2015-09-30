@@ -11,6 +11,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
     {
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
+        public Task<Service.CheckInInfo> CheckInUserAsync(string userName)
+        {
+            return Task.FromResult(CheckInUser(userName));
+        }
+
         public Service.CheckInInfo CheckInUser(string userName)
         {
             var client = new CheckInService.CheckInServiceClient();
@@ -47,6 +52,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                     client.Close();
                 }
             }
+        }
+
+        public Task<Service.CheckInInfo> FindLastUserCheckInAsync(string userName)
+        {
+            return Task.FromResult(FindLastUserCheckIn(userName));
         }
 
         public Service.CheckInInfo FindLastUserCheckIn(string userName)
@@ -86,5 +96,6 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                 }
             }
         }
+
     }
 }

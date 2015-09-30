@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DeadManSwitch.Service;
@@ -27,9 +28,10 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Action/
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = new UserActionListModel(ActionSvc.FindAllEscalationStepsByUserName(User.Identity.Name).ToUiViewModelList());
+            var steps = await ActionSvc.FindAllEscalationStepsByUserNameAsync(User.Identity.Name);
+            var model = new UserActionListModel(steps.ToUiViewModelList());
 
             return View(model);
         }
@@ -37,16 +39,16 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // POST: /Action/Reorder
         [HttpPost]
-        public ActionResult Reorder(IEnumerable<int> stepOrder)
+        public async Task<ActionResult> Reorder(IEnumerable<int> stepOrder)
         {
             try
             {
                 //TODO: This is inefficient. Implement client logic to change text on first item if necessary
-                List<EscalationStep> existingSteps = ActionSvc.FindAllEscalationStepsByUserName(User.Identity.Name);
-                if (!existingSteps.Any()) throw new Exception(string.Format("No existing execution steps found for user {0}", User.Identity.Name));
+                List<EscalationStep> existingSteps = await ActionSvc.FindAllEscalationStepsByUserNameAsync(User.Identity.Name);
+                if (!existingSteps.Any()) throw new Exception($"No existing execution steps found for user {User.Identity.Name}");
 
                 EscalationStep previousFirstStep = existingSteps.Single(s => s.Number == 1);
-                List<EscalationStep> reorderedEscalationSteps = ActionSvc.ReorderEscalationSteps(User.Identity.Name, stepOrder);
+                List<EscalationStep> reorderedEscalationSteps = await ActionSvc.ReorderEscalationStepsAsync(User.Identity.Name, stepOrder);
 
                 if (previousFirstStep.Id == reorderedEscalationSteps.Single(s => s.Number == 1).Id)
                 {
@@ -67,9 +69,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Action/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            var model = ModelBuilder.BuildCreateModel(User.Identity.Name);
+            var model = await ModelBuilder.BuildCreateModelAsync(User.Identity.Name);
 
             return View("Modify", model);
         }
@@ -77,19 +79,19 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // POST: /Action/Create
         [HttpPost]
-        public ActionResult Create(UserActionEditModel model)
+        public async Task<ActionResult> Create(UserActionEditModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    ActionSvc.SaveEscalationStep(User.Identity.Name, model.ToServiceEntity());
+                    await ActionSvc.SaveEscalationStepAsync(User.Identity.Name, model.ToServiceEntity());
 
                     return RedirectToAction("Index");
                 }
 
                 //model state is not valid, so render the page again, keeping user data
-                ModelBuilder.PopulateModelNonPersistentInfo(model);
+                await ModelBuilder.PopulateModelNonPersistentInfoAsync(model);
                 return View("Modify", model);
             }
             catch(Exception ex)
@@ -101,35 +103,35 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Action/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var step = ActionSvc.FindAllEscalationStepsByUserName(User.Identity.Name).SingleOrDefault(s => s.Id == id);
+            var step = await ActionSvc.FindEscalationStepByIdAsync(User.Identity.Name, id);
             if (step == null)
             {
                 Log.Warn("Step ID: {0} was not found for user {1}.", id, User.Identity.Name);
                 return RedirectToAction("Create");
             }
 
-            UserActionEditModel model = ModelBuilder.BuildEditModel(step);
+            UserActionEditModel model = await ModelBuilder.BuildEditModelAsync(step);
             return View("Modify", model);
         }
 
         //
         // POST: /Action/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, UserActionEditModel stepModel)
+        public async Task<ActionResult> Edit(int id, UserActionEditModel stepModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    ActionSvc.SaveEscalationStep(User.Identity.Name, stepModel.ToServiceEntity());
+                    await ActionSvc.SaveEscalationStepAsync(User.Identity.Name, stepModel.ToServiceEntity());
 
                     return RedirectToAction("Index");
                 }
 
                 //model state is not valid, so render the page again, keeping user data
-                ModelBuilder.PopulateModelNonPersistentInfo(stepModel);
+                await ModelBuilder.PopulateModelNonPersistentInfoAsync(stepModel);
                 return View("Modify", stepModel);
             }
             catch(Exception ex)
@@ -142,11 +144,11 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // POST: /Action/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                ActionSvc.DeleteEscalationStep(User.Identity.Name, id);
+                await ActionSvc.DeleteEscalationStepAsync(User.Identity.Name, id);
 
                 return Json(new { redirectUrl = Url.Action("Index") });
             }

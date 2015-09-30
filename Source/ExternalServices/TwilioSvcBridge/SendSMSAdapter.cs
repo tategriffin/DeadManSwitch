@@ -29,7 +29,7 @@ namespace TwilioSvcBridge
 
             Twilio.TwilioRestClient client = new Twilio.TwilioRestClient(TwilioSvcAccountId, TwilioSvcAuthToken);
 
-            Twilio.SMSMessage result = client.SendSmsMessage(from, to, message);
+            Twilio.Message result = client.SendMessage(from, to, message);
             if (result == null)
             {
                 throw new Exception(string.Format("Failed sending SMS From: {0}; To: {1}; result==null - Verify accountId and authToken are correct.", from, to));

@@ -400,30 +400,7 @@ namespace DeadManSwitch.Tests
         }
 
         [TestMethod]
-        public void UserProviderFindUserById_ThrowsEx_WhenUserIdIsNotFound()
-        {
-            //Arrange
-            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
-            UserProvider cut = new UserProvider(container);
-            int userId = 45660965;
-
-            try
-            {
-                //Act
-                cut.FindById(userId);
-
-                //Assert
-                Assert.Fail("FindUserById should throw an exception when userId is not found.");
-
-            }
-            catch (Exception)
-            {
-                //Expected. Test passes.
-            }
-        }
-
-        [TestMethod]
-        public void UserProviderTryFindUserById_ReturnsNull_WhenUserIdIsNotFound()
+        public void UserProviderFindUserById_ReturnsNull_WhenUserIdIsNotFound()
         {
             //Arrange
             IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
@@ -431,12 +408,10 @@ namespace DeadManSwitch.Tests
             int userId = 45660965;
 
             //Act
-            User user;
-            var actual = cut.TryFindById(userId, out user);
+            var actual = cut.FindById(userId);
 
             //Assert
-            Assert.IsFalse(actual);
-            Assert.IsNull(user);
+            Assert.IsNull(actual);
         }
 
         [TestMethod]
@@ -463,30 +438,7 @@ namespace DeadManSwitch.Tests
         }
 
         [TestMethod]
-        public void UserProviderFindUserByUserName_ThrowsEx_WhenUserNameIsNotFound()
-        {
-            //Arrange
-            IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
-            UserProvider cut = new UserProvider(container);
-            string userName = "nvyawenalidtaenavbwe";
-
-            try
-            {
-                //Act
-                cut.FindByUserName(userName);
-
-                //Assert
-                Assert.Fail("FindUserByUserName should throw an exception when userName is not found.");
-
-            }
-            catch (Exception)
-            {
-                //Expected. Test passes.
-            }
-        }
-
-        [TestMethod]
-        public void UserProviderTryFindUserByUserName_ReturnsNull_WhenUserNameIsNotFound()
+        public void UserProviderFindUserByUserName_ReturnsNull_WhenUserNameIsNotFound()
         {
             //Arrange
             IUnityContainer container = TestIoCConfig.BuildContainer(new RepositoryContext());
@@ -494,12 +446,10 @@ namespace DeadManSwitch.Tests
             string userName = "nvyawenalidtaenavbwe";
 
             //Act
-            User user;
-            var actual = cut.TryFindByUserName(userName, out user);
+            var actual = cut.FindByUserName(userName);
 
             //Assert
-            Assert.IsFalse(actual);
-            Assert.IsNull(user);
+            Assert.IsNull(actual);
         }
 
         [TestMethod]
@@ -542,7 +492,6 @@ namespace DeadManSwitch.Tests
             cut.CreateAccount(user, pwd);
             var actual = cut.FindByUserName(userName);
             List<string> failureMsgList;
-            const string expected = "User authentication failed.";
 
             //Act
             bool changed = cut.TryChangePassword(actual.UserName, pwd, "newPassword", out failureMsgList);

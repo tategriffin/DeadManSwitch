@@ -96,6 +96,9 @@ namespace DeadManSwitch.Providers
 
         public void ReorderSteps(User user, IEnumerable<int> requestedStepOrder)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (requestedStepOrder == null) throw new ArgumentNullException(nameof(requestedStepOrder));
+
             var existingSteps = FindProceduresByUserId(user.UserId).EscalationList;
             var reorderedSteps = new List<UserEscalationTask>();
 

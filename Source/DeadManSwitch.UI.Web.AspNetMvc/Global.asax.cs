@@ -38,7 +38,6 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
         void Application_Error(object sender, EventArgs e)
         {
             // Code that runs when an unhandled error occurs
-            System.Web.HttpContext context = HttpContext.Current;
             System.Exception ex = Context.Server.GetLastError();
 
             try
@@ -57,15 +56,6 @@ namespace DeadManSwitch.UI.Web.AspNetMvc
             {
                 logger.Fatal("Primary Exception: {0}; Secondary Exception: {1}", ex, secondaryEx);
             }
-        }
-
-        protected void Application_PreSendRequestHeaders()
-        {
-            Response.Headers.Remove("Server");
-            Response.Headers.Remove("X-AspNet-Version");
-            Response.Headers.Remove("X-AspNetMvc-Version");
-
-            Response.AddHeader("X-Frame-Options", "DENY");
         }
     }
 }

@@ -8,9 +8,9 @@ namespace DeadManSwitch.Service
 {
     public interface ICheckInService
     {
-        CheckInInfo CheckInUser(string userName);
+        Task<CheckInInfo> CheckInUserAsync(string userName);
 
-        CheckInInfo FindLastUserCheckIn(string userName);
+        Task<CheckInInfo> FindLastUserCheckInAsync(string userName);
 
     }
 }

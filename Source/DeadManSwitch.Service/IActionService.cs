@@ -8,18 +8,17 @@ namespace DeadManSwitch.Service
 {
     public interface IActionService
     {
-        Dictionary<int, string> GetAllEscalationActionTypes();
+        Task<Dictionary<int, string>> GetAllEscalationActionTypesAsync();
 
-        Dictionary<int, string> GetAllEscalationWaitMinutes();
+        Task<Dictionary<int, string>> GetAllEscalationWaitMinutesAsync();
 
-        EscalationStep FindEscalationStepById(string userName, int stepId);
-        List<EscalationStep> FindAllEscalationStepsByUserName(string userName);
+        Task<EscalationStep> FindEscalationStepByIdAsync(string userName, int stepId);
+        Task<List<EscalationStep>> FindAllEscalationStepsByUserNameAsync(string userName);
+        Task SaveEscalationStepAsync(string userName, EscalationStep step);
+        Task SaveEscalationStepsAsync(string userName, IEnumerable<EscalationStep> allSteps);
 
-        void SaveEscalationStep(string userName, EscalationStep step);
-        void SaveEscalationSteps(string userName, IEnumerable<EscalationStep> allSteps);
+        Task DeleteEscalationStepAsync(string userName, int stepId);
 
-        void DeleteEscalationStep(string userName, int stepId);
-
-        List<EscalationStep> ReorderEscalationSteps(string userName, IEnumerable<int> orderedStepIds);
+        Task<List<EscalationStep>> ReorderEscalationStepsAsync(string userName, IEnumerable<int> orderedStepIds);
     }
 }

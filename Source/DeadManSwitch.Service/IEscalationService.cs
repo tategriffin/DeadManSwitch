@@ -14,6 +14,6 @@ namespace DeadManSwitch.Service
     /// </summary>
     public interface IEscalationService
     {
-        bool Run();
+        Task<bool> RunAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using DeadManSwitch.Service;
@@ -16,10 +17,10 @@ namespace DeadManSwitch.UI.Models.Builders
             ActionSvc = actionService;
         }
 
-        public UserActionEditModel BuildCreateModel(string userName)
+        public async Task<UserActionEditModel> BuildCreateModelAsync(string userName)
         {
             int stepNumber = 1;
-            var existingSteps = ActionSvc.FindAllEscalationStepsByUserName(userName);
+            var existingSteps = await ActionSvc.FindAllEscalationStepsByUserNameAsync(userName);
             if (existingSteps.Any())
             {
                 stepNumber = existingSteps.Last().Number + 1;
@@ -28,37 +29,37 @@ namespace DeadManSwitch.UI.Models.Builders
             UserActionEditModel model = new UserActionEditModel() {Step = stepNumber};
             model.SubmitActionText = "Create step";
 
-            PopulateModelNonPersistentInfo(model);
+            await PopulateModelNonPersistentInfoAsync(model);
 
             return model;
         }
 
-        public UserActionEditModel BuildEditModel(DeadManSwitch.Service.EscalationStep step)
+        public async Task<UserActionEditModel> BuildEditModelAsync(DeadManSwitch.Service.EscalationStep step)
         {
             UserActionEditModel model = step.ToUiEditModel();
             model.SubmitActionText = "Save changes";
 
-            PopulateModelNonPersistentInfo(model);
+            await PopulateModelNonPersistentInfoAsync(model);
 
             return model;
         }
 
-        public void PopulateModelNonPersistentInfo(UserActionEditModel model)
+        public async Task PopulateModelNonPersistentInfoAsync(UserActionEditModel model)
         {
-            model.ActionTypeOptions = BuildActionTypeOptions();
-            model.WaitMinuteOptions = BuildWaitMinuteOptions();
+            model.ActionTypeOptions = await BuildActionTypeOptionsAsync();
+            model.WaitMinuteOptions = await BuildWaitMinuteOptionsAsync();
         }
 
-        private Dictionary<string, string> BuildActionTypeOptions()
+        private async Task<Dictionary<string, string>> BuildActionTypeOptionsAsync()
         {
-            return ActionSvc.GetAllEscalationActionTypes()
-                .ToDictionary(i => i.Key.ToString(), i => i.Value);
+            var actionTypes = await ActionSvc.GetAllEscalationActionTypesAsync();
+            return actionTypes.ToDictionary(i => i.Key.ToString(), i => i.Value);
         }
 
-        private Dictionary<string, string> BuildWaitMinuteOptions()
+        private async Task<Dictionary<string, string>> BuildWaitMinuteOptionsAsync()
         {
-            return ActionSvc.GetAllEscalationWaitMinutes()
-                .ToDictionary(i => i.Key.ToString(), i => i.Value);
+            var waitMinutes = await ActionSvc.GetAllEscalationWaitMinutesAsync();
+            return waitMinutes.ToDictionary(i => i.Key.ToString(), i => i.Value);
         }
 
     }

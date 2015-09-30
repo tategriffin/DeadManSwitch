@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DeadManSwitch.Service;
 
 namespace DeadManSwitch.UI.Models.Builders
@@ -16,11 +17,10 @@ namespace DeadManSwitch.UI.Models.Builders
             ScheduleSvc = scheduleService;
         }
 
-        public DailyScheduleEditModel BuildModelForCreate(string userName)
+        public async Task<DailyScheduleEditModel> BuildModelForCreateAsync(string userName)
         {
-            var preferences = AccountSvc.FindUserPreferences(userName);
-            DailyScheduleEditModel model = new DailyScheduleEditModel(setAllDays: true, isEnabled: true);
-            model.SubmitActionText = "Create Schedule";
+            var preferences = await AccountSvc.FindUserPreferencesAsync(userName);
+            DailyScheduleEditModel model = new DailyScheduleEditModel(setAllDays: true, isEnabled: true) {SubmitActionText = "Create Schedule"};
 
             TimeZoneInfo userTimeZoneInfo = preferences.TzInfo;
             DateTime userLocalTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, userTimeZoneInfo);
@@ -30,55 +30,56 @@ namespace DeadManSwitch.UI.Models.Builders
             model.CheckIn = userLocalNextHour.ToTimeModel();
             model.EarlyCheckIn = userLocalNextHour.Add(preferences.EarlyCheckInOffset.Negate()).ToTimeModel();
 
-            PopulateModelNonPersistentInfo(preferences, model);
+            await PopulateModelNonPersistentInfoAsync(preferences, model);
 
             return model;
         }
 
-        public DailyScheduleEditModel BuildModelForEdit(string userName, DailySchedule schedule)
+        public async Task<DailyScheduleEditModel> BuildModelForEditAsync(string userName, DailySchedule schedule)
         {
             DailyScheduleEditModel model = schedule.ToEditDailyScheduleModel();
             model.SubmitActionText = "Save Changes";
 
-            var prefs = AccountSvc.FindUserPreferences(userName);
-            PopulateModelNonPersistentInfo(prefs, model);
+            var prefs = await AccountSvc.FindUserPreferencesAsync(userName);
+            await PopulateModelNonPersistentInfoAsync(prefs, model);
+
             return model;
         }
 
-        public void PopulateModelNonPersistentInfo(string userName, DailyScheduleEditModel model)
+        public async Task PopulateModelNonPersistentInfoAsync(string userName, DailyScheduleEditModel model)
         {
-            var preferences = AccountSvc.FindUserPreferences(userName);
-            PopulateModelNonPersistentInfo(preferences, model);
+            var preferences = await AccountSvc.FindUserPreferencesAsync(userName);
+            await PopulateModelNonPersistentInfoAsync(preferences, model);
         }
 
-        public void PopulateModelNonPersistentInfo(UserPreferences preferences, DailyScheduleEditModel model)
+        public async Task PopulateModelNonPersistentInfoAsync(UserPreferences preferences, DailyScheduleEditModel model)
         {
             model.UserTimeZone = preferences.TzInfo.DisplayName;
-            PopulateCheckInOptions(model);
+            await PopulateCheckInOptionsAsync(model);
         }
 
-        private void PopulateCheckInOptions(DailyScheduleEditModel model)
+        private async Task PopulateCheckInOptionsAsync(DailyScheduleEditModel model)
         {
-            model.CheckInHourOptions = BuildCheckInHourOptions();
-            model.CheckInMinuteOptions = BuildCheckInMinuteOptions();
-            model.CheckInAmPmOptions = BuildCheckInAmPmOptions();
+            model.CheckInHourOptions = await BuildCheckInHourOptionsAsync();
+            model.CheckInMinuteOptions = await BuildCheckInMinuteOptionsAsync();
+            model.CheckInAmPmOptions = await BuildCheckInAmPmOptionsAsync();
         }
 
-        private Dictionary<string, string> BuildCheckInHourOptions()
+        private async Task<Dictionary<string, string>> BuildCheckInHourOptionsAsync()
         {
-            return ScheduleSvc.DailyScheduleService.CheckInHourOptions()
-                .ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
+            var hourOptions = await ScheduleSvc.DailyScheduleService.CheckInHourOptionsAsync();
+            return hourOptions.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 
-        private Dictionary<string, string> BuildCheckInMinuteOptions()
+        private async Task<Dictionary<string, string>> BuildCheckInMinuteOptionsAsync()
         {
-            return ScheduleSvc.DailyScheduleService.CheckInMinuteOptions()
-                .ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
+            var minuteOptions = await ScheduleSvc.DailyScheduleService.CheckInMinuteOptionsAsync();
+            return minuteOptions.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 
-        private Dictionary<string, string> BuildCheckInAmPmOptions()
+        private async Task<Dictionary<string, string>> BuildCheckInAmPmOptionsAsync()
         {
-            return ScheduleSvc.DailyScheduleService.CheckInAmPmOptions();
+            return await ScheduleSvc.DailyScheduleService.CheckInAmPmOptionsAsync();
         }
 
     }

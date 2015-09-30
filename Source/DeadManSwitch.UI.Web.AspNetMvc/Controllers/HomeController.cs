@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DeadManSwitch.Service;
@@ -26,12 +27,12 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CheckIn()
+        public async Task<ActionResult> CheckIn()
         {
             try
             {
-                var result = CheckInSvc.CheckInUser(User.Identity.Name);
-                string msg = string.Format("Thanks for checking in {0}. Your next scheduled check in is {1}", result.DisplayName, result.GetNextCheckInText());
+                var result = await CheckInSvc.CheckInUserAsync(User.Identity.Name);
+                string msg = $"Thanks for checking in {result.DisplayName}. Your next scheduled check in is {result.GetNextCheckInText()}";
 
                 return Json(new {message = msg});
             }

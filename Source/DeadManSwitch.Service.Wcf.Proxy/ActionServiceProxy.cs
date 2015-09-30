@@ -12,6 +12,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
     {
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
+        public Task<Dictionary<int, string>> GetAllEscalationActionTypesAsync()
+        {
+            return Task.FromResult(GetAllEscalationActionTypes());
+        }
+
         public Dictionary<int, string> GetAllEscalationActionTypes()
         {
             var client = new ActionService.ActionServiceClient();
@@ -48,6 +53,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                     client.Close();
                 }
             }
+        }
+
+        public Task<Dictionary<int, string>> GetAllEscalationWaitMinutesAsync()
+        {
+            return Task.FromResult(GetAllEscalationWaitMinutes());
         }
 
         public Dictionary<int, string> GetAllEscalationWaitMinutes()
@@ -88,6 +98,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
+        public Task<Service.EscalationStep> FindEscalationStepByIdAsync(string userName, int stepId)
+        {
+            return Task.FromResult(FindEscalationStepById(userName, stepId));
+        }
+
         public Service.EscalationStep FindEscalationStepById(string userName, int stepId)
         {
             var client = new ActionService.ActionServiceClient();
@@ -124,6 +139,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                     client.Close();
                 }
             }
+        }
+
+        public Task<List<Service.EscalationStep>> FindAllEscalationStepsByUserNameAsync(string userName)
+        {
+            return Task.FromResult(FindAllEscalationStepsByUserName(userName));
         }
 
         public List<Service.EscalationStep> FindAllEscalationStepsByUserName(string userName)
@@ -164,6 +184,13 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
+        public Task SaveEscalationStepAsync(string userName, Service.EscalationStep step)
+        {
+            SaveEscalationStep(userName, step);
+
+            return Task.CompletedTask;
+        }
+
         public void SaveEscalationStep(string userName, Service.EscalationStep step)
         {
             var client = new ActionService.ActionServiceClient();
@@ -200,6 +227,13 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                     client.Close();
                 }
             }
+        }
+
+        public Task SaveEscalationStepsAsync(string userName, IEnumerable<Service.EscalationStep> allSteps)
+        {
+            SaveEscalationSteps(userName, allSteps);
+
+            return Task.CompletedTask;
         }
 
         public void SaveEscalationSteps(string userName, IEnumerable<Service.EscalationStep> allSteps)
@@ -240,6 +274,12 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
+        public Task DeleteEscalationStepAsync(string userName, int stepId)
+        {
+            DeleteEscalationStep(userName, stepId);
+            return Task.CompletedTask;
+        }
+
         public void DeleteEscalationStep(string userName, int stepId)
         {
             var client = new ActionService.ActionServiceClient();
@@ -276,6 +316,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                     client.Close();
                 }
             }
+        }
+
+        public Task<List<Service.EscalationStep>> ReorderEscalationStepsAsync(string userName, IEnumerable<int> orderedStepIds)
+        {
+            return Task.FromResult(ReorderEscalationSteps(userName, orderedStepIds));
         }
 
         public List<Service.EscalationStep> ReorderEscalationSteps(string userName, IEnumerable<int> orderedStepIds)
@@ -316,5 +361,6 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                 }
             }
         }
+
     }
 }

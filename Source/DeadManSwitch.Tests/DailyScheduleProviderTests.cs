@@ -194,7 +194,7 @@ namespace DeadManSwitch.Tests
                 //Assert
                 Assert.Fail("Unauthorized user should not be able to delete schedule.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Test passes
             }

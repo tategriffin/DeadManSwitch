@@ -8,17 +8,17 @@ namespace DeadManSwitch.Service
 {
     public interface IDailyScheduleService
     {
-        DailySchedule FindByScheduleId(string userName, int scheduleId);
+        Task<DailySchedule> FindByScheduleIdAsync(string userName, int scheduleId);
 
-        void Save(string userName, DailySchedule schedule);
+        Task SaveAsync(string userName, DailySchedule schedule);
 
-        void Delete(string userName, int scheduleId);
+        Task DeleteAsync(string userName, int scheduleId);
 
-        Dictionary<int, string> CheckInHourOptions();
+        Task<Dictionary<int, string>> CheckInHourOptionsAsync();
 
-        Dictionary<int, string> CheckInMinuteOptions();
+        Task<Dictionary<int, string>> CheckInMinuteOptionsAsync();
 
-        Dictionary<string, string> CheckInAmPmOptions();
+        Task<Dictionary<string, string>> CheckInAmPmOptionsAsync();
 
     }
 }

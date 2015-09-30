@@ -46,7 +46,7 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         public System.Net.HttpStatusCode RunEscalate()
         {
             string userName = (User.Identity.IsAuthenticated ? User.Identity.Name : "anonymous user");
-            Log.Info(string.Format("{0} from IP: {1} requested escalate.", userName, Request.UserHostAddress));
+            Log.Info($"{userName} from IP: {Request.UserHostAddress} requested escalate.");
 
             System.Net.HttpStatusCode? statusCode = GetFakeStatusCode();
             if (!statusCode.HasValue)
@@ -84,15 +84,15 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         {
             if (code.IsInformational() || code.IsSuccess())
             {
-                Log.Info(string.Format("Escalate returned: {0}", code));
+                Log.Info($"Escalate returned: {code}");
             }
             else if (code.IsClientError() || code.IsServerError())
             {
-                Log.Error(string.Format("Escalate returned error: {0}", code));
+                Log.Error($"Escalate returned error: {code}");
             }
             else
             {
-                Log.Warn(string.Format("Escalate returned unexpected status: {0}", code));
+                Log.Warn($"Escalate returned unexpected status: {code}");
             }
         }
         #endregion

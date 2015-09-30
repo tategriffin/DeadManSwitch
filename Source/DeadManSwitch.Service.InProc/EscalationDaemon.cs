@@ -21,7 +21,7 @@ namespace DeadManSwitch.Service
 
         public static void Start(IUnityContainer container, IHostSettingsReader config)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            if (container == null) throw new ArgumentNullException(nameof(container));
             if (IsRunning) return;
 
             lock (Padlock)

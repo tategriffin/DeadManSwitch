@@ -58,8 +58,7 @@ namespace DeadManSwitch.Service.Wcf.Host
                 var svc = new Service.AccountService(CurrentAppState.IoCContainer);
                 var result = svc.RegisterUser(user.ToServiceEntity(), password);
 
-                var list = new List<string>(result);
-                response = new OperationResponse<List<string>>(true, string.Empty, list);
+                response = new OperationResponse<List<string>>(true, string.Empty, result);
             }
             catch (Exception ex)
             {
@@ -70,20 +69,20 @@ namespace DeadManSwitch.Service.Wcf.Host
             return response;
         }
 
-        public OperationResponse<User> Login(string userName, string password)
+        public OperationResponse<LoginResponse> Login(string userName, string password)
         {
-            OperationResponse<User> response;
+            OperationResponse<LoginResponse> response;
             try
             {
                 var svc = new Service.AccountService(CurrentAppState.IoCContainer);
                 var result = svc.Login(userName, password);
 
-                response = new OperationResponse<User>(result.ToWcfEntity());
+                response = new OperationResponse<LoginResponse>(result.ToWcfEntity());
             }
             catch (Exception ex)
             {
                 Log.Error(ex.ToString());
-                response = new OperationResponse<User>("An error occurred while attempting to login.");
+                response = new OperationResponse<LoginResponse>("An error occurred while attempting to login.");
             }
 
             return response;

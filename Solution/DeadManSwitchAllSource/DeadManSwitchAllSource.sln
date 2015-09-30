@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.UI.Web.AspNetMvc", "..\..\Source\DeadManSwitch.UI.Web.AspNetMvc\DeadManSwitch.UI.Web.AspNetMvc.csproj", "{4DB441AE-F9DB-4DA1-886F-6B175B05EA99}"
 EndProject
@@ -42,7 +42,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Service.Wcf.P
 		{0C5870E2-70FF-4F19-B1FF-E5AA8BF4ED7A} = {0C5870E2-70FF-4F19-B1FF-E5AA8BF4ED7A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.UI.Web.AspNet", "..\..\Source\DeadManSwitch.UI.Web.AspNet\DeadManSwitch.UI.Web.AspNet.csproj", "{FBD916FD-432A-49C0-9FC6-EA48071F1732}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Service.WebApi.Host", "..\..\Source\DeadManSwitch.Service.WebApi.Host\DeadManSwitch.Service.WebApi.Host.csproj", "{AB842C36-C68B-4E9A-A9CE-68653422D125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Service.WebApi", "..\..\Source\DeadManSwitch.Service.WebApi\DeadManSwitch.Service.WebApi.csproj", "{2ECFBD37-8A03-41DD-B135-9CD353AB66AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadManSwitch.Service.WebApi.Proxy", "..\..\Source\DeadManSwitch.Service.WebApi.Proxy\DeadManSwitch.Service.WebApi.Proxy.csproj", "{CAA9D458-E141-4F45-AB64-DB67659E15D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,10 +116,18 @@ Global
 		{215317BB-BE40-4BC5-8649-CD8A88E01484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215317BB-BE40-4BC5-8649-CD8A88E01484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215317BB-BE40-4BC5-8649-CD8A88E01484}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBD916FD-432A-49C0-9FC6-EA48071F1732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB842C36-C68B-4E9A-A9CE-68653422D125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB842C36-C68B-4E9A-A9CE-68653422D125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB842C36-C68B-4E9A-A9CE-68653422D125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB842C36-C68B-4E9A-A9CE-68653422D125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ECFBD37-8A03-41DD-B135-9CD353AB66AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ECFBD37-8A03-41DD-B135-9CD353AB66AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ECFBD37-8A03-41DD-B135-9CD353AB66AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ECFBD37-8A03-41DD-B135-9CD353AB66AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA9D458-E141-4F45-AB64-DB67659E15D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA9D458-E141-4F45-AB64-DB67659E15D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA9D458-E141-4F45-AB64-DB67659E15D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA9D458-E141-4F45-AB64-DB67659E15D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

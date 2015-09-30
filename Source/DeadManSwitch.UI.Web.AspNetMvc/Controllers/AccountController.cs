@@ -50,20 +50,20 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var user = LoginAndSetAuthCookie(model.UserName, model.Password, model.RememberMe);
-                    if (user != null)
+                    var response = await LoginAndSetAuthCookie(model.UserName, model.Password, model.RememberMe);
+                    if (response.IsSuccessful)
                     {
                         return RedirectToLocal(returnUrl);
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Invalid username or password.");
+                        AddErrors(response.LoginFailedUserMessageList);
                     }
                 }
 
@@ -77,16 +77,16 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             }
         }
 
-        private User LoginAndSetAuthCookie(string userName, string password, bool rememberMe = false)
+        private async Task<LoginResponse> LoginAndSetAuthCookie(string userName, string password, bool rememberMe = false)
         {
-            var user = AccountSvc.Login(userName, password);
-            if (user != null)
+            var response = await AccountSvc.LoginAsync(userName, password);
+            if (response.IsSuccessful)
             {
-                SetAuthCookie(user, rememberMe);
+                SetAuthCookie(response.User, rememberMe);
                 Reauthenticator.SlideReauthenticatedExpiration(HttpContext, userName, ReauthenticationMinutes);
             }
 
-            return user;
+            return response;
         }
 
         private void SetAuthCookie(User user, bool rememberMe)
@@ -111,9 +111,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
-            if (!AccountSvc.IsRegistrationOpen()) return View("RegistrationClosed");
+            if (!await AccountSvc.IsRegistrationOpenAsync()) return View("RegistrationClosed");
 
             return View();
         }
@@ -123,16 +123,16 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (!AccountSvc.IsRegistrationOpen()) return View("RegistrationClosed");
+            if (!await AccountSvc.IsRegistrationOpenAsync()) return View("RegistrationClosed");
 
             if (ModelState.IsValid)
             {
-                List<string> createUserFailedMsgs = CreateAccount(model);
+                List<string> createUserFailedMsgs = await CreateAccount(model);
                 if (!createUserFailedMsgs.Any())
                 {
-                    LoginAndSetAuthCookie(model.UserName, model.Password);
+                    await LoginAndSetAuthCookie(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -145,20 +145,20 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
             return View(model);
         }
 
-        private List<string> CreateAccount(RegisterViewModel model)
+        private async Task<List<string>> CreateAccount(RegisterViewModel model)
         {
             User user = new User(model.UserName, model.Email, model.FirstName, model.LastName);
 
-            IEnumerable<string> registrationFailedMsgs = this.AccountSvc.RegisterUser(user, model.Password);
+            List<string> registrationFailedMsgs = await AccountSvc.RegisterUserAsync(user, model.Password);
 
-            return new List<string>(registrationFailedMsgs);
+            return registrationFailedMsgs;
         }
 
         //
         // GET: /Account/Manage
-        public ActionResult Manage()
+        public async Task<ActionResult> Manage()
         {
-            var model = ModelBuilder.BuildUserProfileViewModel(User.Identity.Name);
+            var model = await ModelBuilder.BuildUserProfileViewModelAsync(User.Identity.Name);
 
             return View("ProfileView", model);
         }
@@ -166,9 +166,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // GET: /Account/EditProfile
         [MustReauthenticate(ReauthenticationMinutes)]
-        public ActionResult EditProfile()
+        public async Task<ActionResult> EditProfile()
         {
-            var model = ModelBuilder.BuildUserProfileEditModel(User.Identity.Name);
+            var model = await ModelBuilder.BuildUserProfileEditModelAsync(User.Identity.Name);
 
             return View("ProfileEdit", model);
         }
@@ -178,12 +178,12 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MustReauthenticate(ReauthenticationMinutes)]
-        public ActionResult EditProfile(UserProfileEditModel model)
+        public async Task<ActionResult> EditProfile(UserProfileEditModel model)
         {
             if (ModelState.IsValid)
             {
                 var userProfile = model.ToServiceModel();
-                AccountSvc.UpdateProfile(User.Identity.Name, userProfile);
+                await AccountSvc.UpdateProfileAsync(User.Identity.Name, userProfile);
 
                 return RedirectToAction("Manage");
             }
@@ -194,9 +194,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // GET: /Account/EditProfile
         [MustReauthenticate(ReauthenticationMinutes)]
-        public ActionResult EditPreferences()
+        public async Task<ActionResult> EditPreferences()
         {
-            var model = ModelBuilder.BuildUserPreferenceEditModel(User.Identity.Name);
+            var model = await ModelBuilder.BuildUserPreferenceEditModelAsync(User.Identity.Name);
 
             return View("PreferenceEdit", model);
         }
@@ -206,12 +206,12 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MustReauthenticate(ReauthenticationMinutes)]
-        public ActionResult EditPreferences(UserPreferenceEditModel model)
+        public async Task<ActionResult> EditPreferences(UserPreferenceEditModel model)
         {
             if (ModelState.IsValid)
             {
                 var userProfile = model.ToServiceEntity();
-                AccountSvc.UpdatePreferences(User.Identity.Name, userProfile);
+                await AccountSvc.UpdatePreferencesAsync(User.Identity.Name, userProfile);
 
                 return RedirectToAction("Manage");
             }
@@ -230,17 +230,17 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         // POST: /Account/Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(ChangePasswordEditModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordEditModel model)
         {
             ViewBag.ReturnUrl = Url.Action("ChangePassword");
             if (ModelState.IsValid)
             {
-                bool passwordChanged = AccountSvc.ChangePassword(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
+                bool passwordChanged = await AccountSvc.ChangePasswordAsync(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
                 if (passwordChanged)
                 {
                     Reauthenticator.SlideReauthenticatedExpiration(HttpContext, User.Identity.GetUserName(), ReauthenticationMinutes);
 
-                    return ChangePasswordResult(new ChangePasswordResultModel("Your password has been changed."));
+                    return await ChangePasswordResult(new ChangePasswordResultModel("Your password has been changed."));
                 }
                 else
                 {
@@ -254,9 +254,9 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Account/ChangePasswordResult
-        public ActionResult ChangePasswordResult(ChangePasswordResultModel model)
+        public async Task<ActionResult> ChangePasswordResult(ChangePasswordResultModel model)
         {
-            var userProfileModel = ModelBuilder.BuildUserProfileViewModel(User.Identity.Name);
+            var userProfileModel = await ModelBuilder.BuildUserProfileViewModelAsync(User.Identity.Name);
             userProfileModel.Message = model.ResultMessage;
 
             return View("ProfileView", userProfileModel);
@@ -284,7 +284,8 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         {
             foreach (var error in msgList)
             {
-                ModelState.AddModelError("", error);
+                //Don't specify a key so message will be displayed in validation summary
+                ModelState.AddModelError(string.Empty, error);
             }
         }
 

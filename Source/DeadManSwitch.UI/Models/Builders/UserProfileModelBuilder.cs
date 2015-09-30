@@ -16,40 +16,40 @@ namespace DeadManSwitch.UI.Models.Builders
             AccountSvc = accountService;
         }
 
-        public UserProfileViewModel BuildUserProfileViewModel(string userName)
+        public async Task<UserProfileViewModel> BuildUserProfileViewModelAsync(string userName)
         {
-            User user = AccountSvc.FindUser(userName);
+            User user = await AccountSvc.FindUserAsync(userName);
             UserProfileViewModel profileModel = user.ToUiViewModel();
 
-            UserPreferences preferences = AccountSvc.FindUserPreferences(userName);
+            UserPreferences preferences = await AccountSvc.FindUserPreferencesAsync(userName);
             profileModel.TimeZone = preferences.TzInfo.DisplayName;
             profileModel.EarlyCheckinDesc = preferences.EarlyCheckInOffset.TotalMinutes + " minutes";
 
             return profileModel;
         }
 
-        public UserProfileEditModel BuildUserProfileEditModel(string userName)
+        public async Task<UserProfileEditModel> BuildUserProfileEditModelAsync(string userName)
         {
-            User user = AccountSvc.FindUser(userName);
+            User user = await AccountSvc.FindUserAsync(userName);
             UserProfileEditModel profileModel = user.ToUiEditModel();
 
             return profileModel;
         }
 
-        public UserPreferenceEditModel BuildUserPreferenceEditModel(string userName)
+        public async Task<UserPreferenceEditModel> BuildUserPreferenceEditModelAsync(string userName)
         {
-            var preferences = AccountSvc.FindUserPreferences(userName);
+            var preferences = await AccountSvc.FindUserPreferencesAsync(userName);
             var preferenceModel = preferences.ToUiEditModel();
 
-            preferenceModel.TimeZoneOptions = AccountSvc.GetSupportedTimeZones();
-            preferenceModel.EarlyCheckInOptions = BuildEarlyCheckInOptions();
+            preferenceModel.TimeZoneOptions = await AccountSvc.GetSupportedTimeZonesAsync();
+            preferenceModel.EarlyCheckInOptions = await BuildEarlyCheckInOptionsAsync();
 
             return preferenceModel;
         }
 
-        private Dictionary<string, string> BuildEarlyCheckInOptions()
+        private async Task<Dictionary<string, string>> BuildEarlyCheckInOptionsAsync()
         {
-            return AccountSvc.GetCheckInWindowOptions();
+            return await AccountSvc.GetCheckInWindowOptionsAsync();
         }
 
     }

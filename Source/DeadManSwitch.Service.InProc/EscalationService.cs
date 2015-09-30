@@ -12,17 +12,22 @@ namespace DeadManSwitch.Service
 {
     public class EscalationService : IEscalationService
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger Log = LogManager.GetCurrentClassLogger();
         private static readonly object Padlock = new object();
         private static bool IsRunning = false;
         
-        private IUnityContainer Container;
+        private readonly IUnityContainer Container;
 
         public EscalationService(IUnityContainer container)
         {
-            if (container == null) throw new ArgumentNullException("container");
+            if (container == null) throw new ArgumentNullException(nameof(container));
 
             this.Container = container;
+        }
+
+        public Task<bool> RunAsync()
+        {
+            return Task.FromResult(Run());
         }
 
         public bool Run()
@@ -58,7 +63,7 @@ namespace DeadManSwitch.Service
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                Log.Error(ex);
             }
 
             return successful;
@@ -76,7 +81,7 @@ namespace DeadManSwitch.Service
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                Log.Error(ex);
             }
 
             return successful;

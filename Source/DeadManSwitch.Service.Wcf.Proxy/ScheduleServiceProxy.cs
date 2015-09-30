@@ -49,6 +49,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
+        public Task<List<ISchedule>> SearchAllSchedulesByUserAsync(string userName)
+        {
+            return Task.FromResult(SearchAllSchedulesByUser(userName));
+        }
+
         public void DeleteSchedule(string userName, int scheduleTypeId, int scheduleId)
         {
             var client = new ScheduleService.ScheduleServiceClient();
@@ -87,12 +92,19 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
+        public Task DeleteScheduleAsync(string userName, int scheduleTypeId, int scheduleId)
+        {
+            DeleteSchedule(userName, scheduleTypeId, scheduleId);
+
+            return Task.CompletedTask;
+        }
+
         public IDailyScheduleService DailyScheduleService
         {
             get { return this; }
         }
 
-        Service.DailySchedule IDailyScheduleService.FindByScheduleId(string userName, int scheduleId)
+        public Service.DailySchedule FindByScheduleId(string userName, int scheduleId)
         {
             var client = new ScheduleService.ScheduleServiceClient();
             try
@@ -130,7 +142,12 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
-        void IDailyScheduleService.Save(string userName, Service.DailySchedule schedule)
+        Task<Service.DailySchedule> IDailyScheduleService.FindByScheduleIdAsync(string userName, int scheduleId)
+        {
+            return Task.FromResult(FindByScheduleId(userName, scheduleId));
+        }
+
+        public void Save(string userName, Service.DailySchedule schedule)
         {
             var client = new ScheduleService.ScheduleServiceClient();
             try
@@ -168,12 +185,26 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
-        void IDailyScheduleService.Delete(string userName, int scheduleId)
+        Task IDailyScheduleService.SaveAsync(string userName, Service.DailySchedule schedule)
+        {
+            Save(userName, schedule);
+
+            return Task.CompletedTask;
+        }
+
+        public void Delete(string userName, int scheduleId)
         {
             this.DeleteSchedule(userName, DeadManSwitch.Service.DailySchedule.IntervalId, scheduleId);
         }
 
-        Dictionary<int, string> IDailyScheduleService.CheckInHourOptions()
+        Task IDailyScheduleService.DeleteAsync(string userName, int scheduleId)
+        {
+            Delete(userName, scheduleId);
+
+            return Task.CompletedTask;
+        }
+
+        public Dictionary<int, string> CheckInHourOptions()
         {
             var client = new ScheduleService.ScheduleServiceClient();
             try
@@ -212,7 +243,12 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
-        Dictionary<int, string> IDailyScheduleService.CheckInMinuteOptions()
+        Task<Dictionary<int, string>> IDailyScheduleService.CheckInHourOptionsAsync()
+        {
+            return Task.FromResult(CheckInHourOptions());
+        }
+
+        public Dictionary<int, string> CheckInMinuteOptions()
         {
             var client = new ScheduleService.ScheduleServiceClient();
             try
@@ -251,7 +287,12 @@ namespace DeadManSwitch.Service.Wcf.Proxy
             }
         }
 
-        Dictionary<string, string> IDailyScheduleService.CheckInAmPmOptions()
+        Task<Dictionary<int, string>> IDailyScheduleService.CheckInMinuteOptionsAsync()
+        {
+            return Task.FromResult(CheckInMinuteOptions());
+        }
+
+        public Dictionary<string, string> CheckInAmPmOptions()
         {
             var client = new ScheduleService.ScheduleServiceClient();
             try
@@ -289,5 +330,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                 }
             }
         }
+
+        Task<Dictionary<string, string>> IDailyScheduleService.CheckInAmPmOptionsAsync()
+        {
+            return Task.FromResult(CheckInAmPmOptions());
+        }
+
     }
 }

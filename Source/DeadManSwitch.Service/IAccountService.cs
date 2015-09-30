@@ -9,27 +9,27 @@ namespace DeadManSwitch.Service
 {
     public interface IAccountService
     {
-        bool IsRegistrationOpen();
+        Task<bool> IsRegistrationOpenAsync();
 
-        bool UserNameExists(string userName);
+        Task<bool> UserNameExistsAsync(string userName);
 
-        IEnumerable<string> RegisterUser(User user, string password);
+        Task<List<string>> RegisterUserAsync(User user, string password);
 
-        User Login(string userName, string password);
+        Task<LoginResponse> LoginAsync(string userName, string password);
 
-        User FindUser(string userName);
+        Task<User> FindUserAsync(string userName);
 
-        UserPreferences FindUserPreferences(string userName);
+        Task<UserPreferences> FindUserPreferencesAsync(string userName);
 
-        void UpdatePreferences(string userName, UserPreferences preferences);
+        Task UpdatePreferencesAsync(string userName, UserPreferences preferences);
 
-        void UpdateProfile(string userName, UserProfile profile);
+        Task UpdateProfileAsync(string userName, UserProfile profile);
+        
+        Task<bool> ChangePasswordAsync(string userName, string oldPassword, string newPassword);
 
-        bool ChangePassword(string userName, string oldPassword, string newPassword);
+        Task<Dictionary<string, string>> GetSupportedTimeZonesAsync();
 
-        Dictionary<string, string> GetSupportedTimeZones();
-
-        Dictionary<string, string> GetCheckInWindowOptions();
+        Task<Dictionary<string, string>> GetCheckInWindowOptionsAsync();
 
     }
 }

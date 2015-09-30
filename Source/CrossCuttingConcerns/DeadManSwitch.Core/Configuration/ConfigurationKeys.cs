@@ -8,6 +8,7 @@ namespace DeadManSwitch.Configuration
 {
     public static class ConfigurationKeys
     {
+        public const string ApiLocation = "ApiLocation";
         public const string ApplicationName = "ApplicationName";
         public const string AllowOutgoingMessages = "AllowOutgoingMessages";
         public const string EscalateInterval = "EscalateInterval";

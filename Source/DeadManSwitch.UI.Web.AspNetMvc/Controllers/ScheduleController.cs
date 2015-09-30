@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebSockets;
 using DeadManSwitch.Service;
 using DeadManSwitch.UI.Models.Builders;
-using Microsoft.Ajax.Utilities;
 
 namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 {
@@ -29,18 +29,19 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Schedule/
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = new ScheduleListModelBuilder(ScheduleSvc, CheckInSvc).BuildModel(User.Identity.Name);
+            var builder = new ScheduleListModelBuilder(ScheduleSvc, CheckInSvc);
+            var model = await builder.BuildModelAsync(User.Identity.Name);
 
             return View(model);
         }
 
         //
         // GET: /Schedule/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            var model = ModelBuilder.BuildModelForCreate(User.Identity.Name);
+            var model = await ModelBuilder.BuildModelForCreateAsync(User.Identity.Name);
 
             return View("Modify", model);
         }
@@ -48,20 +49,20 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         //
         // POST: /Schedule/Create
         [HttpPost]
-        public ActionResult Create(DailyScheduleEditModel scheduleModel) //FormCollection collection)
+        public async Task<ActionResult> Create(DailyScheduleEditModel scheduleModel) //FormCollection collection)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     DailySchedule schedule = scheduleModel.ToDailySchedule();
-                    ScheduleSvc.DailyScheduleService.Save(User.Identity.Name, schedule);
+                    await ScheduleSvc.DailyScheduleService.SaveAsync(User.Identity.Name, schedule);
 
                     return RedirectToAction("Index");
                 }
                 
                 //model state is not valid, so render the page again, keeping user data
-                ModelBuilder.PopulateModelNonPersistentInfo(User.Identity.Name, scheduleModel);
+                await ModelBuilder.PopulateModelNonPersistentInfoAsync(User.Identity.Name, scheduleModel);
                 return View("Modify", scheduleModel);
             }
             catch (Exception ex)
@@ -73,23 +74,23 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
 
         //
         // GET: /Schedule/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            DailySchedule schedule = ScheduleSvc.DailyScheduleService.FindByScheduleId(User.Identity.Name, id);
+            DailySchedule schedule = await ScheduleSvc.DailyScheduleService.FindByScheduleIdAsync(User.Identity.Name, id);
             if (schedule == null)
             {
                 Log.Warn("Schedule ID: {0} was not found for user {1}.", id, User.Identity.Name);
                 return RedirectToAction("Create");
             }
 
-            DailyScheduleEditModel model = ModelBuilder.BuildModelForEdit(User.Identity.Name, schedule);
+            DailyScheduleEditModel model = await ModelBuilder.BuildModelForEditAsync(User.Identity.Name, schedule);
             return View("Modify", model);
         }
 
         //
         // POST: /Schedule/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, DailyScheduleEditModel scheduleModel)
+        public async Task<ActionResult> Edit(int id, DailyScheduleEditModel scheduleModel)
         {
             try
             {
@@ -97,13 +98,13 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
                 {
                     DailySchedule schedule = scheduleModel.ToDailySchedule();
                     schedule.Id = id;
-                    ScheduleSvc.DailyScheduleService.Save(User.Identity.Name, schedule);
+                    await ScheduleSvc.DailyScheduleService.SaveAsync(User.Identity.Name, schedule);
 
                     return RedirectToAction("Index");
                 }
 
                 //model state is not valid, so render the page again, keeping user data
-                ModelBuilder.PopulateModelNonPersistentInfo(User.Identity.Name, scheduleModel);
+                await ModelBuilder.PopulateModelNonPersistentInfoAsync(User.Identity.Name, scheduleModel);
                 return View("Modify", scheduleModel);
             }
             catch (Exception ex)
@@ -114,22 +115,17 @@ namespace DeadManSwitch.UI.Web.AspNetMvc.Controllers
         }
 
         //
-        // GET: /Schedule/Delete/5
-//        public ActionResult Delete(int id)
-//        {
-//            return View();
-//        }
-
-        //
         // POST: /Schedule/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
-                ScheduleSvc.DailyScheduleService.Delete(User.Identity.Name, id);
+                //Delete FormCollection parm if it is not required
+                await ScheduleSvc.DailyScheduleService.DeleteAsync(User.Identity.Name, id);
 
                 return Json(new { redirectUrl = Url.Action("Index") });
+//                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

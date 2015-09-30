@@ -20,7 +20,7 @@ namespace DeadManSwitch.Service.Wcf
         OperationResponse<List<string>> RegisterUser(User user, string password);
 
         [OperationContract]
-        OperationResponse<User> Login(string userName, string password);
+        OperationResponse<LoginResponse> Login(string userName, string password);
 
         [OperationContract]
         OperationResponse<User> FindUser(string userName);

@@ -11,6 +11,11 @@ namespace DeadManSwitch.Service.Wcf.Proxy
     {
         private static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
+        public Task<bool> RunAsync()
+        {
+            return Task.FromResult(Run());
+        }
+
         public bool Run()
         {
             var client = new EscalationService.EscalationServiceClient();
@@ -48,5 +53,6 @@ namespace DeadManSwitch.Service.Wcf.Proxy
                 }
             }
         }
+
     }
 }
