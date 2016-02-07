@@ -14,24 +14,34 @@ namespace DeadManSwitch.Service.WebApi
 {
     public static class UserMapper
     {
+        private static readonly IMapper MapProvider;
+
         static UserMapper()
         {
-            Mapper.AddProfile(new UserMapperProfile());
+            var config = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg
+                    .CreateMap<DeadManSwitch.Service.WebApi.UserModel, DeadManSwitch.Service.User>()
+                    .ReverseMap();
+                });
+
+            MapProvider = config.CreateMapper();
         }
 
         public static DeadManSwitch.Service.User ToServiceEntity(this DeadManSwitch.Service.WebApi.UserModel source)
         {
-            return Mapper.Map<DeadManSwitch.Service.User>(source);
+            return MapProvider.Map<DeadManSwitch.Service.User>(source);
         }
 
         public static DeadManSwitch.Service.WebApi.UserModel ToWebApiEntity(this DeadManSwitch.Service.User source)
         {
-            return Mapper.Map<DeadManSwitch.Service.WebApi.UserModel>(source);
+            return MapProvider.Map<DeadManSwitch.Service.WebApi.UserModel>(source);
         }
 
         public static DeadManSwitch.Service.User ToServiceEntity(this DeadManSwitch.Service.WebApi.UserRegistrationModel source)
         {
-            return Mapper.Map<DeadManSwitch.Service.User>(source);
+            return MapProvider.Map<DeadManSwitch.Service.User>(source);
         }
 
         public static async Task<DeadManSwitch.Service.User> ToServiceEntityUser(this HttpResponseMessage source)
@@ -54,15 +64,5 @@ namespace DeadManSwitch.Service.WebApi
             return registrationModel;
         }
 
-    }
-
-    public class UserMapperProfile : Profile
-    {
-        protected override void Configure()
-        {
-            Mapper.CreateMap<DeadManSwitch.Service.WebApi.UserModel, DeadManSwitch.Service.User>();
-            Mapper.CreateMap<DeadManSwitch.Service.User, DeadManSwitch.Service.WebApi.UserModel>();
-//            Mapper.CreateMap<DeadManSwitch.Service.WebApi.UserRegistrationModel, DeadManSwitch.Service.User>();
-        }
     }
 }

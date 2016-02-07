@@ -9,28 +9,13 @@ namespace DeadManSwitch.Service.WebApi
 {
     public static class DailyScheduleMapper
     {
+        private static readonly IMapper MapProvider;
+
         static DailyScheduleMapper()
         {
-            Mapper.AddProfile(new DailyScheduleMapperProfile());
-        }
-
-        public static DeadManSwitch.Service.DailySchedule ToServiceEntity(this DeadManSwitch.Service.WebApi.DailySchedule source)
-        {
-            return Mapper.Map<DeadManSwitch.Service.DailySchedule>(source);
-        }
-
-        public static DeadManSwitch.Service.WebApi.DailySchedule ToWebApiEntity(DeadManSwitch.Service.DailySchedule source)
-        {
-            return Mapper.Map<DeadManSwitch.Service.WebApi.DailySchedule>(source);
-        }
-
-    }
-
-    public class DailyScheduleMapperProfile : Profile
-    {
-        protected override void Configure()
-        {
-            Mapper.CreateMap<DeadManSwitch.Service.WebApi.DailySchedule, DeadManSwitch.Service.DailySchedule>()
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<DeadManSwitch.Service.WebApi.DailySchedule, DeadManSwitch.Service.DailySchedule>()
                 .ForMember(
                     dest => dest.Interval,
                     map => map.Ignore()
@@ -44,7 +29,7 @@ namespace DeadManSwitch.Service.WebApi
                     map => map.MapFrom(src => TimeSpan.Parse(src.CheckInWindowStartTime))
                 );
 
-            Mapper.CreateMap<DeadManSwitch.Service.DailySchedule, DeadManSwitch.Service.WebApi.DailySchedule>()
+                cfg.CreateMap<DeadManSwitch.Service.DailySchedule, DeadManSwitch.Service.WebApi.DailySchedule>()
                 .ForMember(
                     dest => dest.Interval,
                     map => map.MapFrom(src => (int)src.Interval)
@@ -57,7 +42,21 @@ namespace DeadManSwitch.Service.WebApi
                     dest => dest.CheckInWindowStartTime,
                     map => map.MapFrom(src => src.CheckInWindowStartTime.ToString())
                 );
+            });
 
+            MapProvider = config.CreateMapper();
         }
+
+        public static DeadManSwitch.Service.DailySchedule ToServiceEntity(this DeadManSwitch.Service.WebApi.DailySchedule source)
+        {
+            return MapProvider.Map<DeadManSwitch.Service.DailySchedule>(source);
+        }
+
+        public static DeadManSwitch.Service.WebApi.DailySchedule ToWebApiEntity(DeadManSwitch.Service.DailySchedule source)
+        {
+            return MapProvider.Map<DeadManSwitch.Service.WebApi.DailySchedule>(source);
+        }
+
     }
+
 }

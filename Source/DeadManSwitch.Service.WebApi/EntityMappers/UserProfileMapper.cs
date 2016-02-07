@@ -9,29 +9,30 @@ namespace DeadManSwitch.Service.WebApi
 {
     public static class UserProfileMapper
     {
+        private static readonly IMapper MapProvider;
+
         static UserProfileMapper()
         {
-            Mapper.AddProfile(new UserProfileMapperProfile());
+            var config = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg
+                    .CreateMap<DeadManSwitch.Service.WebApi.UserProfileModel, DeadManSwitch.Service.UserProfile>()
+                    .ReverseMap();
+                });
+
+            MapProvider = config.CreateMapper();
         }
 
         public static DeadManSwitch.Service.UserProfile ToServiceEntity(this DeadManSwitch.Service.WebApi.UserProfileModel source)
         {
-            return Mapper.Map<DeadManSwitch.Service.UserProfile>(source);
+            return MapProvider.Map<DeadManSwitch.Service.UserProfile>(source);
         }
 
         public static DeadManSwitch.Service.WebApi.UserProfileModel ToWebApiEntity(this DeadManSwitch.Service.UserProfile source)
         {
-            return Mapper.Map<DeadManSwitch.Service.WebApi.UserProfileModel>(source);
+            return MapProvider.Map<DeadManSwitch.Service.WebApi.UserProfileModel>(source);
         }
 
-    }
-
-    public class UserProfileMapperProfile : Profile
-    {
-        protected override void Configure()
-        {
-            Mapper.CreateMap<DeadManSwitch.Service.WebApi.UserProfileModel, DeadManSwitch.Service.UserProfile>();
-            Mapper.CreateMap<DeadManSwitch.Service.UserProfile, DeadManSwitch.Service.WebApi.UserProfileModel>();
-        }
     }
 }
