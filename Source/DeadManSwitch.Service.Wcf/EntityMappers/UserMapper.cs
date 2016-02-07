@@ -9,29 +9,30 @@ namespace DeadManSwitch.Service.Wcf
 {
     public static class UserMapper
     {
+        private static readonly IMapper MapProvider;
+
         static UserMapper()
         {
-            Mapper.AddProfile(new UserMapperProfile());
+            var config = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg
+                    .CreateMap<DeadManSwitch.Service.Wcf.User, DeadManSwitch.Service.User>()
+                    .ReverseMap();
+                });
+
+            MapProvider = config.CreateMapper();
         }
 
         public static DeadManSwitch.Service.User ToServiceEntity(this DeadManSwitch.Service.Wcf.User source)
         {
-            return Mapper.Map<DeadManSwitch.Service.User>(source);
+            return MapProvider.Map<DeadManSwitch.Service.User>(source);
         }
 
         public static DeadManSwitch.Service.Wcf.User ToWcfEntity(this DeadManSwitch.Service.User source)
         {
-            return Mapper.Map<DeadManSwitch.Service.Wcf.User>(source);
+            return MapProvider.Map<DeadManSwitch.Service.Wcf.User>(source);
         }
 
-    }
-
-    public class UserMapperProfile : Profile
-    {
-        protected override void Configure()
-        {
-            Mapper.CreateMap<DeadManSwitch.Service.Wcf.User, DeadManSwitch.Service.User>();
-            Mapper.CreateMap<DeadManSwitch.Service.User, DeadManSwitch.Service.Wcf.User>();
-        }
     }
 }
