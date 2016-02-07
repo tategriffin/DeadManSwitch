@@ -79,20 +79,18 @@ namespace DeadManSwitch.Tests
                 );
 
             var user = userProvider.FindByUserName(userName);
-            scheduleProvider.SaveDailySchedule(
-                user,
-                new DailySchedule(true)
-                {
-                    Name = "RecordCheckInTestSchedule",
-                    CheckInWindowStartTime = DateTime.Now.AddMinutes(15).TimeOfDay,
-                    CheckInTime = DateTime.Now.AddMinutes(30).TimeOfDay
-                }
-                );
+            var schedule = new DailySchedule(true)
+            {
+                Name = "RecordCheckInTestSchedule",
+                CheckInWindowStartTime = DateTime.Now.AddMinutes(15).TimeOfDay,
+                CheckInTime = DateTime.Now.AddMinutes(30).TimeOfDay
+            };
+            scheduleProvider.SaveDailySchedule(user, schedule);
 
             CheckInProvider cut = new CheckInProvider(container);
 
             //Act
-            var expected = DateTime.UtcNow.Date;
+            var expected = DateTime.UtcNow.AddMinutes(30).Date;
             var actual = cut.RecordCheckIn(user);
 
             //Assert
