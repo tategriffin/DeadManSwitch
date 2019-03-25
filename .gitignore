@@ -185,3 +185,6 @@ FakesAssemblies/
 
 # Publish Profiles
 PublishProfiles/
+
+#Visual Studio Solution / Project directory
+.vs/
